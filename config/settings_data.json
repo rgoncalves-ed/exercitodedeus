@@ -14,10 +14,10 @@
     "layout_spacing_sections": 80,
     "card_image_ratio": "portrait",
     "card_show_vendor": true,
-    "social_instagram": "https://instagram.com/",
-    "social_facebook": "https://facebook.com/",
-    "social_youtube": "",
-    "social_whatsapp": "",
+    "social_instagram": "https://www.instagram.com/anaclararocha_exercitodedeus/",
+    "social_facebook": "",
+    "social_youtube": "https://www.youtube.com/c/AnaClaraApresentadora?sub_confirmation=1",
+    "social_whatsapp": "554399935389",
     "sections": {
       "header": { "type": "header", "settings": {} },
       "footer": { "type": "footer", "settings": {} }

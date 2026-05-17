@@ -1,20 +1,107 @@
-{%- if section.settings.text != blank -%}
-  <div class="announcement-bar" role="region" aria-label="Anúncio">
-    <div class="page-width">
-      {{ section.settings.text }}
+{%- liquid
+  assign show_message = section.settings.text
+  assign show_phone = section.settings.contact_phone
+  assign show_email = section.settings.contact_email
+  assign show_social = false
+  if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_youtube != blank or settings.social_whatsapp != blank or section.settings.mulheres_url != blank
+    assign show_social = true
+  endif
+-%}
+
+{%- if show_message != blank or show_phone != blank or show_email != blank or show_social -%}
+  <div class="topbar" role="region" aria-label="Informações de contato e redes sociais">
+    <div class="page-width topbar__inner">
+      <div class="topbar__contacts">
+        {%- if show_phone != blank -%}
+          <a href="tel:{{ show_phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' }}" class="topbar__item">
+            {% render 'icon-whatsapp' %}
+            <span>{{ show_phone }}</span>
+          </a>
+        {%- endif -%}
+        {%- if show_email != blank -%}
+          <a href="mailto:{{ show_email }}" class="topbar__item topbar__item--email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+            <span>{{ show_email }}</span>
+          </a>
+        {%- endif -%}
+        {%- if show_message != blank -%}
+          <span class="topbar__message">{{ show_message }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if show_social -%}
+        <div class="topbar__social" aria-label="Redes sociais">
+          {%- if section.settings.mulheres_url != blank -%}
+            <a href="{{ section.settings.mulheres_url }}"
+               target="_blank"
+               rel="noopener"
+               class="topbar__social-link topbar__social-link--mulheres"
+               aria-label="Mulheres de Rocha"
+               title="Mulheres de Rocha">
+              {% render 'icon-diamond' %}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_instagram != blank -%}
+            <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" class="topbar__social-link" aria-label="Instagram">
+              {% render 'icon-instagram' %}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_facebook != blank -%}
+            <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" class="topbar__social-link" aria-label="Facebook">
+              {% render 'icon-facebook' %}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_youtube != blank -%}
+            <a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" class="topbar__social-link" aria-label="YouTube">
+              {% render 'icon-youtube' %}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_whatsapp != blank -%}
+            {%- assign wa_number = settings.social_whatsapp | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-' -%}
+            <a href="https://wa.me/{{ wa_number }}" target="_blank" rel="noopener" class="topbar__social-link" aria-label="WhatsApp">
+              {% render 'icon-whatsapp' %}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 {%- endif -%}
 
 {% schema %}
 {
-  "name": "Barra de anúncio",
+  "name": "Barra superior",
   "settings": [
+    {
+      "type": "header",
+      "content": "Mensagem e contatos"
+    },
     {
       "type": "text",
       "id": "text",
-      "label": "Texto",
+      "label": "Mensagem (frete grátis, promoção etc)",
       "default": "Frete grátis acima de R$ 199 • Parcelamos em até 12x"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Telefone (exibe no topo)",
+      "default": "(43) 9993-5389"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "E-mail (exibe no topo)",
+      "default": "loja@grupoexercitodedeus.com.br"
+    },
+    {
+      "type": "header",
+      "content": "Link extra"
+    },
+    {
+      "type": "url",
+      "id": "mulheres_url",
+      "label": "Link \"Mulheres de Rocha\" (ícone diamante)"
     }
   ]
 }
