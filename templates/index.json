@@ -15,24 +15,26 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "eyebrow": "Meditações para",
-            "heading": "PENTECOSTES",
-            "text": "Aprofunde sua fé com livros e devocionais selecionados.",
+            "image": "shopify://shop_images/Desktop_4.png",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
             "button_label": "Veja mais",
             "button_url": "",
             "background_color": "#1f2d4a",
             "text_color": "#ffffff",
-            "button_bg": "#ffffff",
+            "button_bg": "rgba(0,0,0,0)",
             "button_color": "#1f2d4a"
           }
         },
         "slide_2": {
           "type": "slide",
           "settings": {
-            "eyebrow": "Novidades",
-            "heading": "FÉ EM FAMÍLIA",
-            "text": "Conteúdos para você compartilhar com os seus.",
-            "button_label": "Explorar",
+            "image": "shopify://shop_images/Desktop_2.png",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
             "button_url": "",
             "background_color": "#7a2f2f",
             "text_color": "#ffffff",
@@ -43,10 +45,11 @@
         "slide_3": {
           "type": "slide",
           "settings": {
-            "eyebrow": "Coleção especial",
-            "heading": "SANTOS DO MÊS",
-            "text": "Conheça a vida e a obra dos santos da Igreja.",
-            "button_label": "Descobrir",
+            "image": "shopify://shop_images/DESKTOP.png",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
             "button_url": "",
             "background_color": "#2a4234",
             "text_color": "#ffffff",
@@ -71,6 +74,7 @@
           "type": "category",
           "settings": {
             "title": "Bíblias",
+            "image": "shopify://shop_images/5a02dec7d4019e21d4d0f89d5176e0c0.jpg",
             "collection": ""
           }
         },
@@ -78,48 +82,31 @@
           "type": "category",
           "settings": {
             "title": "Espiritualidade",
-            "collection": ""
-          }
-        },
-        "cat_liturgia": {
-          "type": "category",
-          "settings": {
-            "title": "Liturgia",
-            "collection": ""
-          }
-        },
-        "cat_santos": {
-          "type": "category",
-          "settings": {
-            "title": "Santos",
+            "image": "shopify://shop_images/6d0ea9784a41e01fb631868a51e46c69.jpg",
             "collection": ""
           }
         },
         "cat_familia": {
           "type": "category",
           "settings": {
-            "title": "Família",
+            "title": "São José",
+            "image": "shopify://shop_images/9d5150ce0ea792eebd95219ea1e753f7.png",
             "collection": ""
           }
         },
         "cat_infantil": {
           "type": "category",
           "settings": {
-            "title": "Infantil",
+            "title": "Uniforme",
+            "image": "shopify://shop_images/mockup_02.png",
             "collection": ""
           }
         },
         "cat_devocionais": {
           "type": "category",
           "settings": {
-            "title": "Devocionais",
-            "collection": ""
-          }
-        },
-        "cat_presentes": {
-          "type": "category",
-          "settings": {
-            "title": "Presentes",
+            "title": "Livros",
+            "image": "shopify://shop_images/Mockup_01.png",
             "collection": ""
           }
         }
@@ -127,12 +114,9 @@
       "block_order": [
         "cat_biblias",
         "cat_espiritualidade",
-        "cat_liturgia",
-        "cat_santos",
         "cat_familia",
         "cat_infantil",
-        "cat_devocionais",
-        "cat_presentes"
+        "cat_devocionais"
       ],
       "settings": {
         "eyebrow": "Navegue por",
@@ -206,7 +190,7 @@
     "presentear": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Para presentear a sua mãe",
+        "heading": "Combos",
         "collection": "",
         "products_to_show": 6,
         "show_view_all": true
