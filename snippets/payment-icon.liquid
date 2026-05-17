@@ -1,0 +1,155 @@
+{%- comment -%}
+  Renderiza um único selo de pagamento pelo tipo.
+  Aceita: visa, master, american_express, elo, hipercard, diners_club,
+          discover, jcb, maestro, paypal, apple_pay, google_pay,
+          shop_pay, pix, boleto
+{%- endcomment -%}
+
+{%- case type -%}
+
+  {%- when 'visa' -%}
+    <li class="payment-badge" aria-label="Visa">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#1A1F71"/>
+        <text x="28" y="24" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-style="italic" font-weight="900" font-size="14" fill="#fff" letter-spacing="0.4">VISA</text>
+      </svg>
+    </li>
+
+  {%- when 'master' or 'mastercard' -%}
+    <li class="payment-badge" aria-label="Mastercard">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#fff" stroke="#E5E5E5"/>
+        <circle cx="22" cy="18" r="9" fill="#EB001B"/>
+        <circle cx="34" cy="18" r="9" fill="#F79E1B"/>
+        <path d="M28 11a9 9 0 0 0 0 14 9 9 0 0 0 0-14z" fill="#FF5F00"/>
+      </svg>
+    </li>
+
+  {%- when 'american_express' or 'amex' -%}
+    <li class="payment-badge" aria-label="American Express">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#2E77BC"/>
+        <text x="28" y="23" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="10" fill="#fff" letter-spacing="0.6">AMEX</text>
+      </svg>
+    </li>
+
+  {%- when 'elo' -%}
+    <li class="payment-badge" aria-label="Elo">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#000"/>
+        <circle cx="20" cy="18" r="5" fill="#FFD400"/>
+        <circle cx="28" cy="18" r="5" fill="#EB1126"/>
+        <circle cx="36" cy="18" r="5" fill="#00A4E0"/>
+      </svg>
+    </li>
+
+  {%- when 'hipercard' or 'hiper' -%}
+    <li class="payment-badge" aria-label="Hipercard">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#B3131B"/>
+        <text x="28" y="23" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="9" fill="#fff" letter-spacing="0.4">HIPER</text>
+      </svg>
+    </li>
+
+  {%- when 'diners_club' or 'diners' -%}
+    <li class="payment-badge" aria-label="Diners Club">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#fff" stroke="#E5E5E5"/>
+        <circle cx="28" cy="18" r="10" fill="#0079BE"/>
+        <path d="M24 11a8 8 0 0 0 0 14V11z" fill="#fff"/>
+        <path d="M32 11a8 8 0 0 1 0 14V11z" fill="#fff"/>
+      </svg>
+    </li>
+
+  {%- when 'discover' -%}
+    <li class="payment-badge" aria-label="Discover">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#fff" stroke="#E5E5E5"/>
+        <text x="20" y="23" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="7" fill="#1A1A1A">DISC</text>
+        <circle cx="40" cy="18" r="7" fill="#FF6000"/>
+      </svg>
+    </li>
+
+  {%- when 'jcb' -%}
+    <li class="payment-badge" aria-label="JCB">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#fff" stroke="#E5E5E5"/>
+        <rect x="10" y="10" width="11" height="16" fill="#0F549E"/>
+        <rect x="22" y="10" width="11" height="16" fill="#C8131B"/>
+        <rect x="34" y="10" width="11" height="16" fill="#067F47"/>
+        <text x="28" y="22" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="6" fill="#fff">JCB</text>
+      </svg>
+    </li>
+
+  {%- when 'maestro' -%}
+    <li class="payment-badge" aria-label="Maestro">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#fff" stroke="#E5E5E5"/>
+        <circle cx="22" cy="18" r="9" fill="#0079BE"/>
+        <circle cx="34" cy="18" r="9" fill="#ED1C2E"/>
+      </svg>
+    </li>
+
+  {%- when 'paypal' -%}
+    <li class="payment-badge" aria-label="PayPal">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#fff" stroke="#E5E5E5"/>
+        <text x="28" y="23" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-style="italic" font-weight="900" font-size="11" fill="#003087">Pay<tspan fill="#009CDE">Pal</tspan></text>
+      </svg>
+    </li>
+
+  {%- when 'apple_pay' -%}
+    <li class="payment-badge" aria-label="Apple Pay">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#000"/>
+        <text x="28" y="23" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="10" fill="#fff">Pay</text>
+        <path d="M12 14c-.3.5-.8.9-1.3.9-.1-.5.1-1 .4-1.4.3-.4.8-.7 1.2-.7.1.5-.1 1-.3 1.2z" fill="#fff"/>
+      </svg>
+    </li>
+
+  {%- when 'google_pay' -%}
+    <li class="payment-badge" aria-label="Google Pay">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#fff" stroke="#E5E5E5"/>
+        <text x="28" y="23" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="9" fill="#5F6368">G Pay</text>
+      </svg>
+    </li>
+
+  {%- when 'shop_pay' -%}
+    <li class="payment-badge" aria-label="Shop Pay">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#5A31F4"/>
+        <text x="28" y="23" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="9" fill="#fff">shop Pay</text>
+      </svg>
+    </li>
+
+  {%- when 'pix' -%}
+    <li class="payment-badge" aria-label="Pix">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#fff" stroke="#E5E5E5"/>
+        <text x="28" y="23" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="13" fill="#32BCAD" letter-spacing="0.3">pix</text>
+      </svg>
+    </li>
+
+  {%- when 'boleto' -%}
+    <li class="payment-badge" aria-label="Boleto bancário">
+      <svg viewBox="0 0 56 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="56" height="36" rx="5" fill="#fff" stroke="#E5E5E5"/>
+        <g fill="#1A1A1A">
+          <rect x="8"  y="8" width="1.5" height="20"/>
+          <rect x="11" y="8" width="2.5" height="20"/>
+          <rect x="15" y="8" width="1"   height="20"/>
+          <rect x="17" y="8" width="3"   height="20"/>
+          <rect x="22" y="8" width="1.5" height="20"/>
+          <rect x="25" y="8" width="2"   height="20"/>
+          <rect x="29" y="8" width="1"   height="20"/>
+          <rect x="31" y="8" width="3"   height="20"/>
+          <rect x="36" y="8" width="1.5" height="20"/>
+          <rect x="39" y="8" width="2.5" height="20"/>
+          <rect x="43" y="8" width="1"   height="20"/>
+          <rect x="45" y="8" width="3"   height="20"/>
+        </g>
+      </svg>
+    </li>
+
+{%- endcase -%}

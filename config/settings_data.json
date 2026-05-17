@@ -19,6 +19,8 @@
     "social_youtube": "https://www.youtube.com/c/AnaClaraApresentadora?sub_confirmation=1",
     "social_tiktok": "",
     "social_whatsapp": "554399935389",
+    "payment_show_pix": true,
+    "payment_show_boleto": true,
     "sections": {
       "header": { "type": "header", "settings": {} },
       "footer": { "type": "footer", "settings": {} }

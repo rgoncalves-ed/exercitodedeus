@@ -166,5 +166,26 @@
         "default": ""
       }
     ]
+  },
+  {
+    "name": "Pagamentos extras",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Os ícones de cartão (Visa, Master, etc) vêm automaticamente das formas de pagamento ativas em Admin → Pagamentos. Pix e Boleto normalmente vêm via app externo — marque abaixo se sua loja aceita."
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_show_pix",
+        "label": "Aceitamos Pix",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_show_boleto",
+        "label": "Aceitamos Boleto",
+        "default": true
+      }
+    ]
   }
 ]
