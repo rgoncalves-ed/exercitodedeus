@@ -869,11 +869,27 @@ p { margin: 0 0 1em; }
 /* ----------------------- Footer (claro, multi-colunas) ----------------------- */
 
 .site-footer {
-  background: #fff;
+  background: var(--color-surface);
   color: var(--color-text);
-  padding-top: 56px;
-  margin-top: 48px;
-  border-top: 1px solid var(--color-border);
+  padding-top: 44px;
+  margin-top: 32px;
+  position: relative;
+  border-top: 4px solid var(--color-accent);
+}
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg,
+    var(--color-accent) 0%,
+    var(--color-accent) 33%,
+    #1F4E78 33%,
+    #1F4E78 66%,
+    #2A4234 66%,
+    #2A4234 100%);
 }
 
 .site-footer a {
@@ -950,9 +966,10 @@ p { margin: 0 0 1em; }
   gap: 10px;
   padding: 10px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 10px;
   background: #fff;
   color: var(--color-text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 .site-footer__security .security-badge svg {
   width: 22px;
@@ -965,6 +982,7 @@ p { margin: 0 0 1em; }
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--color-text);
+  line-height: 1.2;
 }
 .site-footer__security .security-badge small {
   font-size: 0.7rem;
@@ -1001,23 +1019,26 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   margin: 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
-  max-width: 240px;
+  gap: 8px;
+  max-width: 260px;
 }
 .payment-badge {
   background: transparent;
+  transition: transform 0.15s ease;
 }
+.payment-badge:hover { transform: translateY(-2px); }
 .payment-badge svg {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 4px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 /* Bottom (copyright + dev) */
 .site-footer__bottom {
-  padding-block: 24px;
-  border-top: 1px solid var(--color-border);
+  padding-block: 18px;
+  border-top: 1px solid rgba(0,0,0,0.08);
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
@@ -1025,6 +1046,12 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   align-items: center;
   font-size: 0.78rem;
   color: var(--color-text-muted);
+  background: rgba(0,0,0,0.03);
+  margin-inline: -24px;
+  padding-inline: 24px;
+}
+@media (max-width: 749px) {
+  .site-footer__bottom { margin-inline: -16px; padding-inline: 16px; text-align: center; justify-content: center; }
 }
 
 @media (max-width: 1100px) {
