@@ -1,10 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero-banner",
-      "settings": {
-        "autoplay_seconds": 6
-      },
       "blocks": {
         "slide_1": {
           "type": "slide",
@@ -13,10 +19,11 @@
             "heading": "PENTECOSTES",
             "text": "Aprofunde sua fé com livros e devocionais selecionados.",
             "button_label": "Veja mais",
-            "background_color": "#1F2D4A",
-            "text_color": "#FFFFFF",
-            "button_bg": "#FFFFFF",
-            "button_color": "#1F2D4A"
+            "button_url": "",
+            "background_color": "#1f2d4a",
+            "text_color": "#ffffff",
+            "button_bg": "#ffffff",
+            "button_color": "#1f2d4a"
           }
         },
         "slide_2": {
@@ -26,10 +33,11 @@
             "heading": "FÉ EM FAMÍLIA",
             "text": "Conteúdos para você compartilhar com os seus.",
             "button_label": "Explorar",
-            "background_color": "#7A2F2F",
-            "text_color": "#FFFFFF",
-            "button_bg": "#FFFFFF",
-            "button_color": "#7A2F2F"
+            "button_url": "",
+            "background_color": "#7a2f2f",
+            "text_color": "#ffffff",
+            "button_bg": "#ffffff",
+            "button_color": "#7a2f2f"
           }
         },
         "slide_3": {
@@ -39,30 +47,82 @@
             "heading": "SANTOS DO MÊS",
             "text": "Conheça a vida e a obra dos santos da Igreja.",
             "button_label": "Descobrir",
-            "background_color": "#2A4234",
-            "text_color": "#FFFFFF",
-            "button_bg": "#FFFFFF",
-            "button_color": "#2A4234"
+            "button_url": "",
+            "background_color": "#2a4234",
+            "text_color": "#ffffff",
+            "button_bg": "#ffffff",
+            "button_color": "#2a4234"
           }
         }
       },
-      "block_order": ["slide_1", "slide_2", "slide_3"]
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {
+        "autoplay_seconds": 6
+      }
     },
     "categorias": {
       "type": "categories-grid",
-      "settings": {
-        "eyebrow": "Navegue por",
-        "heading": "Categorias"
-      },
       "blocks": {
-        "cat_biblias": { "type": "category", "settings": { "title": "Bíblias" } },
-        "cat_espiritualidade": { "type": "category", "settings": { "title": "Espiritualidade" } },
-        "cat_liturgia": { "type": "category", "settings": { "title": "Liturgia" } },
-        "cat_santos": { "type": "category", "settings": { "title": "Santos" } },
-        "cat_familia": { "type": "category", "settings": { "title": "Família" } },
-        "cat_infantil": { "type": "category", "settings": { "title": "Infantil" } },
-        "cat_devocionais": { "type": "category", "settings": { "title": "Devocionais" } },
-        "cat_presentes": { "type": "category", "settings": { "title": "Presentes" } }
+        "cat_biblias": {
+          "type": "category",
+          "settings": {
+            "title": "Bíblias",
+            "collection": ""
+          }
+        },
+        "cat_espiritualidade": {
+          "type": "category",
+          "settings": {
+            "title": "Espiritualidade",
+            "collection": ""
+          }
+        },
+        "cat_liturgia": {
+          "type": "category",
+          "settings": {
+            "title": "Liturgia",
+            "collection": ""
+          }
+        },
+        "cat_santos": {
+          "type": "category",
+          "settings": {
+            "title": "Santos",
+            "collection": ""
+          }
+        },
+        "cat_familia": {
+          "type": "category",
+          "settings": {
+            "title": "Família",
+            "collection": ""
+          }
+        },
+        "cat_infantil": {
+          "type": "category",
+          "settings": {
+            "title": "Infantil",
+            "collection": ""
+          }
+        },
+        "cat_devocionais": {
+          "type": "category",
+          "settings": {
+            "title": "Devocionais",
+            "collection": ""
+          }
+        },
+        "cat_presentes": {
+          "type": "category",
+          "settings": {
+            "title": "Presentes",
+            "collection": ""
+          }
+        }
       },
       "block_order": [
         "cat_biblias",
@@ -73,53 +133,100 @@
         "cat_infantil",
         "cat_devocionais",
         "cat_presentes"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Navegue por",
+        "heading": "Categorias"
+      }
     },
     "novidades": {
       "type": "featured-collection",
       "settings": {
         "heading": "Novidades da loja",
-        "products_to_show": 6,
+        "collection": "",
+        "products_to_show": 3,
         "show_view_all": true
       }
     },
     "fe_detalhe": {
       "type": "shorts-products",
+      "blocks": {
+        "item_1": {
+          "type": "shorts_item",
+          "settings": {
+            "youtube_id": "https://www.youtube.com/shorts/1y9Yp9WJWAQ",
+            "link": "shopify://products/biblia-sagrada-cnbb-exercito-de-deus-841942818",
+            "alt": "",
+            "product": "biblia-sagrada-cnbb-exercito-de-deus-841942818",
+            "label": ""
+          }
+        },
+        "item_2": {
+          "type": "shorts_item",
+          "settings": {
+            "youtube_id": "",
+            "link": "",
+            "alt": "",
+            "product": "",
+            "label": ""
+          }
+        },
+        "item_3": {
+          "type": "shorts_item",
+          "settings": {
+            "youtube_id": "",
+            "link": "",
+            "alt": "",
+            "product": "",
+            "label": ""
+          }
+        },
+        "item_4": {
+          "type": "shorts_item",
+          "settings": {
+            "youtube_id": "",
+            "link": "",
+            "alt": "",
+            "product": "",
+            "label": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ],
       "settings": {
         "heading": "Fé em cada detalhe",
         "columns": 4
-      },
-      "blocks": {
-        "item_1": { "type": "shorts_item" },
-        "item_2": { "type": "shorts_item" },
-        "item_3": { "type": "shorts_item" },
-        "item_4": { "type": "shorts_item" }
-      },
-      "block_order": ["item_1", "item_2", "item_3", "item_4"]
+      }
     },
     "presentear": {
       "type": "featured-collection",
       "settings": {
         "heading": "Para presentear a sua mãe",
+        "collection": "",
         "products_to_show": 6,
         "show_view_all": true
       }
     },
     "cta": {
       "type": "cta-banner",
-      "settings": {
-        "autoplay_seconds": 7
-      },
       "blocks": {
         "cta_slide_1": {
           "type": "slide",
           "settings": {
+            "eyebrow": "",
             "heading": "Um combo para explicar a fé católica às crianças",
+            "text": "",
             "button_label": "Garantir",
-            "background_color": "#DCE9F1",
-            "text_color": "#1A1A1A",
-            "button_bg": "#1F4E78",
-            "button_color": "#FFFFFF"
+            "button_url": "",
+            "background_color": "#dce9f1",
+            "text_color": "#1a1a1a",
+            "button_bg": "#1f4e78",
+            "button_color": "#ffffff"
           }
         },
         "cta_slide_2": {
@@ -127,20 +234,29 @@
           "settings": {
             "eyebrow": "Oferta da semana",
             "heading": "Kits especiais para Pentecostes",
+            "text": "",
             "button_label": "Conferir",
-            "background_color": "#F3E0C8",
-            "text_color": "#1A1A1A",
-            "button_bg": "#7A2F2F",
-            "button_color": "#FFFFFF"
+            "button_url": "",
+            "background_color": "#f3e0c8",
+            "text_color": "#1a1a1a",
+            "button_bg": "#7a2f2f",
+            "button_color": "#ffffff"
           }
         }
       },
-      "block_order": ["cta_slide_1", "cta_slide_2"]
+      "block_order": [
+        "cta_slide_1",
+        "cta_slide_2"
+      ],
+      "settings": {
+        "autoplay_seconds": 7
+      }
     },
     "bibliotequinha": {
       "type": "featured-collection",
       "settings": {
         "heading": "Acabaram de chegar na Bibliotequinha",
+        "collection": "",
         "products_to_show": 6,
         "show_view_all": true
       }
@@ -149,6 +265,7 @@
       "type": "featured-collection",
       "settings": {
         "heading": "Favoritos dos leitores",
+        "collection": "",
         "products_to_show": 6,
         "show_view_all": true
       }
