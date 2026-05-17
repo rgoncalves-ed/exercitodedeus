@@ -1,0 +1,84 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "O que você procura hoje?",
+      "title": "Buscar",
+      "no_results_html": "Nenhum resultado para “{{ terms }}”.",
+      "results_for_html": "Resultados para “{{ terms }}”"
+    },
+    "404": {
+      "title": "Página não encontrada",
+      "subtext": "A página que você procura não existe.",
+      "link": "Voltar para a loja"
+    },
+    "newsletter_form": {
+      "newsletter_email": "E-mail",
+      "submit": "Inscrever-se",
+      "confirmation": "Obrigado! Inscrição confirmada."
+    },
+    "social": {
+      "alt_text": {
+        "share_on_facebook": "Compartilhar no Facebook",
+        "share_on_twitter": "Compartilhar no Twitter",
+        "share_on_pinterest": "Compartilhar no Pinterest"
+      }
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Próxima",
+      "page": "Página"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Adicionar ao carrinho",
+      "sold_out": "Esgotado",
+      "unavailable": "Indisponível",
+      "quantity": "Quantidade",
+      "from_lowest_price_html": "A partir de {{ lowest_price }}"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Seu carrinho",
+      "empty": "Seu carrinho está vazio.",
+      "continue_browsing": "Continuar comprando",
+      "subtotal": "Subtotal",
+      "checkout": "Finalizar compra",
+      "update": "Atualizar"
+    }
+  },
+  "customer": {
+    "login_page": {
+      "title": "Entrar",
+      "email": "E-mail",
+      "password": "Senha",
+      "sign_in": "Entrar",
+      "no_account": "Ainda não tem conta?",
+      "create_account": "Criar conta"
+    },
+    "register": {
+      "title": "Criar conta",
+      "first_name": "Nome",
+      "last_name": "Sobrenome",
+      "email": "E-mail",
+      "password": "Senha",
+      "submit": "Cadastrar",
+      "has_account": "Já tem conta?",
+      "sign_in": "Entrar"
+    },
+    "account": {
+      "title": "Minha conta",
+      "details": "Detalhes da conta",
+      "view_addresses": "Ver endereços",
+      "logout": "Sair"
+    },
+    "orders": {
+      "title": "Pedidos",
+      "order_number": "Pedido",
+      "date": "Data",
+      "total": "Total",
+      "none": "Você ainda não fez nenhum pedido."
+    }
+  }
+}

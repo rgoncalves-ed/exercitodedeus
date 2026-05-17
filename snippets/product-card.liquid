@@ -1,0 +1,51 @@
+{%- liquid
+  assign card_ratio = settings.card_image_ratio | default: 'portrait'
+  assign on_sale = false
+  assign discount_pct = 0
+  if product.compare_at_price > product.price
+    assign on_sale = true
+    assign discount_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+-%}
+
+<div class="product-card">
+  <a href="{{ product.url }}" class="product-card__media product-card__media--{{ card_ratio }}">
+    {%- if product.featured_image -%}
+      <img src="{{ product.featured_image | image_url: width: 500 }}"
+           alt="{{ product.featured_image.alt | default: product.title | escape }}"
+           loading="lazy"
+           width="500"
+           height="{{ 500 | divided_by: product.featured_image.aspect_ratio | round }}">
+    {%- endif -%}
+  </a>
+
+  <div class="product-card__body">
+    <a href="{{ product.url }}" class="product-card__title-link">
+      <h3 class="product-card__title">{{ product.title }}</h3>
+    </a>
+
+    <div class="product-card__price">
+      {%- if on_sale -%}
+        <span class="price__compare">{{ product.compare_at_price | money }}</span>
+      {%- endif -%}
+      <span class="price__final">{{ product.price | money }}</span>
+      {%- if on_sale -%}
+        <span class="price__discount">{{ discount_pct }}% off</span>
+      {%- endif -%}
+    </div>
+
+    <div class="product-card__buttons">
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="product-card__buy"
+                {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          {% if product.selected_or_first_available_variant.available %}Comprar{% else %}Esgotado{% endif %}
+        </button>
+      </form>
+      <a href="{{ product.url }}" class="product-card__details">
+        Ver detalhes
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+{
+  "type": "header",
+  "name": "Cabeçalho",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Frete grátis acima de R$ 199 • Parcelamos em até 12x"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {}
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

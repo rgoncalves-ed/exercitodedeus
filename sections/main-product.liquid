@@ -1,0 +1,146 @@
+<section class="page-width product-page">
+  <div class="product" data-product-section>
+    <div class="product__gallery">
+      {%- if product.images.size > 1 -%}
+        <div class="product__thumbs">
+          {%- for image in product.images -%}
+            <button type="button" class="product__thumb {% if forloop.first %}is-active{% endif %}"
+                    data-thumb data-full="{{ image | image_url: width: 800 }}">
+              <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | escape }}" loading="lazy">
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="product__main-image">
+        {%- if product.featured_image -%}
+          <img src="{{ product.featured_image | image_url: width: 700 }}"
+               alt="{{ product.featured_image.alt | escape }}"
+               data-main-image>
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'product__placeholder' }}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="product__info">
+      <div class="product__top-row">
+        {%- if product.vendor != blank -%}
+          <p class="product__vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+        <span class="product-card__icon-circle" aria-hidden="true">{% render 'icon-book' %}</span>
+      </div>
+
+      <h1 class="product__title">{{ product.title }}</h1>
+
+      {%- if product.description != blank -%}
+        <div class="product__short-description">{{ product.description | strip_html | truncatewords: 50 }}</div>
+      {%- endif -%}
+
+      <div class="product__price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="price__compare">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+        <span class="price__final">{{ product.price | money }}</span>
+        {%- if product.compare_at_price > product.price -%}
+          {%- assign discount_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+          <span class="price__discount">{{ discount_pct }}% off</span>
+        {%- endif -%}
+        <span class="price__installments">ou em até 12x de {{ product.price | divided_by: 12 | money }}</span>
+      </div>
+
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="product__form" data-product-form>
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="product-option">
+              <label for="Option-{{ forloop.index }}"><strong>{{ option.name }}</strong></label>
+              <select id="Option-{{ forloop.index }}" name="options[{{ option.name }}]">
+                {%- for value in option.values -%}
+                  <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        <button type="submit"
+                class="btn btn--primary btn--block btn--pill product__buy"
+                {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          {% if product.selected_or_first_available_variant.available %}
+            Comprar
+          {% else %}
+            Esgotado
+          {% endif %}
+        </button>
+      </form>
+
+      <button type="button" class="product__share">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+        Compartilhar
+      </button>
+    </div>
+  </div>
+
+  {%- if product.description != blank or product.metafields.specs.list != blank -%}
+    <div class="product-details">
+      <div class="product-details__column">
+        <h2 class="product-details__heading">Sobre</h2>
+        <div class="product-details__text">
+          {{ product.description }}
+        </div>
+      </div>
+
+      <div class="product-details__column">
+        <h2 class="product-details__heading">Itens / Especificações</h2>
+        <dl class="product-details__specs">
+          <dt>Título:</dt><dd>{{ product.title }}</dd>
+          {%- if product.vendor != blank -%}
+            <dt>Editora:</dt><dd>{{ product.vendor }}</dd>
+          {%- endif -%}
+          {%- if product.type != blank -%}
+            <dt>Tipo:</dt><dd>{{ product.type }}</dd>
+          {%- endif -%}
+        </dl>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="product-faq">
+      <h2 class="product-faq__heading">Perguntas frequentes</h2>
+      <div class="product-faq__list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' -%}
+            <details class="product-faq__item" {{ block.shopify_attributes }}>
+              <summary>
+                <span>{{ block.settings.question }}</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </summary>
+              <div class="product-faq__answer">{{ block.settings.answer }}</div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Produto",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Pergunta frequente",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pergunta" },
+        { "type": "richtext", "id": "answer", "label": "Resposta" }
+      ]
+    }
+  ],
+  "max_blocks": 10
+}
+{% endschema %}

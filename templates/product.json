@@ -1,0 +1,41 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "faq-1": {
+          "type": "faq",
+          "settings": {
+            "question": "Para quem este livro é indicado?",
+            "answer": "<p>Este livro é indicado para quem deseja aprofundar sua fé e espiritualidade.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "faq",
+          "settings": {
+            "question": "O conteúdo é teórico ou prático?",
+            "answer": "<p>Combina ensinamentos sólidos com aplicações práticas para o dia a dia da vida cristã.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq",
+          "settings": {
+            "question": "Como recebo o livro?",
+            "answer": "<p>Enviamos para todo o Brasil pelos Correios e transportadoras parceiras.</p>"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3"],
+      "settings": {}
+    },
+    "featured-related": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Você também pode gostar",
+        "products_to_show": 6,
+        "show_view_all": false
+      }
+    }
+  },
+  "order": ["main", "featured-related"]
+}

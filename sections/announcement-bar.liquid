@@ -1,0 +1,21 @@
+{%- if section.settings.text != blank -%}
+  <div class="announcement-bar" role="region" aria-label="Anúncio">
+    <div class="page-width">
+      {{ section.settings.text }}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Barra de anúncio",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Texto",
+      "default": "Frete grátis acima de R$ 199 • Parcelamos em até 12x"
+    }
+  ]
+}
+{% endschema %}

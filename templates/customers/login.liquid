@@ -1,0 +1,16 @@
+<section class="page-width section" style="max-width: 480px; margin: 0 auto;">
+  <h1 style="text-align: center;">Entrar</h1>
+
+  {% form 'customer_login' %}
+    {{ form.errors | default_errors }}
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <input type="email" name="customer[email]" placeholder="E-mail" required>
+      <input type="password" name="customer[password]" placeholder="Senha" required>
+      <button type="submit" class="btn btn--primary btn--block">Entrar</button>
+    </div>
+  {% endform %}
+
+  <p style="text-align: center; margin-top: 20px;">
+    Ainda não tem conta? <a href="{{ routes.account_register_url }}">Cadastre-se</a>
+  </p>
+</section>

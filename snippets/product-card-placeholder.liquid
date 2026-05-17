@@ -1,0 +1,11 @@
+<div class="product-card">
+  <div class="product-card__media product-card__media--{{ settings.card_image_ratio | default: 'portrait' }}">
+    {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+  </div>
+  <div class="product-card__body">
+    <h3 class="product-card__title">Produto de exemplo</h3>
+    <div class="product-card__price">
+      <span class="price__final">R$ 0,00</span>
+    </div>
+  </div>
+</div>

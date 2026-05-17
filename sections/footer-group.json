@@ -1,0 +1,18 @@
+{
+  "type": "footer",
+  "name": "Rodapé",
+  "sections": {
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Receba nossas novidades",
+        "subheading": "Lançamentos, promoções e conteúdo exclusivo direto no seu e-mail."
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": ["newsletter", "footer"]
+}

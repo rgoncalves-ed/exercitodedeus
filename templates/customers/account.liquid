@@ -1,0 +1,43 @@
+<section class="page-width section">
+  <h1>Olá, {{ customer.first_name }}</h1>
+  <p class="muted">Bem-vindo de volta à sua conta.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px;">
+    <div>
+      <h2>Pedidos recentes</h2>
+      {%- if customer.orders.size > 0 -%}
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <th style="text-align: left; padding: 12px 0;">Pedido</th>
+              <th style="text-align: left; padding: 12px 0;">Data</th>
+              <th style="text-align: left; padding: 12px 0;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for order in customer.orders -%}
+              <tr style="border-bottom: 1px solid var(--color-border);">
+                <td style="padding: 12px 0;"><a href="{{ order.customer_url }}">#{{ order.name }}</a></td>
+                <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>
+                <td>{{ order.total_price | money }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      {%- else -%}
+        <p class="muted">Você ainda não fez nenhum pedido.</p>
+      {%- endif -%}
+    </div>
+
+    <div>
+      <h2>Endereço padrão</h2>
+      {%- if customer.default_address -%}
+        <p>{{ customer.default_address | format_address }}</p>
+      {%- else -%}
+        <p class="muted">Nenhum endereço cadastrado.</p>
+      {%- endif -%}
+      <p><a href="{{ routes.account_addresses_url }}" class="btn btn--outline">Gerenciar endereços</a></p>
+      <p><a href="{{ routes.account_logout_url }}" class="muted">Sair</a></p>
+    </div>
+  </div>
+</section>

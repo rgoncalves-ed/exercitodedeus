@@ -1,0 +1,164 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Exército de Deus",
+    "theme_version": "1.0.0",
+    "theme_author": "Raphael",
+    "theme_documentation_url": "https://shopify.dev/themes",
+    "theme_support_url": "https://help.shopify.com"
+  },
+  {
+    "name": "Cores",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Cores principais"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Cor primária (acento)",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Cor de destaque (links, ofertas)",
+        "default": "#B91C1C"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Fundo da página",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Fundo de seções alternadas",
+        "default": "#F8F8F8"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Cor do texto",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "Texto secundário",
+        "default": "#6B6B6B"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Bordas",
+        "default": "#E5E5E5"
+      }
+    ]
+  },
+  {
+    "name": "Tipografia",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "Fonte dos títulos",
+        "default": "inter_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Fonte do corpo",
+        "default": "inter_n4"
+      },
+      {
+        "type": "range",
+        "id": "type_body_size",
+        "label": "Tamanho base do texto",
+        "min": 14,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "default": 15
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "layout_page_width",
+        "label": "Largura máxima do conteúdo",
+        "min": 1200,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1280
+      },
+      {
+        "type": "range",
+        "id": "layout_spacing_sections",
+        "label": "Espaço entre seções",
+        "min": 24,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "default": 80
+      }
+    ]
+  },
+  {
+    "name": "Cartões de produto",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "Proporção da imagem",
+        "options": [
+          { "value": "portrait", "label": "Retrato (livros)" },
+          { "value": "square", "label": "Quadrado" },
+          { "value": "natural", "label": "Original" }
+        ],
+        "default": "portrait"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_vendor",
+        "label": "Mostrar editora/autor",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Redes sociais",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "default": "https://instagram.com/"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook",
+        "default": "https://facebook.com/"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_whatsapp",
+        "label": "WhatsApp (número com DDI, ex: 5551999999999)",
+        "default": ""
+      }
+    ]
+  }
+]

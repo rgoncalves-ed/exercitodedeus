@@ -1,0 +1,50 @@
+{%- assign featured_collection = collections[section.settings.collection] -%}
+<section class="section">
+  <div class="page-width">
+    <div class="section-heading section-heading--simple">
+      <h2 class="section-heading__title">{{ section.settings.heading | default: featured_collection.title }}</h2>
+      {%- if section.settings.show_view_all and featured_collection != blank -%}
+        <a href="{{ featured_collection.url }}" class="section-heading__link">Ver todos</a>
+      {%- endif -%}
+    </div>
+
+    {%- assign products_to_show = featured_collection.products | default: collections.all.products -%}
+    <div class="product-grid product-grid--3">
+      {%- for product in products_to_show limit: section.settings.products_to_show -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_to_show) -%}
+          {% render 'product-card-placeholder' %}
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Coleção em destaque",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Novidades da loja" },
+    { "type": "collection", "id": "collection", "label": "Coleção" },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "label": "Quantidade de produtos",
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Mostrar link 'ver todos'",
+      "default": true
+    }
+  ],
+  "presets": [
+    { "name": "Coleção em destaque" }
+  ]
+}
+{% endschema %}

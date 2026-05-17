@@ -1,0 +1,193 @@
+{%- comment -%}
+  Seção "Shorts + Produto" — grade horizontal de blocos onde cada bloco é:
+  - Um YouTube Shorts (ou imagem estática) no topo (formato vertical 9:16)
+  - Um card pequeno com o produto vinculado embaixo (foto + nome + preço + botão comprar)
+
+  Inspirado na seção "FÉ EM CADA DETALHE" da Biblioteca Católica.
+{%- endcomment -%}
+
+{%- assign block_count = section.blocks.size -%}
+
+<section class="section shorts-section">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <div class="section-heading shorts-section__heading">
+        <h2 class="section-heading__title">{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="shorts-grid" data-cols="{{ section.settings.columns | default: 4 }}">
+      {%- for block in section.blocks -%}
+        {%- assign product = all_products[block.settings.product] -%}
+        {%- assign video_id = block.settings.youtube_id | strip -%}
+
+        {%- comment -%} Aceita URL completa ou só o ID {%- endcomment -%}
+        {%- if video_id contains 'youtube.com/shorts/' -%}
+          {%- assign video_id = video_id | split: '/shorts/' | last | split: '?' | first -%}
+        {%- elsif video_id contains 'youtu.be/' -%}
+          {%- assign video_id = video_id | split: 'youtu.be/' | last | split: '?' | first -%}
+        {%- elsif video_id contains 'youtube.com/watch?v=' -%}
+          {%- assign video_id = video_id | split: 'watch?v=' | last | split: '&' | first -%}
+        {%- endif -%}
+
+        <div class="shorts-item" {{ block.shopify_attributes }}>
+          <div class="shorts-item__media">
+            {%- if video_id != blank -%}
+              <div class="shorts-item__video"
+                   data-shorts-video
+                   data-video-id="{{ video_id }}"
+                   role="button"
+                   tabindex="0"
+                   aria-label="Reproduzir vídeo">
+                <img class="shorts-item__thumb"
+                     src="https://i.ytimg.com/vi/{{ video_id }}/hqdefault.jpg"
+                     alt="{{ block.settings.alt | default: product.title | default: 'Vídeo' | escape }}"
+                     loading="lazy"
+                     width="360"
+                     height="640">
+                <span class="shorts-item__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+              </div>
+            {%- elsif block.settings.image -%}
+              {%- if block.settings.link != blank or product != blank -%}
+                <a href="{{ block.settings.link | default: product.url }}" class="shorts-item__image-link">
+                  <img class="shorts-item__thumb"
+                       src="{{ block.settings.image | image_url: width: 720 }}"
+                       alt="{{ block.settings.alt | default: product.title | escape }}"
+                       loading="lazy">
+                </a>
+              {%- else -%}
+                <img class="shorts-item__thumb"
+                     src="{{ block.settings.image | image_url: width: 720 }}"
+                     alt="{{ block.settings.alt | escape }}"
+                     loading="lazy">
+              {%- endif -%}
+            {%- else -%}
+              <div class="shorts-item__placeholder">
+                {% render 'icon-youtube' %}
+                <span>Adicione um vídeo ou imagem</span>
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if product != blank -%}
+            <div class="shorts-item__product">
+              <a href="{{ product.url }}" class="shorts-item__product-thumb">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 160 }}"
+                       alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                       loading="lazy"
+                       width="60"
+                       height="60">
+                {%- endif -%}
+              </a>
+              <div class="shorts-item__product-info">
+                <a href="{{ product.url }}" class="shorts-item__product-title">{{ product.title }}</a>
+                <span class="shorts-item__product-price">{{ product.price | money }}</span>
+              </div>
+              <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="shorts-item__buy-form">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button type="submit"
+                        class="shorts-item__buy"
+                        aria-label="Adicionar {{ product.title | escape }} ao carrinho"
+                        {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+                  {% render 'icon-bag' %}
+                  <span class="shorts-item__buy-plus" aria-hidden="true">+</span>
+                </button>
+              </form>
+            </div>
+          {%- elsif block.settings.label != blank -%}
+            <div class="shorts-item__product shorts-item__product--placeholder">
+              <span class="shorts-item__product-title">{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <p class="muted">Adicione blocos com vídeos e produtos para preencher esta seção.</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shorts + Produto",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título da seção",
+      "default": "Fé em cada detalhe"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Colunas no desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "shorts_item",
+      "name": "Vídeo + Produto",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Mídia (vídeo OU imagem)"
+        },
+        {
+          "type": "text",
+          "id": "youtube_id",
+          "label": "ID ou URL do YouTube Shorts",
+          "info": "Cole a URL completa (ex: https://youtube.com/shorts/AbC123) ou apenas o ID (AbC123). Deixe vazio para usar uma imagem."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem (usada se não houver vídeo)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link da imagem (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Texto alternativo"
+        },
+        {
+          "type": "header",
+          "content": "Produto vinculado"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produto para compra"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto alternativo (se não houver produto)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Fé em cada detalhe",
+      "blocks": [
+        { "type": "shorts_item" },
+        { "type": "shorts_item" },
+        { "type": "shorts_item" },
+        { "type": "shorts_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

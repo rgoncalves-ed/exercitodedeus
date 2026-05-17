@@ -1,0 +1,63 @@
+<div class="cart-overlay" data-cart-overlay hidden></div>
+
+<aside class="cart-drawer" id="CartDrawer" data-cart-drawer aria-hidden="true" tabindex="-1">
+  <header class="cart-drawer__header">
+    <button type="button" class="cart-drawer__close" data-cart-close aria-label="Fechar carrinho">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h2 class="cart-drawer__title">Carrinho</h2>
+    <button type="button" class="cart-drawer__clear" data-cart-clear>Limpar carrinho</button>
+  </header>
+
+  <div class="cart-drawer__body">
+    <div class="cart-drawer__items" data-cart-items>
+      {% if cart.item_count > 0 %}
+        {% for item in cart.items %}
+          <div class="cart-item" data-cart-item data-line-key="{{ item.key }}">
+            {% if item.image %}
+              <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" class="cart-item__image">
+            {% endif %}
+            <div class="cart-item__info">
+              <h4 class="cart-item__title">{{ item.product.title }}</h4>
+              <div class="cart-item__price">{{ item.final_price | money }}</div>
+              <div class="cart-item__qty">
+                <button type="button" data-line-decrease aria-label="Diminuir">−</button>
+                <input type="number" value="{{ item.quantity }}" min="0" data-line-qty>
+                <button type="button" data-line-increase aria-label="Aumentar">+</button>
+              </div>
+            </div>
+            <button type="button" class="cart-item__remove" data-line-remove aria-label="Remover">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+            </button>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="cart-drawer__empty" data-cart-empty>Seu carrinho está vazio.</p>
+      {% endif %}
+    </div>
+
+    <div class="cart-drawer__shipping" data-cart-shipping {% if cart.item_count == 0 %}hidden{% endif %}>
+      <h3 class="cart-drawer__heading">Entrega</h3>
+      <form class="cart-drawer__cep" data-cep-form>
+        <input type="text" placeholder="CEP" inputmode="numeric" maxlength="9" data-cep-input>
+        <button type="button" class="cart-drawer__cep-btn">Calcular</button>
+      </form>
+      <div class="cart-drawer__shipping-result" data-cep-result hidden></div>
+    </div>
+  </div>
+
+  <footer class="cart-drawer__footer" data-cart-footer {% if cart.item_count == 0 %}hidden{% endif %}>
+    <div class="cart-drawer__totals">
+      <div class="cart-drawer__row">
+        <span>Subtotal</span>
+        <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+      </div>
+      <div class="cart-drawer__row cart-drawer__row--total">
+        <span>Total</span>
+        <span data-cart-total>{{ cart.total_price | money }}</span>
+      </div>
+    </div>
+    <a href="/checkout" class="btn cart-drawer__checkout">Finalizar compra</a>
+    <button type="button" class="btn btn--outline cart-drawer__continue" data-cart-close>Continuar comprando</button>
+  </footer>
+</aside>

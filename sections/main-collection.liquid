@@ -1,0 +1,55 @@
+<section class="collection-banner">
+  <div class="page-width">
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="muted" style="max-width: 640px; margin: 0 auto;">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+<section class="page-width">
+  <div class="collection-toolbar">
+    <div class="collection-toolbar__count">{{ collection.products_count }} produtos</div>
+    <form>
+      <label for="SortBy" class="visually-hidden">Ordenar por</label>
+      <select name="sort_by" id="SortBy" onchange="this.form.submit()">
+        {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+        <option value="manual" {% if current_sort == 'manual' %}selected{% endif %}>Em destaque</option>
+        <option value="best-selling" {% if current_sort == 'best-selling' %}selected{% endif %}>Mais vendidos</option>
+        <option value="price-ascending" {% if current_sort == 'price-ascending' %}selected{% endif %}>Menor preço</option>
+        <option value="price-descending" {% if current_sort == 'price-descending' %}selected{% endif %}>Maior preço</option>
+        <option value="created-descending" {% if current_sort == 'created-descending' %}selected{% endif %}>Mais novos</option>
+        <option value="title-ascending" {% if current_sort == 'title-ascending' %}selected{% endif %}>A–Z</option>
+      </select>
+    </form>
+  </div>
+
+  {%- paginate collection.products by 24 -%}
+    <div class="product-grid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p>Nenhum produto encontrado.</p>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" style="margin-top: 40px; text-align: center;">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" class="btn btn--outline">Anterior</a>
+        {%- endif -%}
+        <span class="muted" style="margin: 0 12px;">Página {{ paginate.current_page }} de {{ paginate.pages }}</span>
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="btn btn--outline">Próxima</a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "Coleção",
+  "settings": []
+}
+{% endschema %}

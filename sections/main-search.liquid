@@ -1,0 +1,35 @@
+<section class="collection-banner">
+  <div class="page-width">
+    <h1>Resultados para "{{ search.terms | escape }}"</h1>
+    <p class="muted">{{ search.results_count }} resultados encontrados</p>
+  </div>
+</section>
+
+<section class="page-width">
+  {%- paginate search.results by 24 -%}
+    <div class="product-grid">
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}
+          {% render 'product-card', product: item %}
+        {%- endif -%}
+      {%- else -%}
+        <p>Nenhum produto encontrado para sua busca.</p>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" style="margin-top: 40px; text-align: center;">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn--outline">Anterior</a>{%- endif -%}
+        <span class="muted" style="margin: 0 12px;">Página {{ paginate.current_page }} de {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn--outline">Próxima</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "Busca",
+  "settings": []
+}
+{% endschema %}

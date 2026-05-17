@@ -1,0 +1,167 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "autoplay_seconds": 6
+      },
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Meditações para",
+            "heading": "PENTECOSTES",
+            "text": "Aprofunde sua fé com livros e devocionais selecionados.",
+            "button_label": "Veja mais",
+            "background_color": "#1F2D4A",
+            "text_color": "#FFFFFF",
+            "button_bg": "#FFFFFF",
+            "button_color": "#1F2D4A"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Novidades",
+            "heading": "FÉ EM FAMÍLIA",
+            "text": "Conteúdos para você compartilhar com os seus.",
+            "button_label": "Explorar",
+            "background_color": "#7A2F2F",
+            "text_color": "#FFFFFF",
+            "button_bg": "#FFFFFF",
+            "button_color": "#7A2F2F"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Coleção especial",
+            "heading": "SANTOS DO MÊS",
+            "text": "Conheça a vida e a obra dos santos da Igreja.",
+            "button_label": "Descobrir",
+            "background_color": "#2A4234",
+            "text_color": "#FFFFFF",
+            "button_bg": "#FFFFFF",
+            "button_color": "#2A4234"
+          }
+        }
+      },
+      "block_order": ["slide_1", "slide_2", "slide_3"]
+    },
+    "categorias": {
+      "type": "categories-grid",
+      "settings": {
+        "eyebrow": "Navegue por",
+        "heading": "Categorias"
+      },
+      "blocks": {
+        "cat_biblias": { "type": "category", "settings": { "title": "Bíblias" } },
+        "cat_espiritualidade": { "type": "category", "settings": { "title": "Espiritualidade" } },
+        "cat_liturgia": { "type": "category", "settings": { "title": "Liturgia" } },
+        "cat_santos": { "type": "category", "settings": { "title": "Santos" } },
+        "cat_familia": { "type": "category", "settings": { "title": "Família" } },
+        "cat_infantil": { "type": "category", "settings": { "title": "Infantil" } },
+        "cat_devocionais": { "type": "category", "settings": { "title": "Devocionais" } },
+        "cat_presentes": { "type": "category", "settings": { "title": "Presentes" } }
+      },
+      "block_order": [
+        "cat_biblias",
+        "cat_espiritualidade",
+        "cat_liturgia",
+        "cat_santos",
+        "cat_familia",
+        "cat_infantil",
+        "cat_devocionais",
+        "cat_presentes"
+      ]
+    },
+    "novidades": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Novidades da loja",
+        "products_to_show": 6,
+        "show_view_all": true
+      }
+    },
+    "fe_detalhe": {
+      "type": "shorts-products",
+      "settings": {
+        "heading": "Fé em cada detalhe",
+        "columns": 4
+      },
+      "blocks": {
+        "item_1": { "type": "shorts_item" },
+        "item_2": { "type": "shorts_item" },
+        "item_3": { "type": "shorts_item" },
+        "item_4": { "type": "shorts_item" }
+      },
+      "block_order": ["item_1", "item_2", "item_3", "item_4"]
+    },
+    "presentear": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Para presentear a sua mãe",
+        "products_to_show": 6,
+        "show_view_all": true
+      }
+    },
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "autoplay_seconds": 7
+      },
+      "blocks": {
+        "cta_slide_1": {
+          "type": "slide",
+          "settings": {
+            "heading": "Um combo para explicar a fé católica às crianças",
+            "button_label": "Garantir",
+            "background_color": "#DCE9F1",
+            "text_color": "#1A1A1A",
+            "button_bg": "#1F4E78",
+            "button_color": "#FFFFFF"
+          }
+        },
+        "cta_slide_2": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Oferta da semana",
+            "heading": "Kits especiais para Pentecostes",
+            "button_label": "Conferir",
+            "background_color": "#F3E0C8",
+            "text_color": "#1A1A1A",
+            "button_bg": "#7A2F2F",
+            "button_color": "#FFFFFF"
+          }
+        }
+      },
+      "block_order": ["cta_slide_1", "cta_slide_2"]
+    },
+    "bibliotequinha": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Acabaram de chegar na Bibliotequinha",
+        "products_to_show": 6,
+        "show_view_all": true
+      }
+    },
+    "favoritos": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Favoritos dos leitores",
+        "products_to_show": 6,
+        "show_view_all": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "categorias",
+    "novidades",
+    "fe_detalhe",
+    "presentear",
+    "cta",
+    "bibliotequinha",
+    "favoritos"
+  ]
+}

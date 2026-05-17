@@ -1,0 +1,67 @@
+<header class="site-header" role="banner">
+  <div class="page-width">
+    <div class="site-header__inner">
+      <a href="{{ routes.root_url }}" class="site-header__logo" aria-label="{{ shop.name }} - página inicial">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 240 | image_tag: alt: shop.name, loading: 'eager' }}
+        {%- else -%}
+          {{ shop.name }}
+        {%- endif -%}
+      </a>
+
+      {%- if section.settings.menu != blank -%}
+        <nav class="site-header__nav" aria-label="Menu principal">
+          {%- for link in section.settings.menu.links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+
+      <form action="{{ routes.search_url }}" method="get" class="site-header__search" role="search">
+        <input
+          type="search"
+          name="q"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          aria-label="{{ 'general.search.placeholder' | t }}">
+        <input type="hidden" name="type" value="product">
+        <button type="submit" aria-label="Buscar">{% render 'icon-search' %}</button>
+      </form>
+
+      <div class="site-header__actions">
+        <button type="button" class="header-action mobile-toggle" aria-label="Abrir menu" data-mobile-toggle>
+          {% render 'icon-menu' %}
+        </button>
+
+        <a href="#" class="header-action" aria-label="Favoritos">
+          {% render 'icon-heart' %}
+        </a>
+
+        <button type="button" class="header-action" aria-label="Carrinho" data-cart-open>
+          {% render 'icon-cart' %}
+          <span class="header-action__count" data-cart-count>{{ cart.item_count }}</span>
+        </button>
+
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header-action header-action--btn">
+            <span class="header-action__label">{% if customer %}Minha conta{% else %}Entrar{% endif %}</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Cabeçalho",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu inline (ao lado do logo)",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

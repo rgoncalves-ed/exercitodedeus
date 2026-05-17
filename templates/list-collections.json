@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "categories": {
+      "type": "categories-grid",
+      "settings": {
+        "eyebrow": "Catálogo",
+        "heading": "Todas as categorias"
+      }
+    }
+  },
+  "order": ["categories"]
+}

@@ -1,0 +1,16 @@
+.DS_Store
+Thumbs.db
+node_modules/
+.shopify/
+*.log
+.env
+.env.local
+
+# Build local / preview estático (não faz parte do tema)
+_preview/
+
+# Zips gerados localmente
+*.zip
+
+# Configuração local do Claude Code (máquina específica)
+.claude/settings.local.json

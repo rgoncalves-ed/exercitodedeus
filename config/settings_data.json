@@ -1,0 +1,36 @@
+{
+  "current": {
+    "color_primary": "#1A1A1A",
+    "color_accent": "#B91C1C",
+    "color_background": "#FFFFFF",
+    "color_surface": "#F8F8F8",
+    "color_text": "#1A1A1A",
+    "color_text_muted": "#6B6B6B",
+    "color_border": "#E5E5E5",
+    "type_heading_font": "inter_n7",
+    "type_body_font": "inter_n4",
+    "type_body_size": 15,
+    "layout_page_width": 1280,
+    "layout_spacing_sections": 80,
+    "card_image_ratio": "portrait",
+    "card_show_vendor": true,
+    "social_instagram": "https://instagram.com/",
+    "social_facebook": "https://facebook.com/",
+    "social_youtube": "",
+    "social_whatsapp": "",
+    "sections": {
+      "header": { "type": "header", "settings": {} },
+      "footer": { "type": "footer", "settings": {} }
+    },
+    "content_for_index": []
+  },
+  "presets": {
+    "Padrão": {
+      "color_primary": "#1A1A1A",
+      "color_accent": "#B91C1C",
+      "color_background": "#FFFFFF",
+      "color_surface": "#F8F8F8",
+      "color_text": "#1A1A1A"
+    }
+  }
+}

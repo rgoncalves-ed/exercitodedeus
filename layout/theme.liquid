@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="{{ settings.color_primary | default: '#1A1A1A' }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <title>
+      {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Página {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {{ content_for_header }}
+
+    {% style %}
+      :root {
+        --color-primary: {{ settings.color_primary | default: '#1A1A1A' }};
+        --color-accent: {{ settings.color_accent | default: '#B91C1C' }};
+        --color-background: {{ settings.color_background | default: '#FFFFFF' }};
+        --color-surface: {{ settings.color_surface | default: '#F8F8F8' }};
+        --color-text: {{ settings.color_text | default: '#1A1A1A' }};
+        --color-text-muted: {{ settings.color_text_muted | default: '#6B6B6B' }};
+        --color-border: {{ settings.color_border | default: '#E5E5E5' }};
+        --font-body: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --font-heading: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --font-body-size: {{ settings.type_body_size | default: 15 }}px;
+        --page-width: {{ settings.layout_page_width | default: 1280 }}px;
+        --section-spacing: {{ settings.layout_spacing_sections | default: 80 }}px;
+      }
+    {% endstyle %}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  </head>
+
+  <body class="template-{{ template | replace: '.', '-' | handle }}">
+    <a class="skip-to-content" href="#MainContent">Pular para o conteúdo</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="main" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {% render 'cart-drawer' %}
+  </body>
+</html>

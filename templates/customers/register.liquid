@@ -1,0 +1,18 @@
+<section class="page-width section" style="max-width: 480px; margin: 0 auto;">
+  <h1 style="text-align: center;">Criar conta</h1>
+
+  {% form 'create_customer' %}
+    {{ form.errors | default_errors }}
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <input type="text" name="customer[first_name]" placeholder="Nome" required>
+      <input type="text" name="customer[last_name]" placeholder="Sobrenome" required>
+      <input type="email" name="customer[email]" placeholder="E-mail" required>
+      <input type="password" name="customer[password]" placeholder="Senha" required>
+      <button type="submit" class="btn btn--primary btn--block">Cadastrar</button>
+    </div>
+  {% endform %}
+
+  <p style="text-align: center; margin-top: 20px;">
+    Já tem conta? <a href="{{ routes.account_login_url }}">Entrar</a>
+  </p>
+</section>
