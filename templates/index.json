@@ -236,15 +236,6 @@
         "autoplay_seconds": 7
       }
     },
-    "bibliotequinha": {
-      "type": "featured-collection",
-      "settings": {
-        "heading": "Acabaram de chegar na Bibliotequinha",
-        "collection": "",
-        "products_to_show": 6,
-        "show_view_all": true
-      }
-    },
     "favoritos": {
       "type": "featured-collection",
       "settings": {
@@ -262,7 +253,6 @@
     "fe_detalhe",
     "presentear",
     "cta",
-    "bibliotequinha",
     "favoritos"
   ]
 }
