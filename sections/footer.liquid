@@ -3,132 +3,141 @@
   assign email = section.settings.email
   assign phone = section.settings.phone
   assign cnpj = section.settings.cnpj
+  assign phone_clean = phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', ''
+  assign wa_number = settings.social_whatsapp | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-'
 -%}
 
 <footer class="site-footer" role="contentinfo">
   <div class="page-width">
-    <div class="site-footer__columns">
+    <div class="site-footer__top">
 
-      {%- comment -%} CONTATO {%- endcomment -%}
-      <div class="site-footer__column">
-        <h3 class="site-footer__heading">{{ section.settings.contact_heading | default: 'Contato' }}</h3>
-        <ul class="site-footer__list site-footer__contact">
+      {%- comment -%} 1. SOCIAL — coluna de ícones {%- endcomment -%}
+      <div class="site-footer__col site-footer__col--social">
+        <ul class="site-footer__socials" role="list" aria-label="Redes sociais">
+          {%- if settings.social_instagram != blank -%}
+            <li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon-instagram' %}</a></li>
+          {%- endif -%}
+          {%- if settings.social_facebook != blank -%}
+            <li><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon-facebook' %}</a></li>
+          {%- endif -%}
+          {%- if settings.social_tiktok != blank -%}
+            <li><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon-tiktok' %}</a></li>
+          {%- endif -%}
+          {%- if settings.social_whatsapp != blank -%}
+            <li><a href="https://wa.me/{{ wa_number }}" target="_blank" rel="noopener" aria-label="WhatsApp">{% render 'icon-whatsapp' %}</a></li>
+          {%- endif -%}
+          {%- if settings.social_youtube != blank -%}
+            <li><a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon-youtube' %}</a></li>
+          {%- endif -%}
+        </ul>
+
+        {%- if section.settings.show_security -%}
+          <div class="site-footer__security">
+            <h4 class="site-footer__heading">{{ section.settings.security_heading | default: 'Segurança' }}</h4>
+            {% render 'icon-security' %}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} 2. INSTITUCIONAL {%- endcomment -%}
+      <div class="site-footer__col">
+        <h4 class="site-footer__heading">{{ section.settings.col1_heading | default: 'Institucional' }}</h4>
+        <ul class="site-footer__links" role="list">
+          {%- if section.settings.col1_menu != blank -%}
+            {%- for link in section.settings.col1_menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            <li><a href="/pages/quem-somos">Quem somos?</a></li>
+            <li><a href="/pages/fale-conosco">Fale conosco</a></li>
+            <li><a href="/pages/nossas-lojas">Nossas Lojas</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      {%- comment -%} 3. INFORMAÇÕES {%- endcomment -%}
+      <div class="site-footer__col">
+        <h4 class="site-footer__heading">{{ section.settings.col2_heading | default: 'Informações' }}</h4>
+        <ul class="site-footer__links" role="list">
+          {%- if section.settings.col2_menu != blank -%}
+            {%- for link in section.settings.col2_menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            <li><a href="/policies/refund-policy">Política de troca</a></li>
+            <li><a href="/policies/privacy-policy">Política de privacidade</a></li>
+            <li><a href="/policies/shipping-policy">Política de entrega</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      {%- comment -%} 4. MINHA CONTA {%- endcomment -%}
+      <div class="site-footer__col">
+        <h4 class="site-footer__heading">{{ section.settings.col3_heading | default: 'Minha conta' }}</h4>
+        <ul class="site-footer__links" role="list">
+          {%- if section.settings.col3_menu != blank -%}
+            {%- for link in section.settings.col3_menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            <li><a href="{{ routes.account_register_url }}">Cadastre-se</a></li>
+            <li><a href="{{ routes.account_url }}">Minha conta</a></li>
+            <li><a href="{{ routes.account_url }}#orders">Meus pedidos</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      {%- comment -%} 5. ATENDIMENTO {%- endcomment -%}
+      <div class="site-footer__col">
+        <h4 class="site-footer__heading">{{ section.settings.contact_heading | default: 'Atendimento' }}</h4>
+        <ul class="site-footer__contact" role="list">
+          {%- if phone != blank -%}
+            <li>
+              <a href="https://wa.me/{{ wa_number | default: phone_clean }}" class="site-footer__contact-row" target="_blank" rel="noopener">
+                <span class="site-footer__contact-icon">{% render 'icon-whatsapp' %}</span>
+                <span>{{ phone }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if email != blank -%}
+            <li>
+              <a href="mailto:{{ email }}" class="site-footer__contact-row">
+                <span class="site-footer__contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+                </span>
+                <span>{{ email }}</span>
+              </a>
+            </li>
+          {%- endif -%}
           {%- if address != blank -%}
-            <li class="site-footer__contact-item">
-              <span class="site-footer__contact-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
-              </span>
-              <div>
-                <strong class="site-footer__contact-label">Endereço</strong>
+            <li>
+              <div class="site-footer__contact-row">
+                <span class="site-footer__contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </span>
                 <span>{{ address }}</span>
               </div>
             </li>
           {%- endif -%}
-          {%- if email != blank -%}
-            <li class="site-footer__contact-item">
-              <span class="site-footer__contact-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8"/><path d="M3 8l9 6 9-6"/><path d="M3 8a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4"/></svg>
-              </span>
-              <div>
-                <strong class="site-footer__contact-label">E-mail</strong>
-                <a href="mailto:{{ email }}">{{ email }}</a>
-              </div>
-            </li>
-          {%- endif -%}
-          {%- if phone != blank -%}
-            {%- assign phone_clean = phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' -%}
-            <li class="site-footer__contact-item">
-              <span class="site-footer__contact-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </span>
-              <div>
-                <strong class="site-footer__contact-label">Telefone</strong>
-                <a href="tel:{{ phone_clean }}">{{ phone }}</a>
-              </div>
-            </li>
-          {%- endif -%}
         </ul>
       </div>
 
-      {%- comment -%} MINHA CONTA {%- endcomment -%}
-      <div class="site-footer__column">
-        <h3 class="site-footer__heading">{{ section.settings.account_heading | default: 'Minha conta' }}</h3>
-        <ul class="site-footer__list site-footer__bullets">
-          {%- if section.settings.account_menu != blank -%}
-            {%- for link in section.settings.account_menu.links -%}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {%- endfor -%}
-          {%- else -%}
-            <li><a href="{{ routes.account_login_url }}">LOGIN</a></li>
-            <li><a href="{{ routes.account_url }}">MINHA CONTA</a></li>
-            <li><a href="{{ routes.account_url }}#orders">ACOMPANHAR PEDIDO</a></li>
-            <li><a href="{{ routes.cart_url }}">CARRINHO</a></li>
-            <li><a href="#">LISTA DE DESEJO</a></li>
-            <li><a href="/pages/quem-somos">QUEM SOMOS</a></li>
-            <li><a href="/pages/contato">CONTATO</a></li>
-          {%- endif -%}
-        </ul>
+      {%- comment -%} 6. PAGAMENTO {%- endcomment -%}
+      <div class="site-footer__col site-footer__col--payments">
+        <h4 class="site-footer__heading">{{ section.settings.payment_heading | default: 'Formas de pagamento' }}</h4>
+        {% render 'payment-icons' %}
       </div>
-
-      {%- comment -%} PAGAMENTO E ENVIO {%- endcomment -%}
-      <div class="site-footer__column">
-        <h3 class="site-footer__heading">{{ section.settings.payment_heading | default: 'Pagamento e envio' }}</h3>
-        <ul class="site-footer__list site-footer__bullets">
-          {%- if section.settings.payment_menu != blank -%}
-            {%- for link in section.settings.payment_menu.links -%}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {%- endfor -%}
-          {%- else -%}
-            <li><a href="/policies/privacy-policy">POLÍTICA E PRIVACIDADE</a></li>
-            <li><a href="/policies/terms-of-service">TERMOS DE USO</a></li>
-            <li><a href="/policies/refund-policy">TROCAS E DEVOLUÇÕES</a></li>
-            <li><a href="/pages/formas-de-pagamento">FORMAS DE PAGAMENTO</a></li>
-            <li><a href="/policies/shipping-policy">POLÍTICA DE ENTREGA</a></li>
-          {%- endif -%}
-        </ul>
-      </div>
-
-      {%- comment -%} REDES SOCIAIS (também aparecem no topo, repetidas aqui pra acessibilidade) {%- endcomment -%}
-      {%- if section.settings.show_social -%}
-        <div class="site-footer__column">
-          <h3 class="site-footer__heading">{{ section.settings.social_heading | default: 'Siga-nos' }}</h3>
-          {%- if section.settings.social_text != blank -%}
-            <p class="site-footer__list">{{ section.settings.social_text }}</p>
-          {%- endif -%}
-          <div class="site-footer__social">
-            {%- if settings.social_instagram != blank -%}
-              <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon-instagram' %}</a>
-            {%- endif -%}
-            {%- if settings.social_facebook != blank -%}
-              <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon-facebook' %}</a>
-            {%- endif -%}
-            {%- if settings.social_youtube != blank -%}
-              <a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon-youtube' %}</a>
-            {%- endif -%}
-            {%- if settings.social_whatsapp != blank -%}
-              {%- assign wa_number = settings.social_whatsapp | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-' -%}
-              <a href="https://wa.me/{{ wa_number }}" target="_blank" rel="noopener" aria-label="WhatsApp">{% render 'icon-whatsapp' %}</a>
-            {%- endif -%}
-          </div>
-        </div>
-      {%- endif -%}
     </div>
 
     <div class="site-footer__bottom">
-      <div>
+      <div class="site-footer__legal">
         © {{ 'now' | date: '%Y' }} {{ section.settings.legal_name | default: shop.name }}.
         {%- if cnpj != blank %} CNPJ: {{ cnpj }}.{% endif %}
         Todos os direitos reservados.
         {%- if section.settings.tagline != blank %} {{ section.settings.tagline }}{% endif -%}
       </div>
-      {%- if section.settings.show_payments -%}
-        <div class="site-footer__payments" aria-label="Formas de pagamento">
-          <span class="payment-icon">VISA</span>
-          <span class="payment-icon">MASTER</span>
-          <span class="payment-icon">ELO</span>
-          <span class="payment-icon">PIX</span>
-          <span class="payment-icon">BOLETO</span>
-        </div>
+      {%- if section.settings.dev_credit != blank -%}
+        <div class="site-footer__dev">{{ section.settings.dev_credit }}</div>
       {%- endif -%}
     </div>
   </div>
@@ -136,9 +145,8 @@
 
 {%- comment -%} Botão flutuante de WhatsApp {%- endcomment -%}
 {%- if section.settings.float_whatsapp and settings.social_whatsapp != blank -%}
-  {%- assign wa_float = settings.social_whatsapp | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-' -%}
   {%- assign wa_msg = section.settings.float_whatsapp_msg | default: 'Olá! Tenho interesse nos produtos da loja.' | url_encode -%}
-  <a href="https://wa.me/{{ wa_float }}?text={{ wa_msg }}"
+  <a href="https://wa.me/{{ wa_number }}?text={{ wa_msg }}"
      class="floating-whatsapp"
      target="_blank"
      rel="noopener"
@@ -154,33 +162,36 @@
 {
   "name": "Rodapé",
   "settings": [
-    {
-      "type": "header",
-      "content": "Coluna Contato"
-    },
-    { "type": "text", "id": "contact_heading", "label": "Título da coluna", "default": "Contato" },
-    { "type": "textarea", "id": "address", "label": "Endereço", "default": "Rua Carmela Dutra 190, Jardim Morumbi, CEP 86036-360, Londrina/PR" },
-    { "type": "text", "id": "email", "label": "E-mail", "default": "loja@grupoexercitodedeus.com.br" },
-    { "type": "text", "id": "phone", "label": "Telefone", "default": "(43) 9993-5389" },
+    { "type": "header", "content": "Coluna Institucional" },
+    { "type": "text", "id": "col1_heading", "label": "Título", "default": "Institucional" },
+    { "type": "link_list", "id": "col1_menu", "label": "Menu (opcional)" },
+
+    { "type": "header", "content": "Coluna Informações" },
+    { "type": "text", "id": "col2_heading", "label": "Título", "default": "Informações" },
+    { "type": "link_list", "id": "col2_menu", "label": "Menu (opcional)" },
 
     { "type": "header", "content": "Coluna Minha Conta" },
-    { "type": "text", "id": "account_heading", "label": "Título da coluna", "default": "Minha conta" },
-    { "type": "link_list", "id": "account_menu", "label": "Menu (opcional — usa padrão se vazio)" },
+    { "type": "text", "id": "col3_heading", "label": "Título", "default": "Minha conta" },
+    { "type": "link_list", "id": "col3_menu", "label": "Menu (opcional)" },
 
-    { "type": "header", "content": "Coluna Pagamento e Envio" },
-    { "type": "text", "id": "payment_heading", "label": "Título da coluna", "default": "Pagamento e envio" },
-    { "type": "link_list", "id": "payment_menu", "label": "Menu (opcional — usa padrão se vazio)" },
+    { "type": "header", "content": "Coluna Atendimento" },
+    { "type": "text", "id": "contact_heading", "label": "Título", "default": "Atendimento" },
+    { "type": "text", "id": "phone", "label": "Telefone", "default": "(43) 9993-5389" },
+    { "type": "text", "id": "email", "label": "E-mail", "default": "loja@grupoexercitodedeus.com.br" },
+    { "type": "textarea", "id": "address", "label": "Endereço", "default": "Rua Carmela Dutra 190, Jardim Morumbi, CEP 86036-360, Londrina/PR" },
 
-    { "type": "header", "content": "Coluna Redes Sociais" },
-    { "type": "checkbox", "id": "show_social", "label": "Mostrar coluna de redes sociais", "default": false, "info": "Os ícones já aparecem na barra superior. Marque para também exibir no rodapé." },
-    { "type": "text", "id": "social_heading", "label": "Título", "default": "Siga-nos" },
-    { "type": "text", "id": "social_text", "label": "Texto" },
+    { "type": "header", "content": "Formas de pagamento" },
+    { "type": "text", "id": "payment_heading", "label": "Título", "default": "Formas de pagamento" },
+
+    { "type": "header", "content": "Segurança" },
+    { "type": "checkbox", "id": "show_security", "label": "Mostrar selo de segurança", "default": true },
+    { "type": "text", "id": "security_heading", "label": "Título", "default": "Segurança" },
 
     { "type": "header", "content": "Rodapé inferior" },
-    { "type": "text", "id": "legal_name", "label": "Razão social (opcional)", "default": "Exército de Deus" },
+    { "type": "text", "id": "legal_name", "label": "Razão social", "default": "Exército de Deus" },
     { "type": "text", "id": "cnpj", "label": "CNPJ", "default": "46.386.798/0002-33" },
     { "type": "text", "id": "tagline", "label": "Tagline (após \"Todos os direitos reservados\")" },
-    { "type": "checkbox", "id": "show_payments", "label": "Mostrar selos de pagamento", "default": true },
+    { "type": "text", "id": "dev_credit", "label": "Crédito de desenvolvimento" },
 
     { "type": "header", "content": "Botão flutuante WhatsApp" },
     { "type": "checkbox", "id": "float_whatsapp", "label": "Ativar botão flutuante", "default": true, "info": "Usa o número configurado em \"Theme settings → Redes sociais\"." },

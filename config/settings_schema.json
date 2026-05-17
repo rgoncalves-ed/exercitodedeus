@@ -155,6 +155,12 @@
       },
       {
         "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok",
+        "default": ""
+      },
+      {
+        "type": "text",
         "id": "social_whatsapp",
         "label": "WhatsApp (número com DDI, ex: 5551999999999)",
         "default": ""

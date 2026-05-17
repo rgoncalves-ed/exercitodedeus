@@ -866,132 +866,192 @@ p { margin: 0 0 1em; }
   background: #fff;
 }
 
-/* ----------------------- Footer ----------------------- */
+/* ----------------------- Footer (claro, multi-colunas) ----------------------- */
 
 .site-footer {
-  background: #0F0F0F;
-  color: rgba(255,255,255,0.7);
+  background: #fff;
+  color: var(--color-text);
   padding-top: 56px;
-  margin-top: 32px;
+  margin-top: 48px;
+  border-top: 1px solid var(--color-border);
 }
 
-.site-footer a { color: rgba(255,255,255,0.7); }
-.site-footer a:hover { color: #fff; }
+.site-footer a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+.site-footer a:hover { color: var(--color-text); }
 
-.site-footer__columns {
+.site-footer__top {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 32px;
+  grid-template-columns: 0.9fr repeat(3, 1fr) 1.3fr 1.3fr;
+  gap: 36px;
   padding-bottom: 40px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
+
+.site-footer__col { min-width: 0; }
 
 .site-footer__heading {
-  color: #fff;
+  color: var(--color-text);
   font-family: var(--font-heading);
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
-  margin-bottom: 14px;
-  text-transform: uppercase;
-  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0 0 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
-.site-footer__list {
+.site-footer__links,
+.site-footer__contact {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  font-size: 0.86rem;
+  gap: 14px;
 }
+.site-footer__links a {
+  font-size: 0.88rem;
+  color: var(--color-accent);
+  font-weight: 400;
+}
+.site-footer__links a:hover { text-decoration: underline; }
 
-/* Lista com bullets quadrados (colunas Minha Conta / Pagamento) */
-.site-footer__bullets li {
-  position: relative;
-  padding-left: 16px;
-}
-.site-footer__bullets li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.5em;
-  width: 6px;
-  height: 6px;
-  background: rgba(255,255,255,0.45);
-}
-.site-footer__bullets a {
-  letter-spacing: 0.04em;
-  font-size: 0.82rem;
-}
-
-/* Bloco de contato (ícone + label + valor) */
-.site-footer__contact {
-  gap: 16px;
-}
-.site-footer__contact-item {
+/* Coluna de redes sociais (esquerda) */
+.site-footer__socials {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
   display: flex;
-  align-items: flex-start;
   gap: 10px;
+  flex-wrap: wrap;
 }
-.site-footer__contact-icon {
-  width: 28px;
-  height: 28px;
+.site-footer__socials a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
   display: inline-grid;
   place-items: center;
-  color: var(--color-accent);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.site-footer__socials a:hover {
+  background: var(--color-accent);
+  color: #fff;
+  transform: translateY(-2px);
+}
+.site-footer__socials svg { width: 16px; height: 16px; }
+
+/* Bloco "Segurança" (Let's Encrypt) */
+.site-footer__security { margin-top: 8px; }
+.site-footer__security .security-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--color-text);
+}
+.site-footer__security .security-badge svg {
+  width: 22px;
+  height: 22px;
+  color: #2a9e3b;
+  flex-shrink: 0;
+}
+.site-footer__security .security-badge strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+.site-footer__security .security-badge small {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Coluna de Atendimento (linhas com ícone) */
+.site-footer__contact-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: var(--color-text);
+}
+a.site-footer__contact-row { color: var(--color-text); }
+a.site-footer__contact-row:hover { color: var(--color-accent); }
+.site-footer__contact-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  display: inline-grid;
+  place-items: center;
   flex-shrink: 0;
 }
 .site-footer__contact-icon svg { width: 16px; height: 16px; }
-.site-footer__contact-label {
+
+/* Grade de selos de pagamento */
+.payment-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  max-width: 240px;
+}
+.payment-badge {
+  background: transparent;
+}
+.payment-badge svg {
+  width: 100%;
+  height: auto;
   display: block;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.72rem;
-  font-weight: 600;
-  margin-bottom: 2px;
+  border-radius: 4px;
 }
 
-.site-footer__social { display: inline-flex; gap: 10px; margin-top: 12px; }
-
-.site-footer__social a {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-  display: inline-grid;
-  place-items: center;
-}
-.site-footer__social a:hover { background: var(--color-accent); color: #fff; }
-.site-footer__social svg { width: 16px; height: 16px; }
-
+/* Bottom (copyright + dev) */
 .site-footer__bottom {
-  padding-block: 20px;
+  padding-block: 24px;
+  border-top: 1px solid var(--color-border);
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.76rem;
-  color: rgba(255,255,255,0.45);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
 }
 
-.site-footer__payments {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+@media (max-width: 1100px) {
+  .site-footer__top {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .site-footer__col--social { grid-column: 1 / -1; }
+  .site-footer__socials { justify-content: flex-start; }
 }
 
-.payment-icon {
-  background: rgba(255,255,255,0.08);
-  border-radius: 4px;
-  padding: 5px 9px;
-  font-size: 0.65rem;
-  letter-spacing: 0.06em;
-  color: #fff;
-  font-weight: 600;
+@media (max-width: 749px) {
+  .site-footer { padding-top: 40px; }
+  .site-footer__top {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  .site-footer__col--social,
+  .site-footer__col--payments {
+    grid-column: 1 / -1;
+  }
+  .payment-grid { max-width: 100%; grid-template-columns: repeat(8, minmax(36px, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .site-footer__top { grid-template-columns: 1fr; }
+  .payment-grid { grid-template-columns: repeat(4, minmax(50px, 1fr)); max-width: 280px; }
 }
 
 /* ----------------------- Product page ----------------------- */
