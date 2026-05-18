@@ -1,0 +1,22 @@
+{%- if settings.cookie_banner_enabled -%}
+  <div class="cookie-banner" data-cookie-banner hidden role="dialog" aria-label="Aviso de cookies" aria-live="polite">
+    <div class="cookie-banner__inner">
+      <div class="cookie-banner__text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><circle cx="9" cy="10" r="1"/><circle cx="13" cy="14" r="1"/><circle cx="16" cy="9" r="1"/></svg>
+        <p>
+          <strong>Sua privacidade é importante.</strong>
+          {{ settings.cookie_banner_text | default: 'Usamos cookies pra melhorar sua experiência, lembrar suas preferências e analisar o uso do site. Ao continuar navegando, você concorda com nossa' }}
+          {%- if settings.cookie_policy_url != blank -%}
+            <a href="{{ settings.cookie_policy_url }}">política de privacidade</a>.
+          {%- else -%}
+            <a href="/policies/privacy-policy">política de privacidade</a>.
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="cookie-banner__actions">
+        <button type="button" class="btn btn--outline btn--sm" data-cookie-reject>Apenas necessários</button>
+        <button type="button" class="btn btn--primary btn--sm" data-cookie-accept>Aceitar todos</button>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

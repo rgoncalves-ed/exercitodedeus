@@ -111,6 +111,29 @@
     </div>
   {%- endif -%}
 
+  {%- comment -%} Produtos relacionados {%- endcomment -%}
+  {%- if section.settings.show_related and product.collections.size > 0 -%}
+    {%- assign related_collection = product.collections.first -%}
+    {%- assign related_count = 0 -%}
+    {%- assign related_limit = section.settings.related_count | default: 4 -%}
+
+    <section class="related-products">
+      <div class="section-heading section-heading--simple">
+        <h2 class="section-heading__title">{{ section.settings.related_heading | default: 'Você também pode gostar' }}</h2>
+        <a href="{{ related_collection.url }}" class="section-heading__link">Ver mais →</a>
+      </div>
+
+      <div class="product-grid product-grid--3">
+        {%- for related in related_collection.products -%}
+          {%- if related.id != product.id and related_count < related_limit -%}
+            {% render 'product-card', product: related %}
+            {%- assign related_count = related_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </section>
+  {%- endif -%}
+
   {%- if section.blocks.size > 0 -%}
     <div class="product-faq">
       <h2 class="product-faq__heading">Perguntas frequentes</h2>
@@ -134,7 +157,33 @@
 {% schema %}
 {
   "name": "Produto",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Produtos relacionados"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "Mostrar produtos relacionados no final da página",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "related_heading",
+      "label": "Título",
+      "default": "Você também pode gostar"
+    },
+    {
+      "type": "range",
+      "id": "related_count",
+      "label": "Quantos produtos mostrar",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
   "blocks": [
     {
       "type": "faq",

@@ -189,6 +189,49 @@
     ]
   },
   {
+    "name": "SEO / Compartilhamento",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Imagem padrão de compartilhamento",
+        "info": "Aparece quando o site é compartilhado no WhatsApp, Facebook, etc. Recomendado: 1200×630px."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo (também usada no Schema.org)",
+        "info": "Usada no header e em microdados SEO."
+      }
+    ]
+  },
+  {
+    "name": "Cookies / LGPD",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Lei brasileira (LGPD) exige aviso de cookies em todo site que coleta dados. O banner aparece uma vez por visitante, salva a preferência no navegador."
+      },
+      {
+        "type": "checkbox",
+        "id": "cookie_banner_enabled",
+        "label": "Ativar banner de cookies",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "cookie_banner_text",
+        "label": "Texto do banner",
+        "default": "Usamos cookies pra melhorar sua experiência, lembrar suas preferências e analisar o uso do site. Ao continuar navegando, você concorda com nossa"
+      },
+      {
+        "type": "url",
+        "id": "cookie_policy_url",
+        "label": "Link da política de privacidade (opcional, padrão: /policies/privacy-policy)"
+      }
+    ]
+  },
+  {
     "name": "Frete grátis",
     "settings": [
       {

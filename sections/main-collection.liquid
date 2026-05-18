@@ -1,5 +1,12 @@
 <section class="collection-banner">
   <div class="page-width">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Início</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ routes.collections_url }}">Coleções</a>
+      <span aria-hidden="true">/</span>
+      <strong>{{ collection.title }}</strong>
+    </nav>
     <h1>{{ collection.title }}</h1>
     {%- if collection.description != blank -%}
       <div class="muted" style="max-width: 640px; margin: 0 auto;">{{ collection.description }}</div>
@@ -7,10 +14,17 @@
   </div>
 </section>
 
-<section class="page-width">
+<section class="page-width collection-page">
+
   <div class="collection-toolbar">
-    <div class="collection-toolbar__count">{{ collection.products_count }} produtos</div>
-    <form>
+    <div class="collection-toolbar__count">{{ collection.products_count }} {% if collection.products_count == 1 %}produto{% else %}produtos{% endif %}</div>
+
+    <button type="button" class="btn btn--outline btn--sm collection-toolbar__filter-toggle" data-filter-toggle aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+      Filtros
+    </button>
+
+    <form class="collection-toolbar__sort">
       <label for="SortBy" class="visually-hidden">Ordenar por</label>
       <select name="sort_by" id="SortBy" onchange="this.form.submit()">
         {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
@@ -20,32 +34,127 @@
         <option value="price-descending" {% if current_sort == 'price-descending' %}selected{% endif %}>Maior preço</option>
         <option value="created-descending" {% if current_sort == 'created-descending' %}selected{% endif %}>Mais novos</option>
         <option value="title-ascending" {% if current_sort == 'title-ascending' %}selected{% endif %}>A–Z</option>
+        <option value="title-descending" {% if current_sort == 'title-descending' %}selected{% endif %}>Z–A</option>
       </select>
     </form>
   </div>
 
-  {%- paginate collection.products by 24 -%}
-    <div class="product-grid">
-      {%- for product in collection.products -%}
-        {% render 'product-card', product: product %}
-      {%- else -%}
-        <p>Nenhum produto encontrado.</p>
-      {%- endfor -%}
-    </div>
+  <div class="collection-grid">
+    {%- comment -%}
+      Sidebar de filtros. Usa collection.filters do Shopify (precisa do app
+      "Search & Discovery" instalado, gratuito). Se não tiver filtros
+      configurados, mostra só faixa de preço básica.
+    {%- endcomment -%}
+    <aside class="collection-filters" data-filter-panel hidden>
+      <form id="CollectionFiltersForm">
+        <input type="hidden" name="sort_by" value="{{ current_sort }}">
 
-    {%- if paginate.pages > 1 -%}
-      <nav class="pagination" style="margin-top: 40px; text-align: center;">
-        {%- if paginate.previous -%}
-          <a href="{{ paginate.previous.url }}" class="btn btn--outline">Anterior</a>
+        <div class="collection-filters__head">
+          <h2>Filtros</h2>
+          <button type="button" class="collection-filters__close" data-filter-close aria-label="Fechar filtros">×</button>
+        </div>
+
+        {%- if collection.filters.size > 0 -%}
+          {%- for filter in collection.filters -%}
+            <details class="filter-group" open>
+              <summary>
+                <span>{{ filter.label }}</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </summary>
+              <div class="filter-group__body">
+                {%- case filter.type -%}
+                  {%- when 'list' -%}
+                    {%- for value in filter.values -%}
+                      <label class="filter-option">
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                        <span>{{ value.label }}</span>
+                        <small>({{ value.count }})</small>
+                      </label>
+                    {%- endfor -%}
+                  {%- when 'price_range' -%}
+                    <div class="filter-price">
+                      <label>
+                        <span>De</span>
+                        <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}" placeholder="0" min="0">
+                      </label>
+                      <label>
+                        <span>Até</span>
+                        <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}" placeholder="{{ filter.range_max | divided_by: 100 }}" min="0">
+                      </label>
+                    </div>
+                {%- endcase -%}
+              </div>
+            </details>
+          {%- endfor -%}
+
+          <div class="collection-filters__actions">
+            <button type="submit" class="btn btn--primary btn--block">Aplicar</button>
+            {%- if collection.url -%}
+              <a href="{{ collection.url }}" class="btn btn--ghost btn--sm">Limpar filtros</a>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <p class="muted" style="font-size: 0.85rem;">
+            Pra ativar filtros (preço, autor, editora, etc), instale o app gratuito
+            <strong>Search &amp; Discovery</strong> na Shopify e configure em
+            <em>Admin → Apps → Search &amp; Discovery → Filters</em>.
+          </p>
         {%- endif -%}
-        <span class="muted" style="margin: 0 12px;">Página {{ paginate.current_page }} de {{ paginate.pages }}</span>
-        {%- if paginate.next -%}
-          <a href="{{ paginate.next.url }}" class="btn btn--outline">Próxima</a>
+      </form>
+    </aside>
+
+    <div class="collection-main">
+      {%- paginate collection.products by 24 -%}
+        {%- if collection.products.size > 0 -%}
+          <div class="product-grid">
+            {%- for product in collection.products -%}
+              {% render 'product-card', product: product %}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="pagination" style="margin-top: 40px; text-align: center;" aria-label="Paginação">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="btn btn--outline">← Anterior</a>
+              {%- endif -%}
+              <span class="muted" style="margin: 0 12px;">Página {{ paginate.current_page }} de {{ paginate.pages }}</span>
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="btn btn--outline">Próxima →</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <div class="empty-state">
+            <p>Nenhum produto encontrado com esses filtros.</p>
+            <a href="{{ collection.url }}" class="btn btn--outline">Limpar filtros</a>
+          </div>
         {%- endif -%}
-      </nav>
-    {%- endif -%}
-  {%- endpaginate -%}
+      {%- endpaginate -%}
+    </div>
+  </div>
 </section>
+
+{%- comment -%} Schema.org: CollectionPage + BreadcrumbList {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ collection.title | json }},
+  "description": {{ collection.description | strip_html | json }},
+  "url": "{{ shop.url }}{{ collection.url }}"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Início", "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": "Coleções", "item": "{{ shop.url }}{{ routes.collections_url }}" },
+    { "@type": "ListItem", "position": 3, "name": {{ collection.title | json }} }
+  ]
+}
+</script>
 
 {% schema %}
 {

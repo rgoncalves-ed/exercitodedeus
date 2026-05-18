@@ -21,6 +21,7 @@
     "social_youtube": "https://www.youtube.com/c/AnaClaraApresentadora?sub_confirmation=1",
     "social_tiktok": "",
     "social_whatsapp": "554399935389",
+    "cookie_banner_enabled": true,
     "free_shipping_enabled": true,
     "free_shipping_threshold": 199,
     "payment_show_pix": true,

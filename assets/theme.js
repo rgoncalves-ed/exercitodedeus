@@ -711,6 +711,125 @@
   }
 
   /* ==========================================================
+     Cookie banner (LGPD)
+     ========================================================== */
+
+  (function () {
+    var COOKIE_KEY = 'exdeus_cookies_consent';
+    var banner = document.querySelector('[data-cookie-banner]');
+    if (!banner) return;
+
+    function consented() {
+      try { return localStorage.getItem(COOKIE_KEY); } catch (e) { return null; }
+    }
+    function save(val) {
+      try { localStorage.setItem(COOKIE_KEY, val); } catch (e) {}
+      banner.setAttribute('hidden', '');
+    }
+
+    if (!consented()) {
+      // Mostra após 1s pra não atrapalhar o load inicial
+      setTimeout(function () { banner.removeAttribute('hidden'); }, 800);
+    }
+
+    var acc = banner.querySelector('[data-cookie-accept]');
+    var rej = banner.querySelector('[data-cookie-reject]');
+    if (acc) acc.addEventListener('click', function () { save('accepted'); });
+    if (rej) rej.addEventListener('click', function () { save('rejected'); });
+  }());
+
+  /* ==========================================================
+     Filtros de coleção (toggle do painel lateral)
+     ========================================================== */
+
+  (function () {
+    var panel = document.querySelector('[data-filter-panel]');
+    if (!panel) return;
+    var toggle = document.querySelector('[data-filter-toggle]');
+    var close = panel.querySelector('[data-filter-close]');
+    if (toggle) toggle.addEventListener('click', function () {
+      var isHidden = panel.hasAttribute('hidden');
+      if (isHidden) panel.removeAttribute('hidden');
+      else panel.setAttribute('hidden', '');
+      toggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+      document.body.classList.toggle('filter-open', isHidden);
+    });
+    if (close) close.addEventListener('click', function () {
+      panel.setAttribute('hidden', '');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('filter-open');
+    });
+  }());
+
+  /* ==========================================================
+     Search autocomplete (Shopify predictive search API)
+     ========================================================== */
+
+  document.querySelectorAll('[data-search-form]').forEach(function (form) {
+    var input = form.querySelector('[data-search-input]');
+    var box = form.querySelector('[data-search-suggest]');
+    var inner = form.querySelector('[data-search-suggest-inner]');
+    if (!input || !box || !inner) return;
+
+    var timer = null;
+
+    function close() { box.setAttribute('hidden', ''); }
+    function open() { box.removeAttribute('hidden'); }
+
+    input.addEventListener('input', function () {
+      var q = input.value.trim();
+      if (timer) clearTimeout(timer);
+      if (q.length < 2) { close(); return; }
+
+      timer = setTimeout(function () {
+        var url = '/search/suggest.json?q=' + encodeURIComponent(q)
+                + '&resources[type]=product&resources[limit]=6&resources[options][unavailable_products]=last';
+        fetch(url, { headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (data) {
+            if (!data || !data.resources || !data.resources.results) { close(); return; }
+            var products = data.resources.results.products || [];
+            if (products.length === 0) {
+              inner.innerHTML = '<p class="search-suggest__empty">Nenhum resultado pra <strong>' + escapeHtml(q) + '</strong>.</p>';
+              open();
+              return;
+            }
+            inner.innerHTML = products.map(function (p) {
+              var imgUrl = p.image ? p.image.replace(/(\.[a-z]+)$/, '_120x$1') : '';
+              var img = imgUrl ? '<img src="' + imgUrl + '" alt="" loading="lazy">' : '';
+              var price = p.price ? moneyBR(parseFloat(p.price) * 100) : '';
+              var compare = p.compare_at_price_max && parseFloat(p.compare_at_price_max) > parseFloat(p.price)
+                ? '<span class="search-suggest__compare">' + moneyBR(parseFloat(p.compare_at_price_max) * 100) + '</span> '
+                : '';
+              return ''
+                + '<a href="' + p.url + '" class="search-suggest__item" role="option">'
+                + '  <span class="search-suggest__thumb">' + img + '</span>'
+                + '  <span class="search-suggest__main">'
+                + '    <span class="search-suggest__title">' + escapeHtml(p.title) + '</span>'
+                + '    <span class="search-suggest__price">' + compare + '<strong>' + price + '</strong></span>'
+                + '  </span>'
+                + '</a>';
+            }).join('');
+            inner.innerHTML += '<a href="/search?q=' + encodeURIComponent(q) + '" class="search-suggest__all">Ver todos os resultados pra "' + escapeHtml(q) + '" →</a>';
+            open();
+          })
+          .catch(function () { close(); });
+      }, 200);
+    });
+
+    input.addEventListener('focus', function () {
+      if (input.value.trim().length >= 2 && inner.children.length > 0) open();
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!form.contains(e.target)) close();
+    });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+  });
+
+  /* ==========================================================
      Cupom de desconto (cart page)
      ========================================================== */
 

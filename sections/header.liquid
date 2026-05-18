@@ -17,14 +17,20 @@
         </nav>
       {%- endif -%}
 
-      <form action="{{ routes.search_url }}" method="get" class="site-header__search" role="search">
+      <form action="{{ routes.search_url }}" method="get" class="site-header__search" role="search" data-search-form>
         <input
           type="search"
           name="q"
           placeholder="{{ 'general.search.placeholder' | t }}"
-          aria-label="{{ 'general.search.placeholder' | t }}">
+          aria-label="{{ 'general.search.placeholder' | t }}"
+          autocomplete="off"
+          data-search-input>
         <input type="hidden" name="type" value="product">
         <button type="submit" aria-label="Buscar">{% render 'icon-search' %}</button>
+
+        <div class="search-suggest" data-search-suggest hidden role="listbox" aria-label="Sugestões de busca">
+          <div class="search-suggest__inner" data-search-suggest-inner></div>
+        </div>
       </form>
 
       <div class="site-header__actions">

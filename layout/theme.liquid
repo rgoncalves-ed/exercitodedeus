@@ -18,6 +18,88 @@
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
 
+    {%- comment -%} Open Graph para compartilhamento em redes sociais {%- endcomment -%}
+    <meta property="og:site_name" content="{{ shop.name }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:title" content="{{ page_title | escape }}">
+    {%- if page_description -%}
+      <meta property="og:description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    {%- if template contains 'product' and product.featured_image -%}
+      <meta property="og:type" content="product">
+      <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+      <meta property="product:price:amount" content="{{ product.price | divided_by: 100.0 }}">
+      <meta property="product:price:currency" content="{{ shop.currency }}">
+    {%- elsif template contains 'article' and article.image -%}
+      <meta property="og:type" content="article">
+      <meta property="og:image" content="{{ article.image | image_url: width: 1200 }}">
+    {%- elsif settings.share_image -%}
+      <meta property="og:type" content="website">
+      <meta property="og:image" content="{{ settings.share_image | image_url: width: 1200 }}">
+    {%- else -%}
+      <meta property="og:type" content="website">
+    {%- endif -%}
+    <meta name="twitter:card" content="summary_large_image">
+
+    {%- comment -%} Schema.org: Organization (em todas as páginas) {%- endcomment -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }}{% if settings.logo %},
+      "logo": {{ settings.logo | image_url: width: 500 | prepend: 'https:' | json }}{% endif %}{% if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_youtube != blank %},
+      "sameAs": [
+        {% if settings.social_instagram != blank %}{{ settings.social_instagram | json }}{% if settings.social_facebook != blank or settings.social_youtube != blank %},{% endif %}{% endif %}
+        {% if settings.social_facebook != blank %}{{ settings.social_facebook | json }}{% if settings.social_youtube != blank %},{% endif %}{% endif %}
+        {% if settings.social_youtube != blank %}{{ settings.social_youtube | json }}{% endif %}
+      ]{% endif %}
+    }
+    </script>
+
+    {%- comment -%} Schema.org: WebSite com SearchAction {%- endcomment -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    {%- comment -%} Schema.org: Product (só nas PDPs) {%- endcomment -%}
+    {%- if template contains 'product' and product -%}
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": {{ product.title | json }},
+        "image": [
+          {% for img in product.images limit: 5 %}{{ img | image_url: width: 1200 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}{% endfor %}
+        ],
+        "description": {{ product.description | strip_html | truncate: 500 | json }},
+        "sku": {{ product.selected_or_first_available_variant.sku | json }},
+        "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
+        "offers": {
+          "@type": "Offer",
+          "url": "{{ shop.url }}{{ product.url }}",
+          "priceCurrency": {{ shop.currency | json }},
+          "price": "{{ product.price | divided_by: 100.0 }}",
+          "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+          "itemCondition": "https://schema.org/NewCondition"
+        }
+      }
+      </script>
+    {%- endif -%}
+
     {{ content_for_header }}
 
     {% style %}
@@ -54,5 +136,6 @@
     {% sections 'footer-group' %}
 
     {% render 'cart-drawer' %}
+    {% render 'cookie-banner' %}
   </body>
 </html>
