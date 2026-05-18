@@ -32,8 +32,9 @@
           {% render 'icon-menu' %}
         </button>
 
-        <a href="#" class="header-action" aria-label="Favoritos">
+        <a href="/pages/lista-de-desejo" class="header-action" aria-label="Lista de desejo">
           {% render 'icon-heart' %}
+          <span class="header-action__count" data-wishlist-count hidden>0</span>
         </a>
 
         <button type="button" class="header-action" aria-label="Carrinho" data-cart-open>

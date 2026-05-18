@@ -1,18 +1,40 @@
-<section class="page-width section" style="max-width: 480px; margin: 0 auto;">
-  <h1 style="text-align: center;">Criar conta</h1>
+<section class="page-width auth">
+  <div class="auth__card">
+    <header class="auth__head">
+      <h1 class="auth__title">Criar uma conta</h1>
+      <p class="auth__lead">Acompanhe pedidos, salve produtos e veja seus endereços.</p>
+    </header>
 
-  {% form 'create_customer' %}
-    {{ form.errors | default_errors }}
-    <div style="display: flex; flex-direction: column; gap: 14px;">
-      <input type="text" name="customer[first_name]" placeholder="Nome" required>
-      <input type="text" name="customer[last_name]" placeholder="Sobrenome" required>
-      <input type="email" name="customer[email]" placeholder="E-mail" required>
-      <input type="password" name="customer[password]" placeholder="Senha" required>
-      <button type="submit" class="btn btn--primary btn--block">Cadastrar</button>
-    </div>
-  {% endform %}
+    {% form 'create_customer', class: 'auth__fields' %}
+      {{ form.errors | default_errors }}
 
-  <p style="text-align: center; margin-top: 20px;">
-    Já tem conta? <a href="{{ routes.account_login_url }}">Entrar</a>
-  </p>
+      <div class="auth__row-2">
+        <label class="auth__field">
+          <span class="auth__label">Nome</span>
+          <input type="text" name="customer[first_name]" autocomplete="given-name" required>
+        </label>
+        <label class="auth__field">
+          <span class="auth__label">Sobrenome</span>
+          <input type="text" name="customer[last_name]" autocomplete="family-name" required>
+        </label>
+      </div>
+
+      <label class="auth__field">
+        <span class="auth__label">E-mail</span>
+        <input type="email" name="customer[email]" autocomplete="email" required>
+      </label>
+
+      <label class="auth__field">
+        <span class="auth__label">Senha</span>
+        <input type="password" name="customer[password]" autocomplete="new-password" minlength="5" required>
+        <small class="auth__hint">Mínimo 5 caracteres.</small>
+      </label>
+
+      <button type="submit" class="btn btn--primary auth__submit">Criar conta</button>
+    {% endform %}
+
+    <p class="auth__alt">
+      Já tem conta? <a href="{{ routes.account_login_url }}">Entrar</a>
+    </p>
+  </div>
 </section>

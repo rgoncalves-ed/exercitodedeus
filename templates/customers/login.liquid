@@ -1,16 +1,58 @@
-<section class="page-width section" style="max-width: 480px; margin: 0 auto;">
-  <h1 style="text-align: center;">Entrar</h1>
+<section class="page-width auth">
+  <div class="auth__card">
+    <header class="auth__head">
+      <h1 class="auth__title">Entrar na conta</h1>
+      <p class="auth__lead">Use seu e-mail e senha pra acessar pedidos, lista de desejo e endereços.</p>
+    </header>
 
-  {% form 'customer_login' %}
-    {{ form.errors | default_errors }}
-    <div style="display: flex; flex-direction: column; gap: 14px;">
-      <input type="email" name="customer[email]" placeholder="E-mail" required>
-      <input type="password" name="customer[password]" placeholder="Senha" required>
-      <button type="submit" class="btn btn--primary btn--block">Entrar</button>
+    <div class="auth__forms" data-recover-state>
+      {%- comment -%} Formulário de login {%- endcomment -%}
+      <div class="auth__form" data-form="login">
+        {% form 'customer_login', class: 'auth__fields' %}
+          {{ form.errors | default_errors }}
+
+          <label class="auth__field">
+            <span class="auth__label">E-mail</span>
+            <input type="email" name="customer[email]" autocomplete="email" required>
+          </label>
+
+          <label class="auth__field">
+            <span class="auth__label">Senha</span>
+            <input type="password" name="customer[password]" autocomplete="current-password" required>
+          </label>
+
+          <div class="auth__row">
+            <a href="#recover" data-recover-toggle class="auth__link-muted">Esqueci minha senha</a>
+          </div>
+
+          <button type="submit" class="btn btn--primary auth__submit">Entrar</button>
+        {% endform %}
+
+        <p class="auth__alt">
+          Ainda não tem conta? <a href="{{ routes.account_register_url }}">Cadastre-se</a>
+        </p>
+      </div>
+
+      {%- comment -%} Formulário de recuperação de senha {%- endcomment -%}
+      <div class="auth__form" data-form="recover" hidden>
+        {% form 'recover_customer_password', class: 'auth__fields' %}
+          {{ form.errors | default_errors }}
+          {%- if form.posted_successfully? -%}
+            <p class="auth__success">Enviamos as instruções pro seu e-mail. Verifique a caixa de entrada.</p>
+          {%- endif -%}
+
+          <label class="auth__field">
+            <span class="auth__label">E-mail cadastrado</span>
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+
+          <button type="submit" class="btn btn--primary auth__submit">Enviar link de redefinição</button>
+        {% endform %}
+
+        <p class="auth__alt">
+          <a href="#login" data-recover-toggle class="auth__link-muted">← Voltar pro login</a>
+        </p>
+      </div>
     </div>
-  {% endform %}
-
-  <p style="text-align: center; margin-top: 20px;">
-    Ainda não tem conta? <a href="{{ routes.account_register_url }}">Cadastre-se</a>
-  </p>
+  </div>
 </section>

@@ -1,0 +1,101 @@
+<section class="page-width account">
+  <a href="{{ routes.account_url }}" class="order-page__back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+    Voltar para minha conta
+  </a>
+
+  <header class="account__head">
+    <div>
+      <h1>Meus endereços</h1>
+      <p class="muted">{{ customer.addresses_count }} {% if customer.addresses_count == 1 %}endereço cadastrado{% else %}endereços cadastrados{% endif %}.</p>
+    </div>
+    <button type="button" class="btn btn--primary" data-address-new>+ Novo endereço</button>
+  </header>
+
+  <div class="address-list">
+    {%- for address in customer.addresses -%}
+      <article class="address-card{% if address == customer.default_address %} address-card--default{% endif %}">
+        {%- if address == customer.default_address -%}
+          <span class="address-card__badge">Padrão</span>
+        {%- endif -%}
+        <strong>{{ address.first_name }} {{ address.last_name }}</strong>
+        <p>{{ address | format_address }}</p>
+        {%- if address.phone != blank -%}
+          <p class="muted">{{ address.phone }}</p>
+        {%- endif -%}
+
+        <div class="address-card__actions">
+          <button type="button" class="btn btn--outline btn--sm" data-address-edit="{{ address.id }}">Editar</button>
+          {% form 'customer_address', address %}
+            <button type="submit" class="btn btn--ghost btn--sm" data-confirm-message="Tem certeza que quer apagar este endereço?">Remover</button>
+            <input type="hidden" name="_method" value="delete">
+          {% endform %}
+        </div>
+
+        {%- comment -%} Form edit oculto, mostrado quando "Editar" clicado {%- endcomment -%}
+        <div class="address-form" data-address-form="{{ address.id }}" hidden>
+          {% form 'customer_address', address, class: 'auth__fields' %}
+            <div class="auth__row-2">
+              <label class="auth__field"><span class="auth__label">Nome</span><input type="text" name="address[first_name]" value="{{ form.first_name }}" required></label>
+              <label class="auth__field"><span class="auth__label">Sobrenome</span><input type="text" name="address[last_name]" value="{{ form.last_name }}" required></label>
+            </div>
+            <label class="auth__field"><span class="auth__label">Empresa (opcional)</span><input type="text" name="address[company]" value="{{ form.company }}"></label>
+            <label class="auth__field"><span class="auth__label">Endereço</span><input type="text" name="address[address1]" value="{{ form.address1 }}" required></label>
+            <label class="auth__field"><span class="auth__label">Complemento</span><input type="text" name="address[address2]" value="{{ form.address2 }}"></label>
+            <div class="auth__row-2">
+              <label class="auth__field"><span class="auth__label">Cidade</span><input type="text" name="address[city]" value="{{ form.city }}" required></label>
+              <label class="auth__field"><span class="auth__label">CEP</span><input type="text" name="address[zip]" value="{{ form.zip }}" required></label>
+            </div>
+            <div class="auth__row-2">
+              <label class="auth__field"><span class="auth__label">Estado</span><input type="text" name="address[province]" value="{{ form.province }}"></label>
+              <label class="auth__field"><span class="auth__label">País</span><input type="text" name="address[country]" value="{{ form.country }}" required></label>
+            </div>
+            <label class="auth__field"><span class="auth__label">Telefone</span><input type="tel" name="address[phone]" value="{{ form.phone }}"></label>
+            <label class="auth__checkbox">
+              <input type="checkbox" name="address[default]" value="1" {% if address == customer.default_address %}checked{% endif %}>
+              Usar como endereço padrão
+            </label>
+            <div style="display:flex; gap:8px;">
+              <button type="submit" class="btn btn--primary">Salvar</button>
+              <button type="button" class="btn btn--outline" data-address-cancel="{{ address.id }}">Cancelar</button>
+            </div>
+          {% endform %}
+        </div>
+      </article>
+    {%- else -%}
+      <div class="empty-state">
+        <p>Nenhum endereço cadastrado ainda.</p>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%} Form pra novo endereço (oculto até clicar) {%- endcomment -%}
+  <div class="address-form" data-address-form="new" hidden style="margin-top: 32px;">
+    <h2>Novo endereço</h2>
+    {% form 'customer_address', customer.new_address, class: 'auth__fields' %}
+      <div class="auth__row-2">
+        <label class="auth__field"><span class="auth__label">Nome</span><input type="text" name="address[first_name]" required></label>
+        <label class="auth__field"><span class="auth__label">Sobrenome</span><input type="text" name="address[last_name]" required></label>
+      </div>
+      <label class="auth__field"><span class="auth__label">Endereço</span><input type="text" name="address[address1]" required></label>
+      <label class="auth__field"><span class="auth__label">Complemento</span><input type="text" name="address[address2]"></label>
+      <div class="auth__row-2">
+        <label class="auth__field"><span class="auth__label">Cidade</span><input type="text" name="address[city]" required></label>
+        <label class="auth__field"><span class="auth__label">CEP</span><input type="text" name="address[zip]" required></label>
+      </div>
+      <div class="auth__row-2">
+        <label class="auth__field"><span class="auth__label">Estado</span><input type="text" name="address[province]"></label>
+        <label class="auth__field"><span class="auth__label">País</span><input type="text" name="address[country]" value="Brasil" required></label>
+      </div>
+      <label class="auth__field"><span class="auth__label">Telefone</span><input type="tel" name="address[phone]"></label>
+      <label class="auth__checkbox">
+        <input type="checkbox" name="address[default]" value="1">
+        Usar como endereço padrão
+      </label>
+      <div style="display:flex; gap:8px;">
+        <button type="submit" class="btn btn--primary">Salvar endereço</button>
+        <button type="button" class="btn btn--outline" data-address-cancel="new">Cancelar</button>
+      </div>
+    {% endform %}
+  </div>
+</section>

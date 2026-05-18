@@ -1,43 +1,119 @@
-<section class="page-width section">
-  <h1>Olá, {{ customer.first_name }}</h1>
-  <p class="muted">Bem-vindo de volta à sua conta.</p>
-
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px;">
+<section class="page-width account">
+  <header class="account__head">
     <div>
-      <h2>Pedidos recentes</h2>
-      {%- if customer.orders.size > 0 -%}
-        <table style="width: 100%; border-collapse: collapse;">
-          <thead>
-            <tr style="border-bottom: 1px solid var(--color-border);">
-              <th style="text-align: left; padding: 12px 0;">Pedido</th>
-              <th style="text-align: left; padding: 12px 0;">Data</th>
-              <th style="text-align: left; padding: 12px 0;">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {%- for order in customer.orders -%}
-              <tr style="border-bottom: 1px solid var(--color-border);">
-                <td style="padding: 12px 0;"><a href="{{ order.customer_url }}">#{{ order.name }}</a></td>
-                <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>
-                <td>{{ order.total_price | money }}</td>
-              </tr>
-            {%- endfor -%}
-          </tbody>
-        </table>
-      {%- else -%}
-        <p class="muted">Você ainda não fez nenhum pedido.</p>
-      {%- endif -%}
+      <p class="account__greeting">Olá,</p>
+      <h1 class="account__name">{{ customer.first_name | default: customer.email }}</h1>
     </div>
+    <a href="{{ routes.account_logout_url }}" class="btn btn--outline account__logout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sair
+    </a>
+  </header>
 
-    <div>
-      <h2>Endereço padrão</h2>
-      {%- if customer.default_address -%}
-        <p>{{ customer.default_address | format_address }}</p>
-      {%- else -%}
-        <p class="muted">Nenhum endereço cadastrado.</p>
-      {%- endif -%}
-      <p><a href="{{ routes.account_addresses_url }}" class="btn btn--outline">Gerenciar endereços</a></p>
-      <p><a href="{{ routes.account_logout_url }}" class="muted">Sair</a></p>
-    </div>
+  <div class="account__grid">
+
+    {%- comment -%} Coluna esquerda: navegação rápida {%- endcomment -%}
+    <aside class="account__nav" aria-label="Menu da conta">
+      <a href="#orders" class="account__nav-link is-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        <span>Pedidos <small>{{ customer.orders.size }}</small></span>
+      </a>
+      <a href="/pages/lista-de-desejo" class="account__nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Lista de desejo <small data-wishlist-count>0</small></span>
+      </a>
+      <a href="{{ routes.account_addresses_url }}" class="account__nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Endereços <small>{{ customer.addresses_count }}</small></span>
+      </a>
+    </aside>
+
+    {%- comment -%} Coluna direita: conteúdo {%- endcomment -%}
+    <main class="account__main">
+
+      {%- comment -%} Pedidos {%- endcomment -%}
+      <section id="orders" class="account__card">
+        <div class="account__card-head">
+          <h2>Meus pedidos</h2>
+          {%- if customer.orders.size > 0 -%}
+            <span class="muted">{{ customer.orders.size }} no total</span>
+          {%- endif -%}
+        </div>
+
+        {%- if customer.orders.size > 0 -%}
+          <div class="order-list">
+            {%- paginate customer.orders by 10 -%}
+              {%- for order in customer.orders -%}
+                <a href="{{ order.customer_url }}" class="order-row">
+                  <div class="order-row__main">
+                    <span class="order-row__id">#{{ order.name }}</span>
+                    <span class="order-row__date">{{ order.created_at | date: '%d/%m/%Y' }}</span>
+                  </div>
+                  <div class="order-row__meta">
+                    <span class="order-status order-status--{{ order.financial_status }}">
+                      {%- case order.financial_status -%}
+                        {%- when 'paid' -%}Pago
+                        {%- when 'pending' -%}Aguardando pagamento
+                        {%- when 'refunded' -%}Reembolsado
+                        {%- when 'partially_refunded' -%}Reembolso parcial
+                        {%- when 'voided' -%}Cancelado
+                        {%- else -%}{{ order.financial_status_label }}
+                      {%- endcase -%}
+                    </span>
+                    {%- if order.fulfillment_status_label != blank -%}
+                      <span class="order-status order-status--{{ order.fulfillment_status }}">{{ order.fulfillment_status_label }}</span>
+                    {%- endif -%}
+                  </div>
+                  <div class="order-row__total">{{ order.total_price | money }}</div>
+                  <svg class="order-row__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              {%- endfor -%}
+
+              {%- if paginate.pages > 1 -%}
+                <nav class="pagination" aria-label="Paginação">{{ paginate | default_pagination }}</nav>
+              {%- endif -%}
+            {%- endpaginate -%}
+          </div>
+        {%- else -%}
+          <div class="empty-state">
+            <p>Você ainda não fez nenhum pedido.</p>
+            <a href="{{ routes.root_url }}" class="btn btn--primary">Começar a comprar</a>
+          </div>
+        {%- endif -%}
+      </section>
+
+      {%- comment -%} Lista de desejo (prévia) {%- endcomment -%}
+      <section id="wishlist-preview" class="account__card">
+        <div class="account__card-head">
+          <h2>Lista de desejo</h2>
+          <a href="/pages/lista-de-desejo" class="account__card-link">Ver tudo →</a>
+        </div>
+        <div data-wishlist-preview class="wishlist-preview">
+          <p class="muted">Carregando…</p>
+        </div>
+      </section>
+
+      {%- comment -%} Endereço padrão {%- endcomment -%}
+      <section id="address" class="account__card">
+        <div class="account__card-head">
+          <h2>Endereço padrão</h2>
+          <a href="{{ routes.account_addresses_url }}" class="account__card-link">Gerenciar →</a>
+        </div>
+        {%- if customer.default_address -%}
+          <div class="address-card">
+            <strong>{{ customer.default_address.first_name }} {{ customer.default_address.last_name }}</strong>
+            <p>{{ customer.default_address | format_address }}</p>
+            {%- if customer.default_address.phone != blank -%}
+              <p class="muted">{{ customer.default_address.phone }}</p>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <div class="empty-state">
+            <p>Você ainda não cadastrou um endereço.</p>
+            <a href="{{ routes.account_addresses_url }}" class="btn btn--outline">Cadastrar endereço</a>
+          </div>
+        {%- endif -%}
+      </section>
+    </main>
   </div>
 </section>

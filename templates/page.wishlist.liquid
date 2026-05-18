@@ -1,0 +1,18 @@
+<section class="page-width section wishlist-page">
+  <header class="wishlist-page__head">
+    <h1>{{ page.title | default: 'Minha lista de desejo' }}</h1>
+    <p class="muted">Produtos salvos pra você comprar depois. A lista fica salva no seu navegador.</p>
+  </header>
+
+  {%- if page.content != blank -%}
+    <div class="rte" style="margin-bottom: 24px;">{{ page.content }}</div>
+  {%- endif -%}
+
+  <div class="empty-state" data-wishlist-empty hidden>
+    <p>Sua lista de desejo está vazia.</p>
+    <p class="muted">Toque no coração de qualquer produto pra adicionar aqui.</p>
+    <a href="{{ routes.root_url }}" class="btn btn--primary" style="margin-top: 12px;">Explorar produtos</a>
+  </div>
+
+  <div class="product-grid product-grid--3" data-wishlist-list></div>
+</section>
