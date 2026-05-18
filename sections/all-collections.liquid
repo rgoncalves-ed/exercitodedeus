@@ -1,0 +1,113 @@
+{%- comment -%}
+  Lista TODAS as coleções da loja automaticamente (não precisa
+  configurar blocks). Usado em /collections (list-collections template).
+{%- endcomment -%}
+
+{%- liquid
+  assign exclude_handles = section.settings.exclude_handles | default: 'frontpage,all,homepage'
+  assign sort = section.settings.sort | default: 'manual'
+-%}
+
+<section class="section all-collections">
+  <div class="page-width">
+    <header class="section-heading">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="section-heading__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h1 class="section-heading__title">{{ section.settings.heading | default: 'Todas as categorias' }}</h1>
+      {%- if section.settings.subheading != blank -%}
+        <p class="muted">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- comment -%} Filtra coleções excluídas {%- endcomment -%}
+    {%- assign all_cols = collections | sort: sort -%}
+    {%- assign exclude_arr = exclude_handles | replace: ' ', '' | split: ',' -%}
+
+    <div class="all-collections__grid all-collections__grid--{{ section.settings.columns | default: 3 }}">
+      {%- assign rendered = 0 -%}
+      {%- for col in all_cols -%}
+        {%- unless exclude_arr contains col.handle -%}
+          {%- if col.products_count > 0 or section.settings.show_empty -%}
+            <a href="{{ col.url }}" class="collection-tile" {{ col.shopify_attributes }}>
+              <div class="collection-tile__media">
+                {%- if col.image -%}
+                  {{ col.image | image_url: width: 600 | image_tag: alt: col.title, loading: 'lazy', class: 'collection-tile__img' }}
+                {%- elsif col.products.first.featured_image -%}
+                  {{ col.products.first.featured_image | image_url: width: 600 | image_tag: alt: col.title, loading: 'lazy', class: 'collection-tile__img' }}
+                {%- else -%}
+                  <div class="collection-tile__placeholder">{% render 'icon-book' %}</div>
+                {%- endif -%}
+                <span class="collection-tile__overlay" aria-hidden="true"></span>
+              </div>
+              <div class="collection-tile__body">
+                <h2 class="collection-tile__title">{{ col.title }}</h2>
+                <span class="collection-tile__count">{{ col.products_count }} {% if col.products_count == 1 %}produto{% else %}produtos{% endif %}</span>
+                <span class="collection-tile__cta">
+                  Ver coleção
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+              </div>
+            </a>
+            {%- assign rendered = rendered | plus: 1 -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endfor -%}
+
+      {%- if rendered == 0 -%}
+        <div class="empty-state" style="grid-column: 1 / -1;">
+          <p>Nenhuma coleção criada ainda.</p>
+          <p class="muted">Vá em <strong>Admin → Produtos → Coleções → Criar coleção</strong>.</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lista de coleções (auto)",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeno (eyebrow)", "default": "Catálogo" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Todas as categorias" },
+    { "type": "text", "id": "subheading", "label": "Subtítulo (opcional)", "default": "Explore nosso acervo por categoria" },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Colunas no desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "sort",
+      "label": "Ordenação",
+      "options": [
+        { "value": "manual", "label": "Ordem manual (definida no admin)" },
+        { "value": "title", "label": "Alfabética (A–Z)" },
+        { "value": "products_count", "label": "Mais produtos primeiro" },
+        { "value": "updated_at", "label": "Mais atualizadas" }
+      ],
+      "default": "manual"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_empty",
+      "label": "Mostrar coleções vazias",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "exclude_handles",
+      "label": "Esconder coleções (handles separados por vírgula)",
+      "default": "frontpage,all,homepage",
+      "info": "Use o \"handle\" da coleção (parte da URL). Ex: frontpage,outlet"
+    }
+  ],
+  "presets": [
+    { "name": "Lista de coleções (auto)", "category": "Coleções" }
+  ]
+}
+{% endschema %}

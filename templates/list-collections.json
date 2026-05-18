@@ -1,12 +1,17 @@
 {
   "sections": {
-    "categories": {
-      "type": "categories-grid",
+    "all-collections": {
+      "type": "all-collections",
       "settings": {
         "eyebrow": "Catálogo",
-        "heading": "Todas as categorias"
+        "heading": "Todas as categorias",
+        "subheading": "Explore nosso acervo por categoria",
+        "columns": 3,
+        "sort": "manual",
+        "show_empty": false,
+        "exclude_handles": "frontpage,all,homepage"
       }
     }
   },
-  "order": ["categories"]
+  "order": ["all-collections"]
 }
