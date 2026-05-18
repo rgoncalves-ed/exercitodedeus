@@ -1,0 +1,28 @@
+{%- comment -%}
+  Calculadora de frete (Frenet ou qualquer provider Shopify).
+  Aceita:
+    - variant_id (opcional): se passado, na PDP adiciona o produto ao
+      cart temporariamente pra calcular, depois remove.
+    - quantity (opcional, default 1)
+{%- endcomment -%}
+
+<div class="ship-calc"
+     data-shipping-calculator
+     {% if variant_id %}data-variant-id="{{ variant_id }}"{% endif %}
+     {% if quantity %}data-quantity="{{ quantity }}"{% endif %}>
+  <label class="ship-calc__label" for="ship-cep-{{ unique | default: variant_id | default: 'cart' }}">
+    {{ heading | default: 'Calcular frete e prazo' }}
+  </label>
+  <div class="ship-calc__row">
+    <input type="text"
+           id="ship-cep-{{ unique | default: variant_id | default: 'cart' }}"
+           class="ship-calc__input"
+           placeholder="00000-000"
+           inputmode="numeric"
+           maxlength="9"
+           data-cep-input>
+    <button type="button" class="btn btn--outline ship-calc__btn" data-cep-calc>Calcular</button>
+  </div>
+  <a href="https://buscacepinter.correios.com.br/" target="_blank" rel="noopener" class="ship-calc__link">Não sei meu CEP</a>
+  <div class="ship-calc__result" data-cep-result aria-live="polite"></div>
+</div>

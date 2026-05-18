@@ -538,14 +538,146 @@
     if (e.key === 'Escape' && document.body.classList.contains('cart-open')) closeCart();
   });
 
-  // CEP: máscara simples + chamada fake (visual apenas, sem API real)
-  var cepInput = document.querySelector('[data-cep-input]');
-  if (cepInput) {
-    cepInput.addEventListener('input', function () {
-      var v = cepInput.value.replace(/\D/g, '').slice(0, 8);
-      cepInput.value = v.length > 5 ? v.slice(0, 5) + '-' + v.slice(5) : v;
+  /* ==========================================================
+     Calculadora de frete (Frenet / qualquer provider Shopify)
+     ========================================================== */
+
+  // Faz POST/POLL na API nativa do Shopify, que consulta o provider
+  // configurado (Frenet, Melhor Envio, Correios etc). Retorna array
+  // de rates: [{ name, price, delivery_date, delivery_days, ... }]
+  function shopifyShippingRates(zip) {
+    var clean = zip.replace(/\D/g, '');
+    if (clean.length !== 8) return Promise.reject(new Error('CEP precisa ter 8 dígitos'));
+    var formatted = clean.slice(0, 5) + '-' + clean.slice(5);
+
+    var qs = 'shipping_address%5Bzip%5D=' + encodeURIComponent(formatted)
+           + '&shipping_address%5Bcountry%5D=Brazil';
+
+    // 1. Prepara o cálculo (Shopify dispara request para os providers)
+    return fetch('/cart/prepare_shipping_rates.json?' + qs, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' }
+    }).then(function (res) {
+      if (!res.ok) throw new Error('Erro ao iniciar cálculo (' + res.status + ')');
+
+      // 2. Faz polling em /cart/async_shipping_rates.json até retornar
+      var attempts = 0;
+      var maxAttempts = 30;
+      function poll() {
+        attempts++;
+        return fetch('/cart/async_shipping_rates.json?' + qs, {
+          headers: { 'Accept': 'application/json' }
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data.shipping_rates !== null && data.shipping_rates !== undefined) {
+              return data.shipping_rates;
+            }
+            if (attempts >= maxAttempts) throw new Error('Tempo esgotado');
+            return new Promise(function (resolve) { setTimeout(resolve, 500); }).then(poll);
+          });
+      }
+      return poll();
     });
   }
+
+  // Para a PDP: adiciona o produto temporariamente, calcula e remove
+  function calcRatesForVariant(variantId, qty, zip) {
+    var addedKey = null;
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: qty || 1 })
+    })
+      .then(function (r) { if (!r.ok) throw new Error('Falha ao preparar produto'); return r.json(); })
+      .then(function (line) {
+        addedKey = line.key;
+        return shopifyShippingRates(zip);
+      })
+      .then(function (rates) {
+        // remove o item temporário antes de retornar
+        return fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ id: addedKey, quantity: 0 })
+        }).then(function () { return rates; });
+      })
+      .catch(function (err) {
+        if (addedKey) {
+          // tenta limpar mesmo em caso de erro pra não deixar item fantasma
+          fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ id: addedKey, quantity: 0 })
+          });
+        }
+        throw err;
+      });
+  }
+
+  function renderShippingRates(rates) {
+    if (!rates || rates.length === 0) {
+      return '<p class="ship-calc__error">Nenhuma opção de frete encontrada para este CEP. Confira se o endereço está correto.</p>';
+    }
+    var rows = rates.map(function (r) {
+      var name = escapeHtml(r.presentment_name || r.name || r.code || 'Frete');
+      var price = parseFloat(r.price);
+      var priceFmt = price <= 0 ? '<strong style="color:#16A34A;">Grátis</strong>' : moneyBR(price * 100);
+      var when = '';
+      if (r.delivery_days) when = 'até ' + r.delivery_days + ' dias úteis';
+      else if (r.delivery_range && r.delivery_range.length) when = r.delivery_range.join('–') + ' dias úteis';
+      else if (r.delivery_date) when = 'entrega ' + r.delivery_date;
+      return ''
+        + '<li class="ship-calc__option">'
+        + '  <span class="ship-calc__option-name">' + name + '</span>'
+        + '  <span class="ship-calc__option-meta">' + escapeHtml(when) + '</span>'
+        + '  <span class="ship-calc__option-price">' + priceFmt + '</span>'
+        + '</li>';
+    }).join('');
+    return '<ul class="ship-calc__options">' + rows + '</ul>';
+  }
+
+  // Aplica a calculadora em cada [data-shipping-calculator] da página
+  document.querySelectorAll('[data-shipping-calculator]').forEach(function (container) {
+    var input = container.querySelector('[data-cep-input]');
+    var btn = container.querySelector('[data-cep-calc]');
+    var result = container.querySelector('[data-cep-result]');
+    if (!input || !btn || !result) return;
+
+    // Máscara CEP
+    input.addEventListener('input', function () {
+      var v = input.value.replace(/\D/g, '').slice(0, 8);
+      input.value = v.length > 5 ? v.slice(0, 5) + '-' + v.slice(5) : v;
+    });
+
+    function calc() {
+      var zip = input.value.trim();
+      if (zip.replace(/\D/g, '').length !== 8) {
+        result.innerHTML = '<p class="ship-calc__error">Digite um CEP válido (8 dígitos).</p>';
+        return;
+      }
+      result.innerHTML = '<p class="ship-calc__loading">Calculando frete…</p>';
+      btn.disabled = true;
+      var saved = btn.textContent;
+      btn.textContent = 'Calculando…';
+
+      var variantId = container.dataset.variantId;
+      var qty = parseInt(container.dataset.quantity, 10) || 1;
+      var promise = variantId
+        ? calcRatesForVariant(variantId, qty, zip)
+        : shopifyShippingRates(zip);
+
+      promise
+        .then(function (rates) { result.innerHTML = renderShippingRates(rates); })
+        .catch(function (err) { result.innerHTML = '<p class="ship-calc__error">' + escapeHtml(err.message || 'Erro ao calcular frete.') + '</p>'; })
+        .then(function () { btn.disabled = false; btn.textContent = saved; });
+    }
+
+    btn.addEventListener('click', calc);
+    input.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); calc(); }
+    });
+  });
 
   // Carrinho começa em sincronia com a tela
   if (document.querySelector('[data-cart-items]')) {

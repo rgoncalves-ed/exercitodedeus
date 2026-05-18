@@ -62,13 +62,7 @@
 
         <!-- Cálculo de frete -->
         <div class="cart-checkout__shipping">
-          <h3 class="cart-checkout__sub-heading">Calcular frete</h3>
-          <div class="cart-checkout__shipping-row">
-            <input type="text" placeholder="Digite seu CEP" inputmode="numeric" maxlength="9" data-cep-input>
-            <button type="button" class="btn btn--outline">Calcular</button>
-            <a href="https://buscacepinter.correios.com.br/" target="_blank" rel="noopener" class="cart-checkout__cep-link">Não sei meu CEP</a>
-          </div>
-          <div data-cep-result></div>
+          {% render 'shipping-calculator', heading: 'Calcular frete' %}
         </div>
       </div>
 
