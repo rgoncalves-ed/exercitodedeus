@@ -4147,6 +4147,9 @@ a.contact-info__row:hover { color: var(--color-accent); }
   inset: 0;
   z-index: 200;
   background: rgba(0,0,0,0.95);
+}
+.lightbox[hidden] { display: none; }
+.lightbox:not([hidden]) {
   display: grid;
   place-items: center;
   animation: lightbox-in 0.2s ease;
