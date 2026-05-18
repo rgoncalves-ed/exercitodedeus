@@ -542,42 +542,80 @@
      Calculadora de frete (Frenet / qualquer provider Shopify)
      ========================================================== */
 
-  // Faz POST/POLL na API nativa do Shopify, que consulta o provider
-  // configurado (Frenet, Melhor Envio, Correios etc). Retorna array
-  // de rates: [{ name, price, delivery_date, delivery_days, ... }]
+  // Busca o endereço pelo CEP via ViaCEP (gratuito, sem chave)
+  function lookupCEP(cleanZip) {
+    return fetch('https://viacep.com.br/ws/' + cleanZip + '/json/')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || data.erro) return null;
+        return { city: data.localidade, province: data.uf };
+      })
+      .catch(function () { return null; });
+  }
+
+  // Polling em /cart/async_shipping_rates.json até retornar rates
+  function pollShippingRates(qs) {
+    var attempts = 0;
+    var maxAttempts = 30;
+    function poll() {
+      attempts++;
+      return fetch('/cart/async_shipping_rates.json?' + qs, {
+        headers: { 'Accept': 'application/json' }
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.shipping_rates !== null && data.shipping_rates !== undefined) {
+            return data.shipping_rates;
+          }
+          if (attempts >= maxAttempts) throw new Error('Tempo esgotado ao calcular frete');
+          return new Promise(function (resolve) { setTimeout(resolve, 500); }).then(poll);
+        });
+    }
+    return poll();
+  }
+
+  // Calcula frete pela API nativa do Shopify, consultando o provider
+  // configurado (Frenet, Melhor Envio, Correios etc). Antes, busca
+  // estado/cidade pelo CEP via ViaCEP — Shopify exige endereço completo.
   function shopifyShippingRates(zip) {
     var clean = zip.replace(/\D/g, '');
     if (clean.length !== 8) return Promise.reject(new Error('CEP precisa ter 8 dígitos'));
     var formatted = clean.slice(0, 5) + '-' + clean.slice(5);
 
-    var qs = 'shipping_address%5Bzip%5D=' + encodeURIComponent(formatted)
-           + '&shipping_address%5Bcountry%5D=Brazil';
-
-    // 1. Prepara o cálculo (Shopify dispara request para os providers)
-    return fetch('/cart/prepare_shipping_rates.json?' + qs, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' }
-    }).then(function (res) {
-      if (!res.ok) throw new Error('Erro ao iniciar cálculo (' + res.status + ')');
-
-      // 2. Faz polling em /cart/async_shipping_rates.json até retornar
-      var attempts = 0;
-      var maxAttempts = 30;
-      function poll() {
-        attempts++;
-        return fetch('/cart/async_shipping_rates.json?' + qs, {
-          headers: { 'Accept': 'application/json' }
-        })
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            if (data.shipping_rates !== null && data.shipping_rates !== undefined) {
-              return data.shipping_rates;
-            }
-            if (attempts >= maxAttempts) throw new Error('Tempo esgotado');
-            return new Promise(function (resolve) { setTimeout(resolve, 500); }).then(poll);
-          });
+    return lookupCEP(clean).then(function (addr) {
+      if (!addr) {
+        throw new Error('CEP não encontrado. Confira o número digitado.');
       }
-      return poll();
+
+      var params = new URLSearchParams();
+      params.append('shipping_address[zip]', formatted);
+      params.append('shipping_address[country]', 'Brazil');
+      params.append('shipping_address[province]', addr.province);
+      params.append('shipping_address[city]', addr.city);
+      var qs = params.toString();
+
+      // 1. Prepara o cálculo (Shopify dispara request para os providers)
+      return fetch('/cart/prepare_shipping_rates.json?' + qs, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' }
+      }).then(function (res) {
+        if (!res.ok) {
+          return res.json().then(function (err) {
+            var msg = '';
+            if (err.shipping_address) {
+              msg = Array.isArray(err.shipping_address) ? err.shipping_address.join(', ') : JSON.stringify(err.shipping_address);
+            } else if (err.message) {
+              msg = err.message;
+            } else {
+              msg = 'Erro ' + res.status + ' ao calcular frete. Verifique se o produto tem peso cadastrado e se o Frenet está ativo.';
+            }
+            throw new Error(msg);
+          }, function () {
+            throw new Error('Erro ' + res.status + '. Verifique a configuração do Frenet em Apps → Frenet.');
+          });
+        }
+        return pollShippingRates(qs);
+      });
     });
   }
 
