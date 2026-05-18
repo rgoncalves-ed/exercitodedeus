@@ -789,32 +789,58 @@
   function pollShippingRates(qs) {
     var attempts = 0;
     var maxAttempts = 30;
+
     function poll() {
       attempts++;
       return fetch('/cart/async_shipping_rates.json?' + qs, {
         headers: { 'Accept': 'application/json' }
-      })
-        .then(function (r) {
-          if (!r.ok) throw new Error('Frete indisponível (' + r.status + ')');
-          return r.text();
-        })
-        .then(function (text) {
-          var data = null;
-          try { data = text ? JSON.parse(text) : null; } catch (e) { data = null; }
+      }).then(function (r) {
+        return r.text().then(function (text) { return { ok: r.ok, status: r.status, text: text }; });
+      }).then(function (res) {
+        var data = null;
+        try { data = res.text ? JSON.parse(res.text) : null; } catch (e) { data = null; }
 
-          // Estrutura ok com rates já prontos
-          if (data && Array.isArray(data.shipping_rates)) {
-            return data.shipping_rates;
-          }
-          // Ainda calculando (shipping_rates === null) → continua polling
-          if (data && data.shipping_rates === null) {
-            if (attempts >= maxAttempts) throw new Error('Tempo esgotado ao calcular frete');
-            return new Promise(function (resolve) { setTimeout(resolve, 500); }).then(poll);
-          }
-          // Resposta vazia/inesperada — tenta de novo até maxAttempts
-          if (attempts >= maxAttempts) throw new Error('Sem resposta do servidor de frete. Tente novamente.');
+        // Caso 1: rates já prontos
+        if (data && Array.isArray(data.shipping_rates)) {
+          return data.shipping_rates;
+        }
+
+        // Caso 2: ainda calculando (status 200, shipping_rates === null)
+        if (res.ok && data && data.shipping_rates === null) {
+          if (attempts >= maxAttempts) throw new Error('O cálculo demorou demais. Tente novamente.');
           return new Promise(function (resolve) { setTimeout(resolve, 500); }).then(poll);
-        });
+        }
+
+        // Caso 3: 422 nas primeiras tentativas pode ser transient (Shopify ainda
+        // não preparou). Retentar até 5x antes de desistir.
+        if (res.status === 422 && attempts < 6) {
+          return new Promise(function (resolve) { setTimeout(resolve, 600); }).then(poll);
+        }
+
+        // Caso 4: erro real, extrair mensagem do Shopify se houver
+        if (!res.ok) {
+          console.warn('[shipping] erro', res.status, data);
+          var serverMsg = '';
+          if (data) {
+            if (data.shipping_address) {
+              serverMsg = Array.isArray(data.shipping_address) ? data.shipping_address.join(', ') : JSON.stringify(data.shipping_address);
+            } else if (data.errors) {
+              serverMsg = typeof data.errors === 'string' ? data.errors : JSON.stringify(data.errors);
+            } else if (data.message) {
+              serverMsg = data.message;
+            }
+          }
+          if (serverMsg) throw new Error(serverMsg);
+          if (res.status === 422) {
+            throw new Error('Não foi possível calcular agora. Verifique se o produto tem peso cadastrado em Admin → Produtos → Envio → Peso.');
+          }
+          throw new Error('Frete indisponível (erro ' + res.status + ').');
+        }
+
+        // Caso 5: resposta vazia
+        if (attempts >= maxAttempts) throw new Error('Sem resposta do servidor de frete. Tente novamente.');
+        return new Promise(function (resolve) { setTimeout(resolve, 500); }).then(poll);
+      });
     }
     return poll();
   }
