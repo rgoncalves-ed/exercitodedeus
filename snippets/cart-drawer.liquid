@@ -37,12 +37,8 @@
     </div>
 
     <div class="cart-drawer__shipping" data-cart-shipping {% if cart.item_count == 0 %}hidden{% endif %}>
-      <h3 class="cart-drawer__heading">Entrega</h3>
-      <form class="cart-drawer__cep" data-cep-form>
-        <input type="text" placeholder="CEP" inputmode="numeric" maxlength="9" data-cep-input>
-        <button type="button" class="cart-drawer__cep-btn">Calcular</button>
-      </form>
-      <div class="cart-drawer__shipping-result" data-cep-result hidden></div>
+      <h3 class="cart-drawer__heading">Calcular entrega</h3>
+      {% render 'shipping-calculator', unique: 'drawer', hide_heading: true %}
     </div>
   </div>
 

@@ -2693,3 +2693,14 @@ body.cart-open .cart-drawer { transform: translateX(0); }
   .ship-calc__option { grid-template-columns: 1fr auto; }
   .ship-calc__option-meta { grid-column: 1 / -1; }
 }
+
+/* Versão compacta dentro do cart drawer */
+.cart-drawer__shipping .ship-calc {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin-top: 0;
+}
+.cart-drawer__shipping .ship-calc__input {
+  padding: 10px 12px;
+}

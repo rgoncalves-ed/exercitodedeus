@@ -10,9 +10,11 @@
      data-shipping-calculator
      {% if variant_id %}data-variant-id="{{ variant_id }}"{% endif %}
      {% if quantity %}data-quantity="{{ quantity }}"{% endif %}>
-  <label class="ship-calc__label" for="ship-cep-{{ unique | default: variant_id | default: 'cart' }}">
-    {{ heading | default: 'Calcular frete e prazo' }}
-  </label>
+  {%- unless hide_heading -%}
+    <label class="ship-calc__label" for="ship-cep-{{ unique | default: variant_id | default: 'cart' }}">
+      {{ heading | default: 'Calcular frete e prazo' }}
+    </label>
+  {%- endunless -%}
   <div class="ship-calc__row">
     <input type="text"
            id="ship-cep-{{ unique | default: variant_id | default: 'cart' }}"
