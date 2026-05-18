@@ -1,5 +1,11 @@
-{%- assign featured_collection = collections[section.settings.collection] -%}
-<section class="section">
+{%- liquid
+  assign featured_collection = collections[section.settings.collection]
+  assign products_to_show = featured_collection.products | default: collections.all.products
+  assign layout = section.settings.layout | default: 'carousel'
+  assign cols = section.settings.desktop_cols | default: 4
+-%}
+
+<section class="section featured-collection featured-collection--{{ layout }}">
   <div class="page-width">
     <div class="section-heading section-heading--simple">
       <h2 class="section-heading__title">{{ section.settings.heading | default: featured_collection.title }}</h2>
@@ -8,16 +14,38 @@
       {%- endif -%}
     </div>
 
-    {%- assign products_to_show = featured_collection.products | default: collections.all.products -%}
-    <div class="product-grid product-grid--3">
-      {%- for product in products_to_show limit: section.settings.products_to_show -%}
-        {% render 'product-card', product: product %}
-      {%- else -%}
-        {%- for i in (1..section.settings.products_to_show) -%}
-          {% render 'product-card-placeholder' %}
+    {%- if layout == 'carousel' -%}
+      <div class="prod-carousel" data-prod-carousel>
+        <div class="prod-carousel__track" data-cols="{{ cols }}" data-prod-carousel-track>
+          {%- for product in products_to_show limit: section.settings.products_to_show -%}
+            <div class="prod-carousel__slide">
+              {% render 'product-card', product: product %}
+            </div>
+          {%- else -%}
+            {%- for i in (1..6) -%}
+              <div class="prod-carousel__slide">{% render 'product-card-placeholder' %}</div>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+
+        <button type="button" class="prod-carousel__arrow prod-carousel__arrow--prev" data-prod-carousel-prev aria-label="Anterior" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="prod-carousel__arrow prod-carousel__arrow--next" data-prod-carousel-next aria-label="Próximo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    {%- else -%}
+      <div class="product-grid product-grid--{{ cols }}">
+        {%- for product in products_to_show limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- else -%}
+          {%- for i in (1..section.settings.products_to_show) -%}
+            {% render 'product-card-placeholder' %}
+          {%- endfor -%}
         {%- endfor -%}
-      {%- endfor -%}
-    </div>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -28,13 +56,34 @@
     { "type": "text", "id": "heading", "label": "Título", "default": "Novidades da loja" },
     { "type": "collection", "id": "collection", "label": "Coleção" },
     {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "carousel", "label": "Carrossel horizontal (com setas)" },
+        { "value": "grid", "label": "Grade (todos visíveis)" }
+      ],
+      "default": "carousel",
+      "info": "Carrossel: cliente desliza pra ver mais. Grade: mostra todos de uma vez."
+    },
+    {
+      "type": "range",
+      "id": "desktop_cols",
+      "min": 3,
+      "max": 5,
+      "step": 1,
+      "label": "Produtos visíveis no desktop",
+      "default": 4
+    },
+    {
       "type": "range",
       "id": "products_to_show",
       "min": 3,
-      "max": 12,
-      "step": 3,
-      "label": "Quantidade de produtos",
-      "default": 6
+      "max": 18,
+      "step": 1,
+      "label": "Quantidade total de produtos",
+      "default": 8,
+      "info": "Total carregado. No carrossel, controla quantos cabem no slide."
     },
     {
       "type": "checkbox",

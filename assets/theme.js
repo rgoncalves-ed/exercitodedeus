@@ -711,6 +711,57 @@
   }
 
   /* ==========================================================
+     Product carousel (featured-collection)
+     ========================================================== */
+
+  document.querySelectorAll('[data-prod-carousel]').forEach(function (carousel) {
+    var track = carousel.querySelector('[data-prod-carousel-track]');
+    var prev = carousel.querySelector('[data-prod-carousel-prev]');
+    var next = carousel.querySelector('[data-prod-carousel-next]');
+    if (!track) return;
+
+    function slideWidth() {
+      var slide = track.querySelector('.prod-carousel__slide');
+      if (!slide) return 0;
+      var style = window.getComputedStyle(slide);
+      var gap = parseFloat(window.getComputedStyle(track).columnGap) || 16;
+      return slide.offsetWidth + gap;
+    }
+
+    function visibleCount() {
+      var w = slideWidth();
+      if (!w) return 1;
+      return Math.max(1, Math.floor(track.clientWidth / w));
+    }
+
+    function updateArrows() {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      if (prev) prev.hidden = track.scrollLeft <= 4;
+      if (next) next.hidden = track.scrollLeft >= max;
+    }
+
+    function scrollBy(dir) {
+      var step = slideWidth() * visibleCount();
+      track.scrollBy({ left: dir * step, behavior: 'smooth' });
+    }
+
+    if (prev) prev.addEventListener('click', function () { scrollBy(-1); });
+    if (next) next.addEventListener('click', function () { scrollBy(1); });
+
+    track.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+
+    // Estado inicial
+    updateArrows();
+
+    // Recalcula quando imagens dos cards terminam de carregar (mudam scrollWidth)
+    track.querySelectorAll('img').forEach(function (img) {
+      if (img.complete) return;
+      img.addEventListener('load', updateArrows, { once: true });
+    });
+  });
+
+  /* ==========================================================
      Cookie banner (LGPD)
      ========================================================== */
 

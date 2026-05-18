@@ -621,17 +621,16 @@ p { margin: 0 0 1em; }
   gap: 24px 16px;
 }
 
-/* Em destaque na home: 3 colunas no desktop, 2 no tablet, 2 no mobile.
-   Cards têm tamanho máximo pra não estourar quando há poucos produtos. */
-.product-grid--3 {
-  grid-template-columns: repeat(auto-fill, minmax(220px, 320px));
-  justify-content: start;
-  gap: 20px 16px;
-}
+/* Em destaque na home: N colunas exatas no desktop */
+.product-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 16px; }
+.product-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px 16px; }
+.product-grid--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 12px; }
 
 @media (max-width: 749px) {
   .product-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 10px; }
-  .product-grid--3 { grid-template-columns: repeat(2, 1fr); gap: 20px 10px; }
+  .product-grid--3,
+  .product-grid--4,
+  .product-grid--5 { grid-template-columns: repeat(2, 1fr); gap: 20px 10px; }
 }
 
 /* ----------------------- Product card (estilo livraria minimalista) ----------------------- */
@@ -3619,4 +3618,96 @@ a.contact-info__row:hover { color: var(--color-accent); }
   width: 100%;
   height: 360px;
   border: 0;
+}
+
+/* ==========================================================
+   Carrossel horizontal de produtos (featured-collection)
+   ========================================================== */
+
+.featured-collection { padding-block: 24px; }
+
+.prod-carousel {
+  position: relative;
+  /* Margin negativa pras setas saírem um pouco fora do page-width */
+  margin-inline: -4px;
+}
+
+.prod-carousel__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--cols, 4) - 1) * 16px) / var(--cols, 4));
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-padding-inline: 4px;
+  padding: 4px;
+  /* Esconde scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.prod-carousel__track::-webkit-scrollbar { display: none; }
+
+.prod-carousel__track[data-cols="3"] { --cols: 3; }
+.prod-carousel__track[data-cols="4"] { --cols: 4; }
+.prod-carousel__track[data-cols="5"] { --cols: 5; }
+
+.prod-carousel__slide {
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+.prod-carousel__arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: #1A1A1A;
+  display: inline-grid;
+  place-items: center;
+  z-index: 5;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+.prod-carousel__arrow:hover {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+.prod-carousel__arrow[hidden] {
+  opacity: 0;
+  pointer-events: none;
+  display: inline-grid !important;
+}
+.prod-carousel__arrow svg { width: 20px; height: 20px; }
+.prod-carousel__arrow--prev { left: -12px; }
+.prod-carousel__arrow--next { right: -12px; }
+
+@media (max-width: 999px) {
+  /* Tablet: 2 visíveis */
+  .prod-carousel__track[data-cols="3"],
+  .prod-carousel__track[data-cols="4"],
+  .prod-carousel__track[data-cols="5"] {
+    grid-auto-columns: calc((100% - 16px) / 2);
+  }
+  .prod-carousel__arrow--prev { left: 4px; }
+  .prod-carousel__arrow--next { right: 4px; }
+}
+
+@media (max-width: 600px) {
+  /* Mobile: 1.4 visíveis pra dar dica de "tem mais" */
+  .prod-carousel__track[data-cols="3"],
+  .prod-carousel__track[data-cols="4"],
+  .prod-carousel__track[data-cols="5"] {
+    grid-auto-columns: calc((100% - 32px) / 1.4);
+    gap: 12px;
+  }
+  .prod-carousel__arrow {
+    display: none;
+  }
 }
