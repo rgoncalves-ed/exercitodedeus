@@ -154,6 +154,45 @@
     ]
   },
   {
+    "name": "Contato",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Esses dados aparecem na página /pages/contato (template page.contato). O e-mail das mensagens do formulário vai para o e-mail principal da loja em Admin → Configurações → Loja."
+      },
+      {
+        "type": "text",
+        "id": "contact_phone_number",
+        "label": "Telefone exibido",
+        "default": "(43) 9993-5389"
+      },
+      {
+        "type": "text",
+        "id": "contact_email_address",
+        "label": "E-mail exibido",
+        "default": "loja@grupoexercitodedeus.com.br"
+      },
+      {
+        "type": "textarea",
+        "id": "contact_address",
+        "label": "Endereço",
+        "default": "Rua Carmela Dutra 190, Jardim Morumbi, CEP 86036-360, Londrina/PR"
+      },
+      {
+        "type": "text",
+        "id": "contact_hours",
+        "label": "Horário de atendimento",
+        "default": "Segunda a sexta, 9h às 18h"
+      },
+      {
+        "type": "textarea",
+        "id": "contact_map_embed",
+        "label": "Embed do mapa (iframe Google Maps)",
+        "info": "Cole o código de incorporação (iframe) do Google Maps aqui."
+      }
+    ]
+  },
+  {
     "name": "Redes sociais",
     "settings": [
       {
