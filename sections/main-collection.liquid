@@ -76,14 +76,33 @@
                       </label>
                     {%- endfor -%}
                   {%- when 'price_range' -%}
+                    {%- assign max_placeholder = filter.range_max | money_without_currency | replace: ',', '.' -%}
                     <div class="filter-price">
-                      <label>
+                      <label class="filter-price__field">
                         <span>De</span>
-                        <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}" placeholder="0" min="0">
+                        <div class="filter-price__input">
+                          <em>R$</em>
+                          <input type="number"
+                                 name="{{ filter.min_value.param_name }}"
+                                 value="{{ filter.min_value.value }}"
+                                 placeholder="0"
+                                 min="0"
+                                 step="0.01"
+                                 inputmode="decimal">
+                        </div>
                       </label>
-                      <label>
+                      <label class="filter-price__field">
                         <span>Até</span>
-                        <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}" placeholder="{{ filter.range_max | divided_by: 100 }}" min="0">
+                        <div class="filter-price__input">
+                          <em>R$</em>
+                          <input type="number"
+                                 name="{{ filter.max_value.param_name }}"
+                                 value="{{ filter.max_value.value }}"
+                                 placeholder="{{ max_placeholder }}"
+                                 min="0"
+                                 step="0.01"
+                                 inputmode="decimal">
+                        </div>
                       </label>
                     </div>
                 {%- endcase -%}
