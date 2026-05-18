@@ -562,12 +562,25 @@
       return fetch('/cart/async_shipping_rates.json?' + qs, {
         headers: { 'Accept': 'application/json' }
       })
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          if (data.shipping_rates !== null && data.shipping_rates !== undefined) {
+        .then(function (r) {
+          if (!r.ok) throw new Error('Frete indisponível (' + r.status + ')');
+          return r.text();
+        })
+        .then(function (text) {
+          var data = null;
+          try { data = text ? JSON.parse(text) : null; } catch (e) { data = null; }
+
+          // Estrutura ok com rates já prontos
+          if (data && Array.isArray(data.shipping_rates)) {
             return data.shipping_rates;
           }
-          if (attempts >= maxAttempts) throw new Error('Tempo esgotado ao calcular frete');
+          // Ainda calculando (shipping_rates === null) → continua polling
+          if (data && data.shipping_rates === null) {
+            if (attempts >= maxAttempts) throw new Error('Tempo esgotado ao calcular frete');
+            return new Promise(function (resolve) { setTimeout(resolve, 500); }).then(poll);
+          }
+          // Resposta vazia/inesperada — tenta de novo até maxAttempts
+          if (attempts >= maxAttempts) throw new Error('Sem resposta do servidor de frete. Tente novamente.');
           return new Promise(function (resolve) { setTimeout(resolve, 500); }).then(poll);
         });
     }
