@@ -126,8 +126,8 @@
     "novidades": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Novidades da loja",
-        "collection": "",
+        "heading": "Combos",
+        "collection": "combos",
         "products_to_show": 3,
         "show_view_all": true
       }
@@ -190,7 +190,7 @@
     "presentear": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Combos",
+        "heading": "Os mais vendidos",
         "collection": "",
         "products_to_show": 6,
         "show_view_all": true
