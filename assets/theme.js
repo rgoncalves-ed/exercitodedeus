@@ -167,27 +167,9 @@
       slides.forEach(function (s) { io.observe(s); });
     }
 
-    // Zoom ao hover no desktop (transform-origin segue o mouse)
+    // Click no slide abre o lightbox (fullscreen com zoom)
     slides.forEach(function (slide) {
-      var img = slide.querySelector('.product__main-img');
-      if (!img) return;
-      slide.addEventListener('mousemove', function (e) {
-        if (window.innerWidth < 750) return;
-        var rect = slide.getBoundingClientRect();
-        var x = ((e.clientX - rect.left) / rect.width) * 100;
-        var y = ((e.clientY - rect.top) / rect.height) * 100;
-        img.style.transformOrigin = x + '% ' + y + '%';
-        img.style.transform = 'scale(1.8)';
-      });
-      slide.addEventListener('mouseleave', function () {
-        img.style.transform = '';
-        img.style.transformOrigin = '';
-      });
-    });
-
-    // Click no slide abre o lightbox
-    slides.forEach(function (slide) {
-      slide.addEventListener('click', function (e) {
+      slide.addEventListener('click', function () {
         var idx = parseInt(slide.dataset.gallerySlide, 10) || 0;
         openLightbox(idx);
       });

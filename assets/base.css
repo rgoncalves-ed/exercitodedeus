@@ -4089,7 +4089,6 @@ a.contact-info__row:hover { color: var(--color-accent); }
   height: 100%;
   object-fit: contain;
   padding: 24px;
-  transition: transform 0.25s ease-out;
 }
 
 .product__gallery-arrow {
