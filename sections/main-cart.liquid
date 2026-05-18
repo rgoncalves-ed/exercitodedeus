@@ -12,6 +12,8 @@
     <p class="muted">{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}itens{% endif %}</p>
   </div>
 
+  {% render 'free-shipping-bar' %}
+
   {%- if cart.item_count > 0 -%}
     <form action="{{ routes.cart_url }}" method="post" novalidate class="cart-checkout__grid">
 

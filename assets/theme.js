@@ -420,6 +420,28 @@
     var totalEl = document.querySelector('[data-cart-total]');
     if (subtotalEl) subtotalEl.textContent = moneyBR(cart.total_price);
     if (totalEl) totalEl.textContent = moneyBR(cart.total_price);
+
+    updateFreeShippingBar(cart.total_price);
+  }
+
+  // Atualiza a barra de "Frete grátis acima de R$ X" reagindo ao cart
+  function updateFreeShippingBar(totalCents) {
+    document.querySelectorAll('[data-free-shipping-bar]').forEach(function (bar) {
+      var threshold = parseInt(bar.dataset.thresholdCents, 10);
+      if (!threshold || threshold <= 0) return;
+      var missing = Math.max(0, threshold - totalCents);
+      var percent = Math.min(100, Math.round((totalCents / threshold) * 100));
+      var fill = bar.querySelector('[data-free-shipping-fill]');
+      var text = bar.querySelector('[data-free-shipping-text]');
+      if (fill) fill.style.width = percent + '%';
+      if (missing <= 0) {
+        bar.classList.add('is-achieved');
+        if (text) text.innerHTML = '🎉 <strong>Você ganhou frete grátis!</strong>';
+      } else {
+        bar.classList.remove('is-achieved');
+        if (text) text.innerHTML = 'Faltam <strong>' + moneyBR(missing) + '</strong> pra você ganhar <strong>frete grátis</strong>';
+      }
+    });
   }
 
   function escapeHtml(str) {
@@ -690,8 +712,105 @@
 
   // CEP salvo no localStorage (lembra entre sessões)
   var CEP_KEY = 'exdeus_last_cep';
-  function saveCEP(cep) { try { localStorage.setItem(CEP_KEY, cep); } catch (e) {} }
+  function saveCEP(cep) {
+    try { localStorage.setItem(CEP_KEY, cep); } catch (e) {}
+    syncCEPWidget(cep);
+  }
   function loadCEP() { try { return localStorage.getItem(CEP_KEY) || ''; } catch (e) { return ''; } }
+
+  function syncCEPWidget(cep) {
+    document.querySelectorAll('[data-cep-widget-value]').forEach(function (el) {
+      el.textContent = cep || 'Definir CEP';
+    });
+  }
+
+  // Mini widget de CEP no topbar — abre dropdown, salva CEP, opcionalmente
+  // calcula frete se o carrinho tem items.
+  document.querySelectorAll('[data-cep-widget]').forEach(function (widget) {
+    var toggle = widget.querySelector('[data-cep-widget-toggle]');
+    var dropdown = widget.querySelector('[data-cep-widget-dropdown]');
+    var input = widget.querySelector('[data-cep-widget-input]');
+    var submit = widget.querySelector('[data-cep-widget-submit]');
+    var result = widget.querySelector('[data-cep-widget-result]');
+    var info = widget.querySelector('[data-cep-widget-info]');
+    if (!toggle || !dropdown || !input || !submit) return;
+
+    // Pre-fill com CEP salvo
+    var savedCep = loadCEP();
+    if (savedCep) input.value = savedCep;
+
+    function open() {
+      dropdown.removeAttribute('hidden');
+      toggle.setAttribute('aria-expanded', 'true');
+      setTimeout(function () { input.focus(); }, 0);
+    }
+    function close() {
+      dropdown.setAttribute('hidden', '');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (dropdown.hasAttribute('hidden')) open(); else close();
+    });
+
+    // Fecha ao clicar fora
+    document.addEventListener('click', function (e) {
+      if (!widget.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+
+    // Máscara
+    input.addEventListener('input', function () {
+      var v = input.value.replace(/\D/g, '').slice(0, 8);
+      input.value = v.length > 5 ? v.slice(0, 5) + '-' + v.slice(5) : v;
+    });
+
+    function submitCep() {
+      var zip = input.value.trim();
+      if (zip.replace(/\D/g, '').length !== 8) {
+        if (result) result.innerHTML = '<p class="ship-calc__error">CEP precisa ter 8 dígitos.</p>';
+        return;
+      }
+      saveCEP(zip);
+      if (info) info.textContent = 'CEP salvo: ' + zip;
+
+      // Pre-preenche outras calculadoras da página
+      document.querySelectorAll('[data-shipping-calculator] [data-cep-input]').forEach(function (i) {
+        if (i !== input) i.value = zip;
+      });
+
+      // Se tem itens no cart, calcula e mostra
+      fetch('/cart.js').then(function (r) { return r.json(); }).then(function (cart) {
+        if (cart.item_count === 0) {
+          if (result) result.innerHTML = '<p class="ship-calc__loading" style="background:#E8F5E9;color:#1B5E20;border:0;padding:8px 10px;border-radius:6px;">CEP salvo! Adicione produtos pra ver o frete.</p>';
+          setTimeout(close, 1800);
+          return;
+        }
+        if (result) result.innerHTML = '<p class="ship-calc__loading">Calculando frete…</p>';
+        submit.disabled = true;
+        shopifyShippingRates(zip)
+          .then(function (rates) {
+            if (result) result.innerHTML = renderShippingRates(rates);
+            updateCheapestShipping(rates);
+          })
+          .catch(function (err) {
+            if (result) result.innerHTML = '<p class="ship-calc__error">' + escapeHtml(err.message || 'Erro') + '</p>';
+          })
+          .then(function () { submit.disabled = false; });
+      });
+    }
+
+    submit.addEventListener('click', submitCep);
+    input.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); submitCep(); }
+    });
+
+    // Mostra CEP atual no botão
+    if (savedCep) syncCEPWidget(savedCep);
+  });
 
   // Atualiza linhas "Frete a partir de R$ X" no resumo do carrinho/drawer
   function updateCheapestShipping(rates) {

@@ -30,6 +30,26 @@
       </div>
 
       <div class="topbar__actions">
+        {%- if section.settings.show_cep_widget -%}
+          <div class="topbar__cep" data-cep-widget>
+            <button type="button" class="topbar__cep-trigger" data-cep-widget-toggle aria-expanded="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="topbar__cep-label">Entregar em</span>
+              <strong class="topbar__cep-value" data-cep-widget-value>Definir CEP</strong>
+            </button>
+            <div class="topbar__cep-dropdown" data-cep-widget-dropdown hidden>
+              <p class="topbar__cep-dropdown-title">Calcular entrega</p>
+              <p class="topbar__cep-dropdown-info" data-cep-widget-info>Digite seu CEP pra estimar prazo e valor.</p>
+              <div class="topbar__cep-form">
+                <input type="text" placeholder="00000-000" inputmode="numeric" maxlength="9" data-cep-widget-input>
+                <button type="button" class="btn btn--primary btn--sm" data-cep-widget-submit>OK</button>
+              </div>
+              <a href="https://buscacepinter.correios.com.br/" target="_blank" rel="noopener" class="topbar__cep-link">Não sei meu CEP</a>
+              <div class="topbar__cep-result" data-cep-widget-result></div>
+            </div>
+          </div>
+        {%- endif -%}
+
         {%- if section.settings.show_track_order -%}
           {%- assign track_url = section.settings.track_order_url | default: routes.account_url -%}
           <a href="{{ track_url }}" class="topbar__action topbar__action--track">
@@ -103,6 +123,17 @@
       "id": "contact_email",
       "label": "E-mail (exibe no topo)",
       "default": "loja@grupoexercitodedeus.com.br"
+    },
+    {
+      "type": "header",
+      "content": "Widget CEP no topo"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cep_widget",
+      "label": "Mostrar widget \"Entregar em\" no topo",
+      "info": "Cliente pode definir o CEP em qualquer página; valor fica salvo e pre-preenche todas as calculadoras de frete.",
+      "default": true
     },
     {
       "type": "header",

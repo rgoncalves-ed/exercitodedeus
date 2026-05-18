@@ -2704,3 +2704,158 @@ body.cart-open .cart-drawer { transform: translateX(0); }
 .cart-drawer__shipping .ship-calc__input {
   padding: 10px 12px;
 }
+
+/* ==========================================================
+   Barra de frete grátis
+   ========================================================== */
+
+.free-ship-bar {
+  background: linear-gradient(135deg, #F0F9F4 0%, #DDF4E6 100%);
+  border: 1px solid #B7E8C8;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 0 0 16px;
+}
+.free-ship-bar.is-achieved {
+  background: linear-gradient(135deg, #DCFCE7 0%, #B5EBC8 100%);
+  border-color: #4ADE80;
+}
+.free-ship-bar__text {
+  margin: 0 0 8px;
+  font-size: 0.84rem;
+  color: #1B5E20;
+  text-align: center;
+}
+.free-ship-bar__text strong { color: #166534; }
+.free-ship-bar__track {
+  height: 6px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.free-ship-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2A9E3B, #4ADE80);
+  border-radius: 999px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.free-ship-bar.is-achieved .free-ship-bar__fill {
+  background: linear-gradient(90deg, #16A34A, #22C55E);
+}
+
+/* Versão dentro do drawer e do /cart */
+.cart-drawer__body > .free-ship-bar { margin: 16px 16px 0; }
+
+/* ==========================================================
+   Widget CEP no topbar
+   ========================================================== */
+
+.topbar__cep {
+  position: relative;
+  display: inline-flex;
+}
+
+.topbar__cep-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: #fff;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  max-width: 200px;
+}
+.topbar__cep-trigger:hover {
+  background: rgba(255,255,255,0.2);
+}
+.topbar__cep-trigger svg { width: 14px; height: 14px; opacity: 0.85; flex-shrink: 0; }
+.topbar__cep-label {
+  opacity: 0.85;
+  white-space: nowrap;
+}
+.topbar__cep-value {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar__cep-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 280px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+  z-index: 100;
+}
+.topbar__cep-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+  border-left: 1px solid var(--color-border);
+  transform: rotate(45deg);
+}
+.topbar__cep-dropdown-title {
+  margin: 0 0 4px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.topbar__cep-dropdown-info {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+.topbar__cep-form {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.topbar__cep-form input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font: inherit;
+  background: #fff;
+  letter-spacing: 0.02em;
+}
+.topbar__cep-form input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
+}
+.topbar__cep-link {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+.topbar__cep-result { margin-top: 12px; }
+.topbar__cep-result:empty { display: none; }
+
+@media (max-width: 749px) {
+  .topbar__cep-trigger { padding: 5px 10px; font-size: 0.72rem; }
+  .topbar__cep-label { display: none; }
+  .topbar__cep-dropdown {
+    position: fixed;
+    top: auto;
+    right: 8px;
+    left: 8px;
+    width: auto;
+    min-width: 0;
+  }
+  .topbar__cep-dropdown::before { display: none; }
+}

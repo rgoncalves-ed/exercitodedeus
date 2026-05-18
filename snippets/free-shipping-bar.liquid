@@ -1,0 +1,31 @@
+{%- comment -%}
+  Barra de progresso "frete grátis acima de R$ X".
+  Calculo no server-side (1a renderização) + atualização live via JS
+  quando o carrinho muda.
+{%- endcomment -%}
+
+{%- if settings.free_shipping_enabled and settings.free_shipping_threshold > 0 -%}
+  {%- assign threshold_cents = settings.free_shipping_threshold | times: 100 -%}
+  {%- assign current = cart.total_price | default: 0 -%}
+  {%- assign missing = threshold_cents | minus: current -%}
+  {%- if missing < 0 -%}{%- assign missing = 0 -%}{%- endif -%}
+  {%- assign percent = current | times: 100 | divided_by: threshold_cents -%}
+  {%- if percent > 100 -%}{%- assign percent = 100 -%}{%- endif -%}
+  {%- assign achieved = false -%}
+  {%- if current >= threshold_cents -%}{%- assign achieved = true -%}{%- endif -%}
+
+  <div class="free-ship-bar {% if achieved %}is-achieved{% endif %}"
+       data-free-shipping-bar
+       data-threshold-cents="{{ threshold_cents }}">
+    <p class="free-ship-bar__text" data-free-shipping-text>
+      {%- if achieved -%}
+        🎉 <strong>Você ganhou frete grátis!</strong>
+      {%- else -%}
+        Faltam <strong data-free-shipping-missing>{{ missing | money }}</strong> pra você ganhar <strong>frete grátis</strong>
+      {%- endif -%}
+    </p>
+    <div class="free-ship-bar__track" aria-hidden="true">
+      <div class="free-ship-bar__fill" data-free-shipping-fill style="width: {{ percent }}%;"></div>
+    </div>
+  </div>
+{%- endif -%}

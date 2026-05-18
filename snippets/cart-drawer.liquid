@@ -10,6 +10,8 @@
   </header>
 
   <div class="cart-drawer__body">
+    {% render 'free-shipping-bar' %}
+
     <div class="cart-drawer__items" data-cart-items>
       {% if cart.item_count > 0 %}
         {% for item in cart.items %}

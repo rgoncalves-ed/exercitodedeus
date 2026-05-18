@@ -168,6 +168,28 @@
     ]
   },
   {
+    "name": "Frete grátis",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Mostra uma barra de progresso no carrinho indicando quanto falta para o cliente ganhar frete grátis."
+      },
+      {
+        "type": "checkbox",
+        "id": "free_shipping_enabled",
+        "label": "Ativar barra de frete grátis",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Valor mínimo (em reais)",
+        "default": 199,
+        "info": "Acima desse valor o cliente ganha frete grátis. Você precisa criar a regra de \"shipping rate\" no admin para que isso funcione no checkout — aqui é apenas o aviso visual."
+      }
+    ]
+  },
+  {
     "name": "Pagamentos extras",
     "settings": [
       {
