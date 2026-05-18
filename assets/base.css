@@ -4017,8 +4017,10 @@ a.contact-info__row:hover { color: var(--color-accent); }
   gap: 16px;
   align-items: start;
 }
+.product__gallery--single { grid-template-columns: 1fr; }
 @media (max-width: 749px) {
-  .product__gallery { grid-template-columns: 1fr; gap: 12px; }
+  .product__gallery,
+  .product__gallery--single { grid-template-columns: 1fr; gap: 12px; }
 }
 
 .product__thumbs {

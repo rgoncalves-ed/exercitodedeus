@@ -1,6 +1,6 @@
 <section class="page-width product-page">
   <div class="product" data-product-section data-product-handle="{{ product.handle }}">
-    <div class="product__gallery" data-gallery>
+    <div class="product__gallery {% if product.images.size <= 1 %}product__gallery--single{% endif %}" data-gallery>
       {%- if product.images.size > 1 -%}
         <div class="product__thumbs">
           {%- for image in product.images -%}
