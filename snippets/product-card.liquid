@@ -26,6 +26,13 @@
   unless product.available
     assign is_soldout = true
   endunless
+
+  assign first_variant = product.selected_or_first_available_variant
+  assign low_threshold = settings.low_stock_threshold | default: 5
+  assign low_stock_qty = 0
+  if first_variant.inventory_management == 'shopify' and first_variant.inventory_policy == 'deny' and first_variant.inventory_quantity > 0 and first_variant.inventory_quantity <= low_threshold
+    assign low_stock_qty = first_variant.inventory_quantity
+  endif
 -%}
 
 <div class="product-card" data-product-handle="{{ product.handle }}">
@@ -45,6 +52,13 @@
     {%- else -%}
       {%- if on_sale -%}
         <span class="product-badge product-badge--sale">−{{ discount_pct }}%</span>
+      {%- endif -%}
+      {%- if low_stock_qty > 0 -%}
+        {%- if low_stock_qty == 1 -%}
+          <span class="product-badge product-badge--last">Último!</span>
+        {%- else -%}
+          <span class="product-badge product-badge--low">Restam {{ low_stock_qty }}</span>
+        {%- endif -%}
       {%- endif -%}
       {%- if is_new -%}
         <span class="product-badge product-badge--new">Novo</span>

@@ -2828,6 +2828,40 @@ body.cart-open .cart-drawer { transform: translateX(0); }
 .product-badge--soldout {
   background: #6B7280;
 }
+.product-badge--last {
+  background: #DC2626;
+  animation: badge-pulse 1.8s ease-in-out infinite;
+}
+.product-badge--low {
+  background: #EA580C;
+}
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.03); }
+}
+
+/* Aviso de estoque baixo na PDP */
+.product__stock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  margin: 8px 0 16px;
+}
+.product__stock svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.product__stock--low {
+  background: #FFF7ED;
+  color: #9A3412;
+  border: 1px solid #FED7AA;
+}
+.product__stock--low svg { color: #EA580C; }
+.product__stock strong { font-weight: 700; }
 
 /* ==========================================================
    Página /promocoes

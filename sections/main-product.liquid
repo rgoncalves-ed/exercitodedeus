@@ -49,6 +49,28 @@
         <span class="price__installments">ou em até 12x de {{ product.price | divided_by: 12 | money }}</span>
       </div>
 
+      {%- liquid
+        assign variant = product.selected_or_first_available_variant
+        assign low_threshold = settings.low_stock_threshold | default: 5
+        assign show_low_stock = false
+        if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny' and variant.inventory_quantity > 0 and variant.inventory_quantity <= low_threshold
+          assign show_low_stock = true
+        endif
+      -%}
+
+      {%- if show_low_stock -%}
+        <div class="product__stock product__stock--low" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          <span>
+            {%- if variant.inventory_quantity == 1 -%}
+              <strong>Último em estoque!</strong> Garante o seu agora.
+            {%- else -%}
+              <strong>Apenas {{ variant.inventory_quantity }} {% if variant.inventory_quantity == 1 %}unidade{% else %}unidades{% endif %}</strong> em estoque.
+            {%- endif -%}
+          </span>
+        </div>
+      {%- endif -%}
+
       <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="product__form" data-product-form>
         {%- unless product.has_only_default_variant -%}
           {%- for option in product.options_with_values -%}
@@ -63,12 +85,12 @@
           {%- endfor -%}
         {%- endunless -%}
 
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="id" value="{{ variant.id }}">
 
         <button type="submit"
                 class="btn btn--primary btn--block btn--pill product__buy"
-                {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-          {% if product.selected_or_first_available_variant.available %}
+                {% unless variant.available %}disabled{% endunless %}>
+          {% if variant.available %}
             Comprar
           {% else %}
             Esgotado

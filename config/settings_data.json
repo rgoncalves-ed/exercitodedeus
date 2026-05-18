@@ -16,6 +16,7 @@
     "card_show_vendor": true,
     "badge_new_days": 30,
     "badge_bestseller_tag": "mais-vendido",
+    "low_stock_threshold": 5,
     "social_instagram": "https://www.instagram.com/anaclararocha_exercitodedeus/",
     "social_facebook": "",
     "social_youtube": "https://www.youtube.com/c/AnaClaraApresentadora?sub_confirmation=1",
