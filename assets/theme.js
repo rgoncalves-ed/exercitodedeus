@@ -116,19 +116,247 @@
     trigger.click();
   });
 
-  // ---------- Product page: thumb selection ----------
-  var productSection = document.querySelector('[data-product-section]');
-  if (productSection) {
-    var mainImage = productSection.querySelector('[data-main-image]');
-    productSection.querySelectorAll('[data-thumb]').forEach(function (thumb) {
-      thumb.addEventListener('click', function () {
-        productSection.querySelectorAll('[data-thumb]').forEach(function (t) { t.classList.remove('is-active'); });
-        thumb.classList.add('is-active');
-        var full = thumb.dataset.full;
-        if (mainImage && full) mainImage.src = full;
+  /* ==========================================================
+     PDP: galeria com swipe + zoom + lightbox
+     ========================================================== */
+
+  (function () {
+    var gallery = document.querySelector('[data-gallery]');
+    if (!gallery) return;
+    var track = gallery.querySelector('[data-gallery-track]');
+    var thumbs = gallery.querySelectorAll('[data-gallery-thumb]');
+    var slides = gallery.querySelectorAll('[data-gallery-slide]');
+    var prev = gallery.querySelector('[data-gallery-prev]');
+    var next = gallery.querySelector('[data-gallery-next]');
+    if (!track || slides.length === 0) return;
+
+    var current = 0;
+
+    function goTo(idx) {
+      idx = Math.max(0, Math.min(slides.length - 1, idx));
+      current = idx;
+      slides[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === idx); });
+      updateArrows();
+    }
+    function updateArrows() {
+      if (prev) prev.hidden = current === 0;
+      if (next) next.hidden = current === slides.length - 1;
+    }
+
+    thumbs.forEach(function (t) {
+      t.addEventListener('click', function () { goTo(parseInt(t.dataset.galleryThumb, 10) || 0); });
+    });
+    if (prev) prev.addEventListener('click', function () { goTo(current - 1); });
+    if (next) next.addEventListener('click', function () { goTo(current + 1); });
+
+    // Detecta slide visível via IntersectionObserver (swipe nativo no mobile)
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && e.intersectionRatio > 0.5) {
+            var idx = parseInt(e.target.dataset.gallerySlide, 10);
+            if (!isNaN(idx) && idx !== current) {
+              current = idx;
+              thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === idx); });
+              updateArrows();
+            }
+          }
+        });
+      }, { root: track, threshold: 0.6 });
+      slides.forEach(function (s) { io.observe(s); });
+    }
+
+    // Zoom ao hover no desktop (transform-origin segue o mouse)
+    slides.forEach(function (slide) {
+      var img = slide.querySelector('.product__main-img');
+      if (!img) return;
+      slide.addEventListener('mousemove', function (e) {
+        if (window.innerWidth < 750) return;
+        var rect = slide.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width) * 100;
+        var y = ((e.clientY - rect.top) / rect.height) * 100;
+        img.style.transformOrigin = x + '% ' + y + '%';
+        img.style.transform = 'scale(1.8)';
+      });
+      slide.addEventListener('mouseleave', function () {
+        img.style.transform = '';
+        img.style.transformOrigin = '';
       });
     });
-  }
+
+    // Click no slide abre o lightbox
+    slides.forEach(function (slide) {
+      slide.addEventListener('click', function (e) {
+        var idx = parseInt(slide.dataset.gallerySlide, 10) || 0;
+        openLightbox(idx);
+      });
+    });
+
+    /* Lightbox */
+    var lightbox = document.querySelector('[data-lightbox]');
+    if (!lightbox) return;
+    var lbImg = lightbox.querySelector('[data-lightbox-img]');
+    var lbPrev = lightbox.querySelector('[data-lightbox-prev]');
+    var lbNext = lightbox.querySelector('[data-lightbox-next]');
+    var lbClose = lightbox.querySelector('[data-lightbox-close]');
+    var lbCounter = lightbox.querySelector('[data-lightbox-counter]');
+    var lbIdx = 0;
+
+    function openLightbox(idx) {
+      lbIdx = idx;
+      renderLightbox();
+      lightbox.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+      if (lbImg) lbImg.src = '';
+    }
+    function renderLightbox() {
+      var slide = slides[lbIdx];
+      if (!slide || !lbImg) return;
+      lbImg.src = slide.dataset.zoomSrc || slide.querySelector('img').src;
+      if (lbCounter) lbCounter.textContent = (lbIdx + 1) + ' / ' + slides.length;
+      if (lbPrev) lbPrev.hidden = lbIdx === 0 || slides.length === 1;
+      if (lbNext) lbNext.hidden = lbIdx === slides.length - 1 || slides.length === 1;
+    }
+
+    if (lbClose) lbClose.addEventListener('click', closeLightbox);
+    if (lbPrev) lbPrev.addEventListener('click', function () { lbIdx = Math.max(0, lbIdx - 1); renderLightbox(); });
+    if (lbNext) lbNext.addEventListener('click', function () { lbIdx = Math.min(slides.length - 1, lbIdx + 1); renderLightbox(); });
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (lightbox.hasAttribute('hidden')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft' && lbPrev && !lbPrev.hidden) lbPrev.click();
+      if (e.key === 'ArrowRight' && lbNext && !lbNext.hidden) lbNext.click();
+    });
+
+    // Swipe touch no lightbox
+    var lbStartX = 0;
+    lightbox.addEventListener('touchstart', function (e) { lbStartX = e.touches[0].clientX; }, { passive: true });
+    lightbox.addEventListener('touchend', function (e) {
+      var diff = e.changedTouches[0].clientX - lbStartX;
+      if (Math.abs(diff) < 50) return;
+      if (diff > 0 && lbPrev && !lbPrev.hidden) lbPrev.click();
+      if (diff < 0 && lbNext && !lbNext.hidden) lbNext.click();
+    });
+
+    updateArrows();
+  }());
+
+  /* ==========================================================
+     PDP: recently viewed (localStorage + fetch)
+     ========================================================== */
+
+  (function () {
+    var RV_KEY = 'exdeus_recent_v1';
+    var MAX = 12;
+
+    function read() {
+      try { return JSON.parse(localStorage.getItem(RV_KEY) || '[]'); } catch (e) { return []; }
+    }
+    function write(arr) {
+      try { localStorage.setItem(RV_KEY, JSON.stringify(arr)); } catch (e) {}
+    }
+    function add(handle) {
+      if (!handle) return;
+      var arr = read().filter(function (h) { return h !== handle; });
+      arr.unshift(handle);
+      write(arr.slice(0, MAX));
+    }
+
+    var section = document.querySelector('[data-product-section]');
+    var currentHandle = section ? section.dataset.productHandle : null;
+
+    // Registra o produto atual no histórico (mas não inclui ele no render)
+    if (currentHandle) add(currentHandle);
+
+    var container = document.querySelector('[data-recently-viewed]');
+    var list = document.querySelector('[data-recently-viewed-list]');
+    if (!container || !list) return;
+
+    var handles = read().filter(function (h) { return h !== currentHandle; }).slice(0, 4);
+    if (handles.length === 0) return;
+
+    Promise.all(handles.map(function (h) {
+      return fetch('/products/' + encodeURIComponent(h) + '.js')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    })).then(function (products) {
+      var valid = products.filter(Boolean);
+      if (valid.length === 0) return;
+      list.innerHTML = valid.map(function (p) {
+        var img = p.featured_image ? '<img src="' + p.featured_image + '&width=400" alt="' + escapeHtml(p.title) + '" loading="lazy">' : '';
+        var compare = (p.compare_at_price && p.compare_at_price > p.price)
+          ? '<span class="price__compare">' + moneyBR(p.compare_at_price) + '</span>' : '';
+        var url = '/products/' + p.handle;
+        return ''
+          + '<div class="product-card" data-product-handle="' + p.handle + '">'
+          + '  <a href="' + url + '" class="product-card__media product-card__media--portrait">' + img + '</a>'
+          + '  <button type="button" class="product-card__wishlist" data-wishlist-toggle="' + p.handle + '" aria-label="Lista de desejo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>'
+          + '  <div class="product-card__body">'
+          + '    <a href="' + url + '" class="product-card__title-link"><h3 class="product-card__title">' + escapeHtml(p.title) + '</h3></a>'
+          + '    <div class="product-card__price">' + compare + '<span class="price__final">' + moneyBR(p.price) + '</span></div>'
+          + '  </div>'
+          + '</div>';
+      }).join('');
+      container.hidden = false;
+      // Re-sync dos botões de wishlist nos cards novos
+      if (window.exdeusWishlist && window.exdeusWishlist.refresh) window.exdeusWishlist.refresh();
+    });
+  }());
+
+  /* ==========================================================
+     PDP: compre junto (bundle) — soma total + add em batch
+     ========================================================== */
+
+  (function () {
+    var form = document.querySelector('[data-bundle-form]');
+    if (!form) return;
+    var totalEl = form.querySelector('[data-bundle-total]');
+    var btnText = form.querySelector('[data-bundle-btn-text]');
+
+    function recalc() {
+      var checked = form.querySelectorAll('[data-bundle-item]:checked');
+      var total = 0;
+      checked.forEach(function (i) { total += parseInt(i.dataset.price, 10) || 0; });
+      if (totalEl) totalEl.textContent = moneyBR(total);
+      if (btnText) {
+        btnText.textContent = checked.length === 1 ? 'Comprar este' : 'Comprar ' + checked.length + ' itens';
+      }
+    }
+
+    form.querySelectorAll('[data-bundle-item]').forEach(function (input) {
+      input.addEventListener('change', recalc);
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var ids = Array.from(form.querySelectorAll('[data-bundle-item]:checked')).map(function (i) {
+        return { id: parseInt(i.value, 10), quantity: 1 };
+      });
+      if (ids.length === 0) return;
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ items: ids })
+      })
+        .then(function (r) { if (!r.ok) throw new Error('falha ao adicionar'); return r.json(); })
+        .then(function () { return fetchAndRenderCart(); })
+        .then(function () { openCart(); })
+        .catch(function () { alert('Não foi possível adicionar todos os itens ao carrinho.'); })
+        .finally(function () { if (btn) btn.disabled = false; });
+    });
+
+    recalc();
+  }());
 
   /* ==========================================================
      Wishlist (localStorage) — funciona logado ou não
@@ -196,7 +424,7 @@
 
   // Initial UI sync
   wlRefreshUI();
-  window.exdeusWishlist = { read: wlRead, toggle: wlToggle, remove: wlRemove, has: wlHas };
+  window.exdeusWishlist = { read: wlRead, toggle: wlToggle, remove: wlRemove, has: wlHas, refresh: wlRefreshUI };
 
   /* ==========================================================
      Wishlist page renderer (em /pages/lista-de-desejo)

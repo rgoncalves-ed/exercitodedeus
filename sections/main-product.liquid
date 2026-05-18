@@ -1,25 +1,52 @@
 <section class="page-width product-page">
-  <div class="product" data-product-section>
-    <div class="product__gallery">
+  <div class="product" data-product-section data-product-handle="{{ product.handle }}">
+    <div class="product__gallery" data-gallery>
       {%- if product.images.size > 1 -%}
         <div class="product__thumbs">
           {%- for image in product.images -%}
-            <button type="button" class="product__thumb {% if forloop.first %}is-active{% endif %}"
-                    data-thumb data-full="{{ image | image_url: width: 800 }}">
-              <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | escape }}" loading="lazy">
+            <button type="button"
+                    class="product__thumb {% if forloop.first %}is-active{% endif %}"
+                    data-gallery-thumb="{{ forloop.index0 }}"
+                    aria-label="Imagem {{ forloop.index }}">
+              <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | escape }}" loading="lazy">
             </button>
           {%- endfor -%}
         </div>
       {%- endif -%}
 
-      <div class="product__main-image">
-        {%- if product.featured_image -%}
-          <img src="{{ product.featured_image | image_url: width: 700 }}"
-               alt="{{ product.featured_image.alt | escape }}"
-               data-main-image>
-        {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'product__placeholder' }}
+      <div class="product__gallery-stage">
+        {%- if product.images.size > 1 -%}
+          <button type="button" class="product__gallery-arrow product__gallery-arrow--prev" data-gallery-prev aria-label="Imagem anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button type="button" class="product__gallery-arrow product__gallery-arrow--next" data-gallery-next aria-label="Próxima imagem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         {%- endif -%}
+
+        <div class="product__main-track" data-gallery-track>
+          {%- if product.images.size > 0 -%}
+            {%- for image in product.images -%}
+              <button type="button"
+                      class="product__main-slide"
+                      data-gallery-slide="{{ forloop.index0 }}"
+                      data-zoom-src="{{ image | image_url: width: 1600 }}"
+                      aria-label="Ver imagem {{ forloop.index }} em tela cheia">
+                <img src="{{ image | image_url: width: 800 }}"
+                     alt="{{ image.alt | escape | default: product.title }}"
+                     class="product__main-img"
+                     loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+              </button>
+            {%- endfor -%}
+          {%- else -%}
+            <div class="product__main-slide">{{ 'product-1' | placeholder_svg_tag: 'product__placeholder' }}</div>
+          {%- endif -%}
+        </div>
+
+        <span class="product__zoom-hint" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          Toque pra ampliar
+        </span>
       </div>
     </div>
 
@@ -242,6 +269,69 @@
     </div>
   {%- endif -%}
 
+  {%- comment -%} Compre junto (bundle) {%- endcomment -%}
+  {%- if section.settings.show_bundle and product.collections.size > 0 -%}
+    {%- assign bundle_collection = product.collections.first -%}
+    {%- assign bundle_others = '' | split: ',' -%}
+    {%- for p in bundle_collection.products -%}
+      {%- if p.id != product.id and p.available and bundle_others.size < 2 -%}
+        {%- assign bundle_others = bundle_others | concat: '' | push: p -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if bundle_others.size > 0 -%}
+      <section class="bundle">
+        <h2 class="section-heading__title bundle__heading">Comprado frequentemente junto</h2>
+
+        <form class="bundle__form" data-bundle-form>
+          <div class="bundle__items">
+            {%- comment -%} Produto atual (sempre marcado, disabled) {%- endcomment -%}
+            <label class="bundle__item bundle__item--current">
+              <input type="checkbox" name="ids" value="{{ product.selected_or_first_available_variant.id }}" checked disabled data-bundle-item data-price="{{ product.price }}">
+              <div class="bundle__item-media">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title | escape }}">
+                {%- endif -%}
+              </div>
+              <div class="bundle__item-info">
+                <span class="bundle__item-tag">Este produto</span>
+                <span class="bundle__item-title">{{ product.title | truncate: 50 }}</span>
+                <span class="bundle__item-price">{{ product.price | money }}</span>
+              </div>
+            </label>
+
+            {%- for other in bundle_others -%}
+              <div class="bundle__plus" aria-hidden="true">+</div>
+              <label class="bundle__item">
+                <input type="checkbox" name="ids" value="{{ other.selected_or_first_available_variant.id }}" checked data-bundle-item data-price="{{ other.price }}">
+                <div class="bundle__item-media">
+                  {%- if other.featured_image -%}
+                    <img src="{{ other.featured_image | image_url: width: 200 }}" alt="{{ other.title | escape }}">
+                  {%- endif -%}
+                </div>
+                <div class="bundle__item-info">
+                  <a href="{{ other.url }}" class="bundle__item-title">{{ other.title | truncate: 50 }}</a>
+                  <span class="bundle__item-price">{{ other.price | money }}</span>
+                </div>
+              </label>
+            {%- endfor -%}
+          </div>
+
+          <div class="bundle__summary">
+            <div>
+              <span class="bundle__total-label">Comprar selecionados:</span>
+              <strong class="bundle__total" data-bundle-total>{{ product.price | money }}</strong>
+            </div>
+            <button type="submit" class="btn btn--primary bundle__submit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <span data-bundle-btn-text>Comprar selecionados</span>
+            </button>
+          </div>
+        </form>
+      </section>
+    {%- endif -%}
+  {%- endif -%}
+
   {%- comment -%} Produtos relacionados {%- endcomment -%}
   {%- if section.settings.show_related and product.collections.size > 0 -%}
     {%- assign related_collection = product.collections.first -%}
@@ -264,6 +354,31 @@
       </div>
     </section>
   {%- endif -%}
+
+  {%- comment -%} Visto recentemente {%- endcomment -%}
+  {%- if section.settings.show_recently_viewed -%}
+    <section class="recently-viewed" data-recently-viewed hidden>
+      <div class="section-heading section-heading--simple">
+        <h2 class="section-heading__title">{{ section.settings.recent_heading | default: 'Você viu recentemente' }}</h2>
+      </div>
+      <div class="product-grid product-grid--4" data-recently-viewed-list></div>
+    </section>
+  {%- endif -%}
+
+  {%- comment -%} Lightbox da galeria {%- endcomment -%}
+  <div class="lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-label="Imagem em tela cheia">
+    <button type="button" class="lightbox__close" data-lightbox-close aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button type="button" class="lightbox__arrow lightbox__arrow--prev" data-lightbox-prev aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button type="button" class="lightbox__arrow lightbox__arrow--next" data-lightbox-next aria-label="Próxima">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <img class="lightbox__img" data-lightbox-img alt="">
+    <span class="lightbox__counter" data-lightbox-counter></span>
+  </div>
 
   {%- if section.blocks.size > 0 -%}
     <div class="product-faq">
@@ -298,6 +413,33 @@
       "id": "show_trust_badges",
       "label": "Mostrar selos de confiança (compra segura, frete, troca, WhatsApp)",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Compre junto"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bundle",
+      "label": "Mostrar 'Comprado frequentemente junto'",
+      "default": true,
+      "info": "Mostra 2 produtos da mesma coleção como combo. Cliente pode desmarcar."
+    },
+    {
+      "type": "header",
+      "content": "Visto recentemente"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_recently_viewed",
+      "label": "Mostrar 'Você viu recentemente'",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "recent_heading",
+      "label": "Título",
+      "default": "Você viu recentemente"
     },
     {
       "type": "header",
