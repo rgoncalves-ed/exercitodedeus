@@ -3711,3 +3711,305 @@ a.contact-info__row:hover { color: var(--color-accent); }
     display: none;
   }
 }
+
+/* ==========================================================
+   PDP: melhorias de conversão
+   ========================================================== */
+
+/* Countdown */
+.product__countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  border: 1px solid #FBBF24;
+  color: #78350F;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  margin: 8px 0 14px;
+}
+.product__countdown svg { width: 16px; height: 16px; }
+.product__countdown strong { font-weight: 700; font-variant-numeric: tabular-nums; }
+.product__countdown.is-expired { opacity: 0.6; }
+
+/* Seletor de quantidade */
+.product__qty-row { margin: 14px 0 8px; }
+.product__qty-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+.product__qty-controls {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+  background: #fff;
+}
+.product__qty-controls button {
+  width: 42px;
+  height: 44px;
+  background: transparent;
+  border: 0;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: background 0.15s ease;
+}
+.product__qty-controls button:hover { background: var(--color-surface); }
+.product__qty-controls input {
+  width: 50px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  font: inherit;
+  font-weight: 700;
+  -moz-appearance: textfield;
+}
+.product__qty-controls input::-webkit-outer-spin-button,
+.product__qty-controls input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* CTA row: Comprar + Wishlist */
+.product__cta-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+.product__buy {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px !important;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.product__buy svg { width: 18px; height: 18px; }
+
+.product__wishlist-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+.product__wishlist-btn:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: scale(1.05);
+}
+.product__wishlist-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: fill 0.15s ease;
+}
+.product__wishlist-btn.is-active { color: var(--color-accent); border-color: var(--color-accent); }
+.product__wishlist-btn.is-active svg { fill: currentColor; }
+
+.product__wishlist-btn--full {
+  width: 100%;
+  height: 48px;
+  border-radius: 999px;
+  margin-top: 14px;
+}
+.product__wishlist-btn--full span { margin-left: 8px; font-weight: 600; font-size: 0.9rem; }
+
+/* "Avise-me quando voltar" (esgotado) */
+.product__restock {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 14px 0;
+}
+.product__restock-head h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+.product__restock-head p {
+  margin: 0 0 12px;
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+}
+.product__restock-form {
+  display: flex;
+  gap: 8px;
+}
+.product__restock-form input[type="email"] {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font: inherit;
+  background: #fff;
+}
+.product__restock-form input[type="email"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
+}
+.product__restock-success {
+  background: #DCFCE7;
+  color: #166534;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 0;
+  font-size: 0.88rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Selos de confiança */
+.product__trust {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (max-width: 480px) {
+  .product__trust { grid-template-columns: 1fr; }
+}
+.product__trust li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--color-surface);
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+.product__trust svg {
+  width: 22px;
+  height: 22px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.product__trust strong {
+  display: block;
+  font-weight: 700;
+  font-size: 0.84rem;
+  color: var(--color-text);
+}
+.product__trust span { line-height: 1.3; color: var(--color-text-muted); }
+.product__trust span strong { color: var(--color-text); }
+
+/* Compartilhar */
+.product__share-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+.product__share-label {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  margin-right: 4px;
+}
+.product__share-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.product__share-btn:hover { transform: translateY(-2px); }
+.product__share-btn svg { width: 16px; height: 16px; }
+.product__share-btn--wa:hover { background: #25D366; color: #fff; border-color: #25D366; }
+.product__share-btn--fb:hover { background: #1877F2; color: #fff; border-color: #1877F2; }
+.product__share-btn--pin:hover { background: #E60023; color: #fff; border-color: #E60023; }
+.product__share-btn--copy.is-copied { background: #16A34A; color: #fff; border-color: #16A34A; }
+
+/* Sticky cart no mobile */
+.product__sticky-cart {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.1);
+  padding: 10px 0;
+  animation: sticky-up 0.3s ease;
+}
+@keyframes sticky-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.product__sticky-cart-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.product__sticky-cart-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+.product__sticky-cart-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.product__sticky-cart-title {
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text);
+}
+.product__sticky-cart-price {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+.product__sticky-cart-form button {
+  padding: 12px 18px !important;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+.product__sticky-cart-form button svg { width: 14px; height: 14px; }
+
+/* Some no desktop, evita conflito com WhatsApp flutuante */
+@media (min-width: 750px) {
+  .product__sticky-cart { display: none; }
+}
+@media (max-width: 749px) {
+  /* Empurra o botão flutuante de WhatsApp pra cima se sticky cart estiver visível */
+  .product__sticky-cart:not([hidden]) ~ .floating-whatsapp,
+  body:has(.product__sticky-cart:not([hidden])) .floating-whatsapp {
+    bottom: 85px;
+  }
+}

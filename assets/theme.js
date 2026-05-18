@@ -711,6 +711,121 @@
   }
 
   /* ==========================================================
+     PDP: seletor de quantidade
+     ========================================================== */
+
+  document.querySelectorAll('[data-qty-input]').forEach(function (input) {
+    var wrap = input.parentNode;
+    var dec = wrap.querySelector('[data-qty-decrease]');
+    var inc = wrap.querySelector('[data-qty-increase]');
+    var max = input.max ? parseInt(input.max, 10) : Infinity;
+    var min = parseInt(input.min || '1', 10);
+    function setQty(v) {
+      v = Math.max(min, Math.min(max, v));
+      input.value = v;
+    }
+    if (dec) dec.addEventListener('click', function () { setQty((parseInt(input.value, 10) || min) - 1); });
+    if (inc) inc.addEventListener('click', function () { setQty((parseInt(input.value, 10) || min) + 1); });
+    input.addEventListener('change', function () { setQty(parseInt(input.value, 10) || min); });
+  });
+
+  /* ==========================================================
+     PDP: countdown de oferta
+     ========================================================== */
+
+  document.querySelectorAll('[data-countdown]').forEach(function (el) {
+    var endStr = el.dataset.end;
+    if (!endStr) return;
+    var end = new Date(endStr).getTime();
+    if (isNaN(end)) return;
+    var text = el.querySelector('[data-countdown-text]');
+    if (!text) return;
+
+    function tick() {
+      var now = Date.now();
+      var diff = Math.max(0, end - now);
+      if (diff === 0) {
+        text.textContent = 'expirada';
+        el.classList.add('is-expired');
+        clearInterval(timer);
+        return;
+      }
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      var parts = [];
+      if (d > 0) parts.push(d + 'd');
+      parts.push(String(h).padStart(2, '0') + 'h');
+      parts.push(String(m).padStart(2, '0') + 'm');
+      if (d === 0) parts.push(String(s).padStart(2, '0') + 's');
+      text.textContent = parts.join(' ');
+    }
+    tick();
+    var timer = setInterval(tick, 1000);
+  });
+
+  /* ==========================================================
+     PDP: sticky cart mobile (aparece quando scrolla além do botão original)
+     ========================================================== */
+
+  (function () {
+    var sticky = document.querySelector('[data-sticky-cart]');
+    if (!sticky) return;
+    var mainBtn = document.querySelector('.product__buy');
+    if (!mainBtn) return;
+
+    function check() {
+      if (window.innerWidth >= 750) {
+        sticky.hidden = true;
+        return;
+      }
+      var rect = mainBtn.getBoundingClientRect();
+      // Mostra quando o botão original sai da tela (acima)
+      var visible = rect.bottom < 0;
+      if (visible) {
+        sticky.hidden = false;
+        sticky.setAttribute('aria-hidden', 'false');
+      } else {
+        sticky.hidden = true;
+        sticky.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    check();
+  }());
+
+  /* ==========================================================
+     PDP: copiar link
+     ========================================================== */
+
+  document.querySelectorAll('[data-copy-link]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var url = btn.dataset.copyLink;
+      if (!url) return;
+      var done = function () {
+        var prev = btn.innerHTML;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+        btn.classList.add('is-copied');
+        setTimeout(function () { btn.innerHTML = prev; btn.classList.remove('is-copied'); }, 1500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done).catch(function () {});
+      } else {
+        // Fallback
+        var ta = document.createElement('textarea');
+        ta.value = url;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    });
+  });
+
+  /* ==========================================================
      Product carousel (featured-collection)
      ========================================================== */
 

@@ -71,43 +71,152 @@
         </div>
       {%- endif -%}
 
-      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="product__form" data-product-form>
-        {%- unless product.has_only_default_variant -%}
-          {%- for option in product.options_with_values -%}
-            <div class="product-option">
-              <label for="Option-{{ forloop.index }}"><strong>{{ option.name }}</strong></label>
-              <select id="Option-{{ forloop.index }}" name="options[{{ option.name }}]">
-                {%- for value in option.values -%}
-                  <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
-                {%- endfor -%}
-              </select>
+      {%- comment -%} Countdown de oferta (se data_fim configurada via metafield) {%- endcomment -%}
+      {%- assign offer_end = product.metafields.offer.ends_at -%}
+      {%- if offer_end != blank -%}
+        <div class="product__countdown" data-countdown data-end="{{ offer_end | date: '%Y-%m-%dT%H:%M:%S' }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Oferta termina em <strong data-countdown-text>—</strong></span>
+        </div>
+      {%- endif -%}
+
+      {%- if variant.available -%}
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="product__form" data-product-form>
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="product-option">
+                <label for="Option-{{ forloop.index }}"><strong>{{ option.name }}</strong></label>
+                <select id="Option-{{ forloop.index }}" name="options[{{ option.name }}]">
+                  {%- for value in option.values -%}
+                    <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <div class="product__qty-row">
+            <div class="product__qty">
+              <label class="product__qty-label" for="ProductQty">Quantidade</label>
+              <div class="product__qty-controls">
+                <button type="button" data-qty-decrease aria-label="Diminuir">−</button>
+                <input id="ProductQty" type="number" name="quantity" value="1" min="1" {% if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny' and variant.inventory_quantity > 0 %}max="{{ variant.inventory_quantity }}"{% endif %} data-qty-input>
+                <button type="button" data-qty-increase aria-label="Aumentar">+</button>
+              </div>
             </div>
-          {%- endfor -%}
-        {%- endunless -%}
+          </div>
 
-        <input type="hidden" name="id" value="{{ variant.id }}">
+          <input type="hidden" name="id" value="{{ variant.id }}">
 
-        <button type="submit"
-                class="btn btn--primary btn--block btn--pill product__buy"
-                {% unless variant.available %}disabled{% endunless %}>
-          {% if variant.available %}
-            Comprar
-          {% else %}
-            Esgotado
-          {% endif %}
-        </button>
-      </form>
+          <div class="product__cta-row">
+            <button type="submit" class="btn btn--primary btn--pill product__buy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              Comprar
+            </button>
+            <button type="button"
+                    class="product__wishlist-btn"
+                    data-wishlist-toggle="{{ product.handle }}"
+                    aria-label="Adicionar à lista de desejo">
+              {% render 'icon-heart' %}
+            </button>
+          </div>
+        </form>
+      {%- else -%}
+        {%- comment -%} Esgotado: form "Avise-me quando voltar" {%- endcomment -%}
+        <div class="product__restock" data-restock>
+          <div class="product__restock-head">
+            <h3>Produto esgotado</h3>
+            <p>Deixe seu e-mail e te avisamos assim que voltar.</p>
+          </div>
+          {% form 'contact', class: 'product__restock-form', id: 'RestockForm' %}
+            {%- if form.posted_successfully? -%}
+              <p class="product__restock-success">✓ Obrigado! Vamos te avisar.</p>
+            {%- else -%}
+              <input type="hidden" name="contact[subject]" value="Restock — {{ product.title | escape }}">
+              <input type="hidden" name="contact[body]" value="Cliente quer ser avisado quando voltar: {{ product.title }} ({{ shop.url }}{{ product.url }})">
+              <input type="email" name="contact[email]" placeholder="seu@email.com" required>
+              <button type="submit" class="btn btn--primary">Avise-me</button>
+            {%- endif -%}
+          {% endform %}
+          <button type="button"
+                  class="product__wishlist-btn product__wishlist-btn--full"
+                  data-wishlist-toggle="{{ product.handle }}">
+            {% render 'icon-heart' %}
+            <span>Adicionar à lista de desejo</span>
+          </button>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_trust_badges -%}
+        <ul class="product__trust" role="list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span><strong>Compra segura</strong> SSL · Criptografada</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span><strong>Frete pra todo Brasil</strong> Frenet · PAC · SEDEX</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            <span><strong>Troca em 30 dias</strong> Garantia satisfação</span>
+          </li>
+          {%- if settings.social_whatsapp != blank -%}
+            <li>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="color:#25D366;"><path d="M17.6 14.2c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.4-1.5-.9-.8-1.5-1.8-1.6-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.2.2-.4.1-.2.1-.3 0-.5 0-.1-.6-1.5-.9-2-.2-.5-.5-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2 0 1.3.9 2.6 1.1 2.7.1.2 1.9 2.9 4.6 4 .6.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.2-.2-.5-.3M12 21.5c-1.5 0-3-.4-4.3-1.2l-.3-.2-3.2 1 1-3.1-.2-.3c-.9-1.4-1.3-3-1.3-4.6 0-4.7 3.8-8.5 8.4-8.5 2.3 0 4.4.9 6 2.5 1.6 1.6 2.5 3.7 2.5 6 0 4.7-3.8 8.4-8.5 8.4M20.5 3.5C18.3 1.2 15.3 0 12 0 5.4 0 0 5.4 0 12c0 2.1.5 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.7 1.4 5.8 1.4 6.6 0 12-5.4 12-12 0-3.3-1.2-6.3-3.5-8.5"/></svg>
+              <span><strong>Atendimento WhatsApp</strong> Respondemos em 1h útil</span>
+            </li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
 
       {% render 'shipping-calculator',
          variant_id: product.selected_or_first_available_variant.id,
          unique: product.id %}
 
-      <button type="button" class="product__share">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
-        Compartilhar
-      </button>
+      {%- comment -%} Compartilhar com botões diretos {%- endcomment -%}
+      {%- assign product_url = shop.url | append: product.url -%}
+      {%- assign share_text = product.title | append: ' — ' | append: product.price | money | url_encode -%}
+      <div class="product__share-row">
+        <span class="product__share-label">Compartilhar:</span>
+        <a href="https://wa.me/?text={{ share_text }}%20{{ product_url | url_encode }}" target="_blank" rel="noopener" class="product__share-btn product__share-btn--wa" aria-label="Compartilhar no WhatsApp">
+          {% render 'icon-whatsapp' %}
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ product_url | url_encode }}" target="_blank" rel="noopener" class="product__share-btn product__share-btn--fb" aria-label="Compartilhar no Facebook">
+          {% render 'icon-facebook' %}
+        </a>
+        <a href="https://pinterest.com/pin/create/button/?url={{ product_url | url_encode }}{% if product.featured_image %}&media={{ product.featured_image | image_url: width: 800 | url_encode }}{% endif %}&description={{ product.title | url_encode }}" target="_blank" rel="noopener" class="product__share-btn product__share-btn--pin" aria-label="Compartilhar no Pinterest">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0a12 12 0 0 0-4.4 23.2c-.1-.9-.2-2.4 0-3.4l1.4-6S8.7 13 8.7 11.7c0-2 1.2-3.5 2.6-3.5 1.3 0 1.9.9 1.9 2 0 1.3-.8 3.1-1.2 4.8-.3 1.5.8 2.7 2.2 2.7 2.7 0 4.7-2.8 4.7-6.9 0-3.6-2.6-6.1-6.3-6.1-4.3 0-6.9 3.2-6.9 6.6 0 1.3.5 2.7 1.1 3.5.2.2.2.3.1.5l-.4 1.7c-.1.3-.2.3-.5.2-1.7-.8-2.8-3.3-2.8-5.3 0-4.3 3.1-8.3 9-8.3 4.7 0 8.4 3.4 8.4 7.9 0 4.7-2.9 8.5-7 8.5-1.4 0-2.6-.7-3.1-1.6l-.8 3.2c-.3 1.1-1.1 2.6-1.6 3.5A12 12 0 1 0 12 0z"/></svg>
+        </a>
+        <button type="button" class="product__share-btn product__share-btn--copy" data-copy-link="{{ product_url }}" aria-label="Copiar link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
     </div>
   </div>
+
+  {%- comment -%} Sticky add-to-cart no mobile (aparece quando scrolla além do botão original) {%- endcomment -%}
+  {%- if variant.available -%}
+    <div class="product__sticky-cart" data-sticky-cart hidden aria-hidden="true">
+      <div class="page-width product__sticky-cart-inner">
+        {%- if product.featured_image -%}
+          <img src="{{ product.featured_image | image_url: width: 120 }}" alt="" class="product__sticky-cart-img">
+        {%- endif -%}
+        <div class="product__sticky-cart-info">
+          <span class="product__sticky-cart-title">{{ product.title | truncate: 50 }}</span>
+          <span class="product__sticky-cart-price">{{ product.price | money }}</span>
+        </div>
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form class="product__sticky-cart-form">
+          <input type="hidden" name="id" value="{{ variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="btn btn--primary btn--pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </form>
+      </div>
+    </div>
+  {%- endif -%}
 
   {%- if product.description != blank or product.metafields.specs.list != blank -%}
     <div class="product-details">
@@ -180,6 +289,16 @@
 {
   "name": "Produto",
   "settings": [
+    {
+      "type": "header",
+      "content": "Confiança"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Mostrar selos de confiança (compra segura, frete, troca, WhatsApp)",
+      "default": true
+    },
     {
       "type": "header",
       "content": "Produtos relacionados"
