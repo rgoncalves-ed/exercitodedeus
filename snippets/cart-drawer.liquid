@@ -48,6 +48,10 @@
         <span>Subtotal</span>
         <span data-cart-subtotal>{{ cart.total_price | money }}</span>
       </div>
+      <div class="cart-drawer__row" data-shipping-row hidden>
+        <span>Frete a partir de</span>
+        <strong data-cheapest-shipping>—</strong>
+      </div>
       <div class="cart-drawer__row cart-drawer__row--total">
         <span>Total</span>
         <span data-cart-total>{{ cart.total_price | money }}</span>

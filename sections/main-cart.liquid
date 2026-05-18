@@ -81,9 +81,13 @@
               <span style="color: var(--color-accent);">- {{ cart.total_discount | money }}</span>
             </div>
           {%- endif -%}
-          <div class="cart-checkout__row muted" style="font-size: 0.9rem;">
+          <div class="cart-checkout__row" data-shipping-row hidden>
+            <span>Frete a partir de</span>
+            <strong data-cheapest-shipping>—</strong>
+          </div>
+          <div class="cart-checkout__row muted" style="font-size: 0.85rem;" data-shipping-fallback>
             <span>Frete</span>
-            <span>Calculado no próximo passo</span>
+            <span>Calcule abaixo ou no checkout</span>
           </div>
           <div class="cart-checkout__row cart-checkout__row--total">
             <span>Total</span>

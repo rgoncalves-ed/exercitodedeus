@@ -688,6 +688,25 @@
     return '<ul class="ship-calc__options">' + rows + '</ul>';
   }
 
+  // CEP salvo no localStorage (lembra entre sessões)
+  var CEP_KEY = 'exdeus_last_cep';
+  function saveCEP(cep) { try { localStorage.setItem(CEP_KEY, cep); } catch (e) {} }
+  function loadCEP() { try { return localStorage.getItem(CEP_KEY) || ''; } catch (e) { return ''; } }
+
+  // Atualiza linhas "Frete a partir de R$ X" no resumo do carrinho/drawer
+  function updateCheapestShipping(rates) {
+    if (!rates || rates.length === 0) return;
+    var prices = rates.map(function (r) { return parseFloat(r.price); }).filter(function (n) { return !isNaN(n); });
+    if (prices.length === 0) return;
+    var cheapest = Math.min.apply(null, prices);
+    var label = cheapest <= 0 ? 'Grátis' : moneyBR(cheapest * 100);
+    document.querySelectorAll('[data-cheapest-shipping]').forEach(function (el) {
+      el.textContent = label;
+      var row = el.closest('[data-shipping-row]');
+      if (row) row.hidden = false;
+    });
+  }
+
   // Aplica a calculadora em cada [data-shipping-calculator] da página
   document.querySelectorAll('[data-shipping-calculator]').forEach(function (container) {
     var input = container.querySelector('[data-cep-input]');
@@ -701,15 +720,15 @@
       input.value = v.length > 5 ? v.slice(0, 5) + '-' + v.slice(5) : v;
     });
 
-    function calc() {
+    function calc(silent) {
       var zip = input.value.trim();
       if (zip.replace(/\D/g, '').length !== 8) {
-        result.innerHTML = '<p class="ship-calc__error">Digite um CEP válido (8 dígitos).</p>';
+        if (!silent) result.innerHTML = '<p class="ship-calc__error">Digite um CEP válido (8 dígitos).</p>';
         return;
       }
       result.innerHTML = '<p class="ship-calc__loading">Calculando frete…</p>';
       btn.disabled = true;
-      var saved = btn.textContent;
+      var savedTxt = btn.textContent;
       btn.textContent = 'Calculando…';
 
       var variantId = container.dataset.variantId;
@@ -719,15 +738,31 @@
         : shopifyShippingRates(zip);
 
       promise
-        .then(function (rates) { result.innerHTML = renderShippingRates(rates); })
-        .catch(function (err) { result.innerHTML = '<p class="ship-calc__error">' + escapeHtml(err.message || 'Erro ao calcular frete.') + '</p>'; })
-        .then(function () { btn.disabled = false; btn.textContent = saved; });
+        .then(function (rates) {
+          result.innerHTML = renderShippingRates(rates);
+          saveCEP(zip);
+          updateCheapestShipping(rates);
+        })
+        .catch(function (err) {
+          result.innerHTML = '<p class="ship-calc__error">' + escapeHtml(err.message || 'Erro ao calcular frete.') + '</p>';
+        })
+        .then(function () { btn.disabled = false; btn.textContent = savedTxt; });
     }
 
-    btn.addEventListener('click', calc);
+    btn.addEventListener('click', function () { calc(false); });
     input.addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') { e.preventDefault(); calc(); }
+      if (e.key === 'Enter') { e.preventDefault(); calc(false); }
     });
+
+    // Pré-preenche o CEP salvo. Se for no carrinho (sem variant_id), dispara
+    // o cálculo automaticamente. Na PDP só preenche, evita cálculo desnecessário.
+    var savedCep = loadCEP();
+    if (savedCep) {
+      input.value = savedCep;
+      if (!container.dataset.variantId) {
+        calc(true);
+      }
+    }
   });
 
   // Carrinho começa em sincronia com a tela
