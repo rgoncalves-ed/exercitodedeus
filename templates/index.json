@@ -128,7 +128,9 @@
       "settings": {
         "heading": "Combos",
         "collection": "combos",
-        "products_to_show": 3,
+        "layout": "carousel",
+        "desktop_cols": 4,
+        "products_to_show": 9,
         "show_view_all": true
       }
     },
@@ -192,6 +194,8 @@
       "settings": {
         "heading": "Os mais vendidos",
         "collection": "",
+        "layout": "carousel",
+        "desktop_cols": 4,
         "products_to_show": 6,
         "show_view_all": true
       }
@@ -241,6 +245,8 @@
       "settings": {
         "heading": "Favoritos dos leitores",
         "collection": "",
+        "layout": "carousel",
+        "desktop_cols": 4,
         "products_to_show": 6,
         "show_view_all": true
       }
