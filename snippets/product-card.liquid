@@ -6,6 +6,26 @@
     assign on_sale = true
     assign discount_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
   endif
+
+  assign is_new = false
+  assign new_days = settings.badge_new_days | default: 30
+  if product.created_at and new_days > 0
+    assign days_old = 'now' | date: '%s' | minus: product.created_at | date: '%s' | divided_by: 86400
+    if days_old <= new_days
+      assign is_new = true
+    endif
+  endif
+
+  assign is_bestseller = false
+  assign bestseller_tag = settings.badge_bestseller_tag | default: 'mais-vendido'
+  if product.tags contains bestseller_tag
+    assign is_bestseller = true
+  endif
+
+  assign is_soldout = false
+  unless product.available
+    assign is_soldout = true
+  endunless
 -%}
 
 <div class="product-card" data-product-handle="{{ product.handle }}">
@@ -18,6 +38,22 @@
            height="{{ 500 | divided_by: product.featured_image.aspect_ratio | round }}">
     {%- endif -%}
   </a>
+
+  <div class="product-card__badges">
+    {%- if is_soldout -%}
+      <span class="product-badge product-badge--soldout">Esgotado</span>
+    {%- else -%}
+      {%- if on_sale -%}
+        <span class="product-badge product-badge--sale">−{{ discount_pct }}%</span>
+      {%- endif -%}
+      {%- if is_new -%}
+        <span class="product-badge product-badge--new">Novo</span>
+      {%- endif -%}
+      {%- if is_bestseller -%}
+        <span class="product-badge product-badge--bestseller">Mais vendido</span>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
 
   <button type="button"
           class="product-card__wishlist"

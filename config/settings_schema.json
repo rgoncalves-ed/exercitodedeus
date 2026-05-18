@@ -129,6 +129,27 @@
         "id": "card_show_vendor",
         "label": "Mostrar editora/autor",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Selos / badges nos cards"
+      },
+      {
+        "type": "range",
+        "id": "badge_new_days",
+        "label": "Marcar como \"Novo\" se criado há até X dias",
+        "min": 0,
+        "max": 90,
+        "step": 5,
+        "default": 30,
+        "info": "0 desativa o selo Novo."
+      },
+      {
+        "type": "text",
+        "id": "badge_bestseller_tag",
+        "label": "Tag que ativa o selo \"Mais vendido\"",
+        "default": "mais-vendido",
+        "info": "Adicione essa tag no produto pra ele aparecer com o selo."
       }
     ]
   },

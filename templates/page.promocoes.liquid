@@ -1,0 +1,45 @@
+<section class="page-width section promocoes-page">
+  <header class="promocoes-page__head">
+    <h1>{{ page.title | default: 'Promoções' }}</h1>
+    <p class="muted">Confira todos os produtos com desconto disponíveis agora.</p>
+  </header>
+
+  {%- if page.content != blank -%}
+    <div class="rte" style="margin-bottom: 24px;">{{ page.content }}</div>
+  {%- endif -%}
+
+  {%- comment -%}
+    Filtra produtos com compare_at_price > price em todas as coleções.
+    Paginação de 24 por vez. Para listas grandes, considere criar uma
+    Smart Collection no admin com condição "Compare at price > 0" e
+    redirecionar /promocoes pra ela.
+  {%- endcomment -%}
+
+  {%- assign sale_products = '' | split: ',' -%}
+  {%- for product in collections.all.products -%}
+    {%- if product.compare_at_price > product.price -%}
+      {%- assign sale_products = sale_products | concat: '' | push: product -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if sale_products.size > 0 -%}
+    <p class="promocoes-page__count">{{ sale_products.size }} produto{% if sale_products.size != 1 %}s{% endif %} em promoção</p>
+
+    <div class="product-grid product-grid--3">
+      {%- for product in sale_products limit: 24 -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    </div>
+
+    {%- if sale_products.size > 24 -%}
+      <p class="muted" style="margin-top: 24px; text-align: center;">
+        Mostrando 24 de {{ sale_products.size }}. <a href="{{ routes.all_products_collection_url }}">Ver todos os produtos →</a>
+      </p>
+    {%- endif -%}
+  {%- else -%}
+    <div class="empty-state">
+      <p>Nenhuma promoção ativa no momento.</p>
+      <a href="{{ routes.root_url }}" class="btn btn--primary">Ver todos os produtos</a>
+    </div>
+  {%- endif -%}
+</section>

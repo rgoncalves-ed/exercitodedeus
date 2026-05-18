@@ -710,6 +710,47 @@
     return '<ul class="ship-calc__options">' + rows + '</ul>';
   }
 
+  /* ==========================================================
+     Cupom de desconto (cart page)
+     ========================================================== */
+
+  document.querySelectorAll('[data-coupon-form]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = form.querySelector('[data-coupon-input]');
+      var msg = form.parentNode.querySelector('[data-coupon-msg]');
+      var btn = form.querySelector('button[type="submit"]');
+      var code = (input.value || '').trim().toUpperCase();
+      if (!code) {
+        if (msg) { msg.textContent = 'Digite um código.'; msg.className = 'cart-checkout__coupon-msg is-error'; }
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'Aplicando…';
+      if (msg) { msg.textContent = ''; msg.className = 'cart-checkout__coupon-msg'; }
+      // Shopify aplica via cookie quando visitamos /discount/CODE. Redireciona
+      // de volta pro /cart. Se o cupom for inválido, o cart não fica com
+      // discount_applications e o usuário vê na linha do total.
+      window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
+    });
+  });
+
+  // Detecta se voltou de uma aplicação de cupom que não pegou
+  // (URL ?discount_code=XXX persiste mesmo se Shopify ignorou o code)
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var attempted = params.get('discount_code');
+    if (!attempted) return;
+    var msg = document.querySelector('[data-coupon-msg]');
+    var hasApplied = document.querySelector('.cart-checkout__coupon-applied');
+    if (msg && !hasApplied) {
+      msg.textContent = 'Cupom "' + attempted + '" não é válido ou expirou.';
+      msg.className = 'cart-checkout__coupon-msg is-error';
+      var wrap = document.querySelector('[data-coupon-form-wrap]');
+      if (wrap) wrap.setAttribute('open', '');
+    }
+  }());
+
   // CEP salvo no localStorage (lembra entre sessões)
   var CEP_KEY = 'exdeus_last_cep';
   function saveCEP(cep) {
