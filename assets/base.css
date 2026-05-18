@@ -3126,6 +3126,9 @@ body.cart-open .cart-drawer { transform: translateX(0); }
   gap: 32px;
   align-items: start;
 }
+.collection-grid--no-filters {
+  grid-template-columns: 1fr !important;
+}
 .collection-page { padding-bottom: 60px; }
 
 .collection-filters {
@@ -3224,13 +3227,13 @@ body.cart-open .cart-drawer { transform: translateX(0); }
 }
 
 @media (min-width: 900px) {
-  .collection-grid {
+  .collection-grid:not(.collection-grid--no-filters) {
     grid-template-columns: 260px 1fr;
   }
-  .collection-filters {
-    display: block !important;
+  /* Desktop: sidebar sempre visível, mesmo com [hidden] */
+  .collection-grid:not(.collection-grid--no-filters) .collection-filters[hidden] {
+    display: block;
   }
-  .collection-filters[hidden] { display: block !important; }
   .collection-filters__close,
   .collection-toolbar__filter-toggle { display: none; }
 }

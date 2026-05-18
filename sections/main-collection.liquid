@@ -14,20 +14,29 @@
   </div>
 </section>
 
+{%- liquid
+  assign has_filters = false
+  if collection.filters.size > 0
+    assign has_filters = true
+  endif
+  assign current_sort = collection.sort_by | default: collection.default_sort_by
+-%}
+
 <section class="page-width collection-page">
 
   <div class="collection-toolbar">
     <div class="collection-toolbar__count">{{ collection.products_count }} {% if collection.products_count == 1 %}produto{% else %}produtos{% endif %}</div>
 
-    <button type="button" class="btn btn--outline btn--sm collection-toolbar__filter-toggle" data-filter-toggle aria-expanded="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
-      Filtros
-    </button>
+    {%- if has_filters -%}
+      <button type="button" class="btn btn--outline btn--sm collection-toolbar__filter-toggle" data-filter-toggle aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+        Filtros
+      </button>
+    {%- endif -%}
 
     <form class="collection-toolbar__sort">
       <label for="SortBy" class="visually-hidden">Ordenar por</label>
       <select name="sort_by" id="SortBy" onchange="this.form.submit()">
-        {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
         <option value="manual" {% if current_sort == 'manual' %}selected{% endif %}>Em destaque</option>
         <option value="best-selling" {% if current_sort == 'best-selling' %}selected{% endif %}>Mais vendidos</option>
         <option value="price-ascending" {% if current_sort == 'price-ascending' %}selected{% endif %}>Menor preço</option>
@@ -39,22 +48,17 @@
     </form>
   </div>
 
-  <div class="collection-grid">
-    {%- comment -%}
-      Sidebar de filtros. Usa collection.filters do Shopify (precisa do app
-      "Search & Discovery" instalado, gratuito). Se não tiver filtros
-      configurados, mostra só faixa de preço básica.
-    {%- endcomment -%}
-    <aside class="collection-filters" data-filter-panel hidden>
-      <form id="CollectionFiltersForm">
-        <input type="hidden" name="sort_by" value="{{ current_sort }}">
+  <div class="collection-grid {% unless has_filters %}collection-grid--no-filters{% endunless %}">
+    {%- if has_filters -%}
+      <aside class="collection-filters" data-filter-panel hidden>
+        <form id="CollectionFiltersForm">
+          <input type="hidden" name="sort_by" value="{{ current_sort }}">
 
-        <div class="collection-filters__head">
-          <h2>Filtros</h2>
-          <button type="button" class="collection-filters__close" data-filter-close aria-label="Fechar filtros">×</button>
-        </div>
+          <div class="collection-filters__head">
+            <h2>Filtros</h2>
+            <button type="button" class="collection-filters__close" data-filter-close aria-label="Fechar filtros">×</button>
+          </div>
 
-        {%- if collection.filters.size > 0 -%}
           {%- for filter in collection.filters -%}
             <details class="filter-group" open>
               <summary>
@@ -93,15 +97,9 @@
               <a href="{{ collection.url }}" class="btn btn--ghost btn--sm">Limpar filtros</a>
             {%- endif -%}
           </div>
-        {%- else -%}
-          <p class="muted" style="font-size: 0.85rem;">
-            Pra ativar filtros (preço, autor, editora, etc), instale o app gratuito
-            <strong>Search &amp; Discovery</strong> na Shopify e configure em
-            <em>Admin → Apps → Search &amp; Discovery → Filters</em>.
-          </p>
-        {%- endif -%}
-      </form>
-    </aside>
+        </form>
+      </aside>
+    {%- endif -%}
 
     <div class="collection-main">
       {%- paginate collection.products by 24 -%}
