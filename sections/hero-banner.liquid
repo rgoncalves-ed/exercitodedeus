@@ -9,8 +9,10 @@
     <div class="hero-slider__viewport">
       <div class="hero-slider__track" data-slider-track>
         {%- for block in section.blocks -%}
+          {%- assign has_video = false -%}
+          {%- if block.settings.video != blank -%}{%- assign has_video = true -%}{%- endif -%}
           {%- assign is_empty = false -%}
-          {%- if block.settings.image == blank -%}{%- assign is_empty = true -%}{%- endif -%}
+          {%- if block.settings.image == blank and has_video == false -%}{%- assign is_empty = true -%}{%- endif -%}
 
           <a href="{{ block.settings.button_url | default: '#' }}"
              class="hero-slide{% if is_empty %} hero-slide--empty{% endif %}"
@@ -20,7 +22,16 @@
              aria-label="Slide {{ forloop.index }} de {{ slide_count }}"
              {% if forloop.index0 != 0 %}aria-hidden="true"{% endif %}
              {{ block.shopify_attributes }}>
-            {%- if block.settings.image -%}
+            {%- if has_video -%}
+              <span class="hero-slide__bg hero-slide__bg--video">
+                <video class="hero-slide__video" autoplay muted loop playsinline preload="metadata"
+                       {% if block.settings.image %}poster="{{ block.settings.image | image_url: width: 1800 }}"{% endif %}>
+                  {%- for source in block.settings.video.sources -%}
+                    <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                  {%- endfor -%}
+                </video>
+              </span>
+            {%- elsif block.settings.image -%}
               <span class="hero-slide__bg" style="background-image: url('{{ block.settings.image | image_url: width: 1800 }}')"></span>
             {%- endif -%}
             <div class="hero-slide__inner">
@@ -84,6 +95,7 @@
       "name": "Slide",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Imagem de fundo" },
+        { "type": "video", "id": "video", "label": "Vídeo de fundo (opcional)", "info": "Se preenchido, substitui a imagem. Roda em mudo, autoplay e loop. A imagem acima vira o cartaz/fallback enquanto o vídeo carrega." },
         { "type": "text", "id": "eyebrow", "label": "Texto pequeno superior" },
         { "type": "text", "id": "heading", "label": "Título", "default": "Bem-vindo à loja" },
         { "type": "textarea", "id": "text", "label": "Descrição" },
