@@ -1037,9 +1037,18 @@
       var price = parseFloat(r.price);
       var priceFmt = price <= 0 ? '<strong style="color:#16A34A;">Grátis</strong>' : moneyBR(price * 100);
       var when = '';
-      if (r.delivery_days) when = 'até ' + r.delivery_days + ' dias úteis';
-      else if (r.delivery_range && r.delivery_range.length) when = r.delivery_range.join('–') + ' dias úteis';
-      else if (r.delivery_date) when = 'entrega ' + r.delivery_date;
+      if (r.delivery_days != null && r.delivery_days !== '') {
+        var d = Math.ceil(parseFloat(r.delivery_days));
+        if (!isNaN(d) && d > 0) when = 'até ' + d + (d === 1 ? ' dia útil' : ' dias úteis');
+      } else if (r.delivery_range && r.delivery_range.length) {
+        var lo = Math.ceil(parseFloat(r.delivery_range[0]));
+        var hi = Math.ceil(parseFloat(r.delivery_range[1] != null ? r.delivery_range[1] : r.delivery_range[0]));
+        if (!isNaN(lo) && !isNaN(hi)) {
+          when = (lo === hi ? lo : lo + '–' + hi) + (hi === 1 ? ' dia útil' : ' dias úteis');
+        }
+      } else if (r.delivery_date) {
+        when = 'entrega ' + r.delivery_date;
+      }
       return ''
         + '<li class="ship-calc__option">'
         + '  <span class="ship-calc__option-name">' + name + '</span>'
