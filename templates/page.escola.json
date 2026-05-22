@@ -1,0 +1,133 @@
+{
+  "sections": {
+    "hero": {
+      "type": "escola-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "heading": "Conheça a Escola Exército de Deus",
+            "text": "Formação católica para a sua família.",
+            "btn_label": "Veja os planos",
+            "bg_color": "#1F2D4A",
+            "text_color": "#FFFFFF",
+            "btn_bg": "#FFFFFF",
+            "btn_color": "#1F2D4A"
+          }
+        }
+      },
+      "block_order": ["slide_1"],
+      "settings": {
+        "eyebrow": "Escola Exército de Deus",
+        "title": "Escola Exército de Deus",
+        "subtitle": "Formando Famílias Consagradas: Onde as virtudes, os valores e a fé católica se tornam sua maior força.",
+        "autoplay_seconds": 6
+      }
+    },
+    "trilhas": {
+      "type": "escola-trilhas",
+      "blocks": {
+        "t_mulheres": {
+          "type": "trilha",
+          "settings": {
+            "title": "Mulheres de Rocha",
+            "description": "Formação para mulheres que querem viver a fé com firmeza.",
+            "color": "#7A2F2F",
+            "link": ""
+          }
+        },
+        "t_familias": {
+          "type": "trilha",
+          "settings": {
+            "title": "Famílias Consagradas",
+            "description": "Caminho de fé para casais, pais e filhos.",
+            "color": "#1F4E78",
+            "link": ""
+          }
+        },
+        "t_forjados": {
+          "type": "trilha",
+          "settings": {
+            "title": "Forjados na Graça",
+            "description": "Para homens que buscam viver como guerreiros da fé.",
+            "color": "#2A4234",
+            "link": ""
+          }
+        }
+      },
+      "block_order": ["t_mulheres", "t_familias", "t_forjados"],
+      "settings": {
+        "eyebrow": "Nossas",
+        "heading": "Trilhas",
+        "intro": "Escolha o caminho de formação que mais combina com você e sua família."
+      }
+    },
+    "planos": {
+      "type": "escola-plans",
+      "blocks": {
+        "p_mulheres": {
+          "type": "plan",
+          "settings": {
+            "eyebrow": "Trilha",
+            "name": "Mulheres de Rocha",
+            "tagline": "Todos os cursos da trilha Mulheres de Rocha.",
+            "features": "Acesso a todos os cursos da trilha\nAulas com Padres e formadores convidados\nMaterial complementar para download\nCertificado de conclusão",
+            "installments": "12x R$ 42,90",
+            "total_label": "",
+            "btn_label": "Quero esse plano",
+            "link": "",
+            "disclaimer": "* Compra única, com acesso de 1 ano. Pode parcelar em até 12x no cartão.",
+            "highlight": false,
+            "highlight_label": "",
+            "coming_soon": false,
+            "launch_date": ""
+          }
+        },
+        "p_familias": {
+          "type": "plan",
+          "settings": {
+            "eyebrow": "Trilha",
+            "name": "Famílias Consagradas",
+            "tagline": "O plano mais completo da Escola.",
+            "features": "Todos os cursos do Mulheres de Rocha\nTodos os cursos do Forjados na Graça\nCursos exclusivos para famílias\nGrupo fechado de famílias",
+            "installments": "12x R$ 79,90",
+            "total_label": "",
+            "btn_label": "Garantir pré-venda",
+            "link": "",
+            "disclaimer": "* Compra única, com acesso de 1 ano. Pode parcelar em até 12x no cartão.",
+            "highlight": true,
+            "highlight_label": "Mais completo",
+            "coming_soon": true,
+            "launch_date": "19 de Agosto de 2026"
+          }
+        },
+        "p_forjados": {
+          "type": "plan",
+          "settings": {
+            "eyebrow": "Trilha",
+            "name": "Forjados na Graça",
+            "tagline": "Todos os cursos da trilha Forjados na Graça.",
+            "features": "Acesso a todos os cursos da trilha\nAulas com Padres e formadores convidados\nMaterial complementar para download\nCertificado de conclusão",
+            "installments": "12x R$ 42,90",
+            "total_label": "",
+            "btn_label": "Garantir pré-venda",
+            "link": "",
+            "disclaimer": "* Compra única, com acesso de 1 ano. Pode parcelar em até 12x no cartão.",
+            "highlight": false,
+            "highlight_label": "",
+            "coming_soon": true,
+            "launch_date": "19 de Agosto de 2026"
+          }
+        }
+      },
+      "block_order": ["p_mulheres", "p_familias", "p_forjados"],
+      "settings": {
+        "eyebrow": "Escolha seu",
+        "heading": "Plano",
+        "intro": "Compra única com acesso de 1 ano. Sem mensalidade, sem fidelidade.",
+        "note": "<p><strong>Importante:</strong> não é assinatura. É uma compra de acesso de 1 ano, que pode ser parcelada em até 12x no cartão.</p>"
+      }
+    }
+  },
+  "order": ["hero", "trilhas", "planos"]
+}

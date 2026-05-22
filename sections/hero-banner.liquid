@@ -6,6 +6,9 @@
          data-autoplay="{{ autoplay }}"
          aria-roledescription="carousel">
   <div class="page-width">
+    {%- if section.settings.welcome_text != blank -%}
+      <p class="hero-welcome">{{ section.settings.welcome_text | newline_to_br }}</p>
+    {%- endif -%}
     <div class="hero-slider__viewport">
       <div class="hero-slider__track" data-slider-track>
         {%- for block in section.blocks -%}
@@ -31,8 +34,16 @@
                   {%- endfor -%}
                 </video>
               </span>
-            {%- elsif block.settings.image -%}
-              <span class="hero-slide__bg" style="background-image: url('{{ block.settings.image | image_url: width: 1800 }}')"></span>
+            {%- else -%}
+              {%- if block.settings.image -%}
+                <span class="hero-slide__bg hero-slide__bg--desktop" style="background-image: url('{{ block.settings.image | image_url: width: 1800 }}')"></span>
+              {%- endif -%}
+              {%- if block.settings.mobile_image -%}
+                <span class="hero-slide__bg hero-slide__bg--mobile" style="background-image: url('{{ block.settings.mobile_image | image_url: width: 900 }}')"></span>
+              {%- elsif block.settings.image -%}
+                <span class="hero-slide__bg hero-slide__bg--mobile hero-slide__bg--fallback"
+                      style="background-image: url('{{ block.settings.image | image_url: width: 1200 }}'); background-color: {{ block.settings.background_color }};"></span>
+              {%- endif -%}
             {%- endif -%}
             <div class="hero-slide__inner">
               {%- if block.settings.eyebrow != blank -%}
@@ -80,6 +91,13 @@
   "name": "Banner rotativo (hero)",
   "settings": [
     {
+      "type": "textarea",
+      "id": "welcome_text",
+      "label": "Frase de boas-vindas (acima do banner)",
+      "info": "Use Enter para quebrar linha. Aparece à esquerda, em duas linhas.",
+      "default": "Bem-vindo à Loja do Exército de Deus,\na loja das Famílias Consagradas."
+    },
+    {
       "type": "range",
       "id": "autoplay_seconds",
       "label": "Tempo de troca automática (segundos)",
@@ -94,7 +112,8 @@
       "type": "slide",
       "name": "Slide",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Imagem de fundo" },
+        { "type": "image_picker", "id": "image", "label": "Imagem de fundo (desktop)" },
+        { "type": "image_picker", "id": "mobile_image", "label": "Imagem de fundo (mobile) — opcional", "info": "Se vazio, usa a desktop em modo 'contain' (sem cortar) no celular." },
         { "type": "video", "id": "video", "label": "Vídeo de fundo (opcional)", "info": "Se preenchido, substitui a imagem. Roda em mudo, autoplay e loop. A imagem acima vira o cartaz/fallback enquanto o vídeo carrega." },
         { "type": "text", "id": "eyebrow", "label": "Texto pequeno superior" },
         { "type": "text", "id": "heading", "label": "Título", "default": "Bem-vindo à loja" },

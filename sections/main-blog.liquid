@@ -1,0 +1,98 @@
+{%- paginate blog.articles by section.settings.posts_per_page -%}
+<section class="page-width blog-list">
+  <header class="blog-list__header">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="blog-list__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    <h1 class="blog-list__title">{{ blog.title }}</h1>
+    {%- if section.settings.intro != blank -%}
+      <p class="blog-list__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+  </header>
+
+  {%- if blog.articles.size > 0 -%}
+    {%- if section.settings.show_featured and current_tags == blank and paginate.current_page == 1 -%}
+      {%- assign featured = blog.articles.first -%}
+      <a class="blog-featured" href="{{ featured.url }}">
+        {%- if featured.image -%}
+          <div class="blog-featured__media">
+            <img src="{{ featured.image | image_url: width: 1400 }}" alt="{{ featured.image.alt | escape | default: featured.title }}" loading="eager">
+          </div>
+        {%- endif -%}
+        <div class="blog-featured__body">
+          {%- if featured.tags.size > 0 -%}
+            <span class="blog-card__tag">{{ featured.tags.first }}</span>
+          {%- endif -%}
+          <h2 class="blog-featured__title">{{ featured.title }}</h2>
+          {%- if featured.excerpt_or_content != blank -%}
+            <p class="blog-featured__excerpt">{{ featured.excerpt_or_content | strip_html | truncatewords: 36, "" }}</p>
+          {%- endif -%}
+          <div class="blog-card__meta">
+            <span>{{ featured.published_at | date: "%d %b %Y" }}</span>
+            {%- if featured.author != blank -%}<span>·</span><span>{{ featured.author }}</span>{%- endif -%}
+          </div>
+          <span class="blog-featured__cta">Ler artigo →</span>
+        </div>
+      </a>
+    {%- endif -%}
+
+    <div class="blog-grid">
+      {%- for article in blog.articles -%}
+        {%- if section.settings.show_featured and forloop.first and current_tags == blank and paginate.current_page == 1 -%}
+          {%- continue -%}
+        {%- endif -%}
+        <a class="blog-card" href="{{ article.url }}">
+          {%- if article.image -%}
+            <div class="blog-card__media">
+              <img src="{{ article.image | image_url: width: 700 }}" alt="{{ article.image.alt | escape | default: article.title }}" loading="lazy">
+            </div>
+          {%- else -%}
+            <div class="blog-card__media blog-card__media--empty" aria-hidden="true">
+              {% render 'icon-book' %}
+            </div>
+          {%- endif -%}
+          <div class="blog-card__body">
+            {%- if article.tags.size > 0 -%}
+              <span class="blog-card__tag">{{ article.tags.first }}</span>
+            {%- endif -%}
+            <h2 class="blog-card__title">{{ article.title }}</h2>
+            {%- if article.excerpt_or_content != blank -%}
+              <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 22, "" }}</p>
+            {%- endif -%}
+            <div class="blog-card__meta">
+              <span>{{ article.published_at | date: "%d %b %Y" }}</span>
+              {%- if article.author != blank -%}<span>·</span><span>{{ article.author }}</span>{%- endif -%}
+            </div>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="blog-pagination" role="navigation" aria-label="Paginação">
+        {%- if paginate.previous -%}
+          <a class="blog-pagination__link" href="{{ paginate.previous.url }}">← Anterior</a>
+        {%- endif -%}
+        <span class="blog-pagination__info">Página {{ paginate.current_page }} de {{ paginate.pages }}</span>
+        {%- if paginate.next -%}
+          <a class="blog-pagination__link" href="{{ paginate.next.url }}">Próxima →</a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- else -%}
+    <p class="blog-list__empty">Ainda não temos artigos publicados. Volte em breve!</p>
+  {%- endif -%}
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Blog",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeno superior", "default": "Blog" },
+    { "type": "text", "id": "intro", "label": "Introdução curta" },
+    { "type": "checkbox", "id": "show_featured", "label": "Destacar o post mais recente no topo", "default": true },
+    { "type": "range", "id": "posts_per_page", "label": "Posts por página", "min": 6, "max": 24, "step": 1, "default": 9 }
+  ]
+}
+{% endschema %}

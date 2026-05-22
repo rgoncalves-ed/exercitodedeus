@@ -1,0 +1,108 @@
+{%- assign autoplay = section.settings.autoplay_seconds | default: 6 -%}
+{%- assign slide_count = section.blocks.size -%}
+
+<section class="escola-hero">
+  <div class="page-width">
+    <header class="escola-hero__intro">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="escola-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h1 class="escola-hero__title">{{ section.settings.title }}</h1>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p class="escola-hero__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if slide_count > 0 -%}
+      <div class="escola-banner {% if slide_count > 1 %}escola-banner--multi{% endif %}"
+           data-hero-slider data-autoplay="{{ autoplay }}">
+        <div class="escola-banner__viewport">
+          <div class="escola-banner__track" data-slider-track>
+            {%- for block in section.blocks -%}
+              {%- assign link = block.settings.link | default: '#' -%}
+              <a href="{{ link }}"
+                 class="escola-banner__slide"
+                 data-slide
+                 {{ block.shopify_attributes }}
+                 style="background-color: {{ block.settings.bg_color }};">
+                {%- if block.settings.image -%}
+                  <span class="escola-banner__bg escola-banner__bg--desktop" style="background-image: url('{{ block.settings.image | image_url: width: 1800 }}')"></span>
+                {%- endif -%}
+                {%- if block.settings.mobile_image -%}
+                  <span class="escola-banner__bg escola-banner__bg--mobile" style="background-image: url('{{ block.settings.mobile_image | image_url: width: 900 }}')"></span>
+                {%- elsif block.settings.image -%}
+                  <span class="escola-banner__bg escola-banner__bg--mobile escola-banner__bg--fallback" style="background-image: url('{{ block.settings.image | image_url: width: 1200 }}'); background-color: {{ block.settings.bg_color }};"></span>
+                {%- endif -%}
+                <div class="escola-banner__content" style="color: {{ block.settings.text_color }};">
+                  {%- if block.settings.heading != blank -%}
+                    <h2 class="escola-banner__title" style="color: {{ block.settings.text_color }};">{{ block.settings.heading }}</h2>
+                  {%- endif -%}
+                  {%- if block.settings.text != blank -%}
+                    <p class="escola-banner__text">{{ block.settings.text }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.btn_label != blank -%}
+                    <span class="escola-banner__btn" style="background: {{ block.settings.btn_bg }}; color: {{ block.settings.btn_color }};">{{ block.settings.btn_label }}</span>
+                  {%- endif -%}
+                </div>
+              </a>
+            {%- endfor -%}
+          </div>
+
+          {%- if slide_count > 1 -%}
+            <button type="button" class="hero-slider__arrow hero-slider__arrow--prev" data-slider-prev aria-label="Anterior">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="hero-slider__arrow hero-slider__arrow--next" data-slider-next aria-label="Próximo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="hero-slider__dots" data-slider-dots role="tablist">
+              {%- for block in section.blocks -%}
+                <button type="button"
+                        class="hero-slider__dot{% if forloop.index0 == 0 %} is-active{% endif %}"
+                        data-slider-dot="{{ forloop.index0 }}"
+                        role="tab"
+                        aria-label="Slide {{ forloop.index }}"></button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Escola — Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeno superior", "default": "Escola Exército de Deus" },
+    { "type": "text", "id": "title", "label": "Título principal", "default": "Escola Exército de Deus" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Formando Famílias Consagradas: Onde as virtudes, os valores e a fé católica se tornam sua maior força." },
+    { "type": "range", "id": "autoplay_seconds", "label": "Tempo entre slides (segundos)", "min": 3, "max": 12, "step": 1, "default": 6 }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide do banner",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagem (desktop)" },
+        { "type": "image_picker", "id": "mobile_image", "label": "Imagem (mobile) — opcional" },
+        { "type": "text", "id": "heading", "label": "Título do slide" },
+        { "type": "textarea", "id": "text", "label": "Texto" },
+        { "type": "text", "id": "btn_label", "label": "Texto do botão" },
+        { "type": "url", "id": "link", "label": "Link do slide" },
+        { "type": "color", "id": "bg_color", "label": "Cor de fundo", "default": "#1F2D4A" },
+        { "type": "color", "id": "text_color", "label": "Cor do texto", "default": "#FFFFFF" },
+        { "type": "color", "id": "btn_bg", "label": "Cor do botão", "default": "#FFFFFF" },
+        { "type": "color", "id": "btn_color", "label": "Cor do texto do botão", "default": "#1F2D4A" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    { "name": "Escola — Hero" }
+  ]
+}
+{% endschema %}

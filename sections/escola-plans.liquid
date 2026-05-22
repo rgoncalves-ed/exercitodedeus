@@ -1,0 +1,161 @@
+<section class="escola-plans page-width">
+  {%- if section.settings.heading != blank -%}
+    <header class="escola-plans__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="escola-plans__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="escola-plans__title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.intro != blank -%}
+        <p class="escola-plans__intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+    </header>
+  {%- endif -%}
+
+  {%- if section.settings.note != blank -%}
+    <p class="escola-plans__note">{{ section.settings.note }}</p>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="escola-plans__grid">
+      {%- for block in section.blocks -%}
+        {%- assign link = block.settings.link | default: '#' -%}
+        <article class="plan-card{% if block.settings.highlight %} plan-card--highlight{% endif %}{% if block.settings.coming_soon %} plan-card--soon{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.highlight and block.settings.highlight_label != blank -%}
+            <span class="plan-card__ribbon">{{ block.settings.highlight_label }}</span>
+          {%- endif -%}
+
+          <header class="plan-card__head">
+            {%- if block.settings.eyebrow != blank -%}
+              <span class="plan-card__eyebrow">{{ block.settings.eyebrow }}</span>
+            {%- endif -%}
+            <h3 class="plan-card__name">{{ block.settings.name }}</h3>
+            {%- if block.settings.tagline != blank -%}
+              <p class="plan-card__tagline">{{ block.settings.tagline }}</p>
+            {%- endif -%}
+          </header>
+
+          {%- if block.settings.coming_soon -%}
+            <div class="plan-card__badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Lançamento em <strong>{{ block.settings.launch_date }}</strong></span>
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.features != blank -%}
+            <ul class="plan-card__features" role="list">
+              {%- assign feature_lines = block.settings.features | newline_to_br | split: '<br />' -%}
+              {%- for line in feature_lines -%}
+                {%- assign clean = line | strip -%}
+                {%- if clean != blank -%}
+                  <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>{{ clean }}</span>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          <div class="plan-card__price">
+            {%- if block.settings.installments != blank -%}
+              <span class="plan-card__installments">{{ block.settings.installments }}</span>
+            {%- endif -%}
+            {%- if block.settings.total_label != blank -%}
+              <span class="plan-card__total">{{ block.settings.total_label }}</span>
+            {%- endif -%}
+          </div>
+
+          <a href="{{ link }}" class="plan-card__cta{% if block.settings.coming_soon %} plan-card__cta--soon{% endif %}">
+            {{ block.settings.btn_label | default: 'Quero esse plano' }}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+
+          {%- if block.settings.disclaimer != blank -%}
+            <p class="plan-card__disclaimer">{{ block.settings.disclaimer }}</p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Escola — Planos",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeno superior", "default": "Escolha seu" },
+    { "type": "text", "id": "heading", "label": "Título da seção", "default": "Plano" },
+    { "type": "textarea", "id": "intro", "label": "Texto introdutório" },
+    { "type": "richtext", "id": "note", "label": "Aviso destacado", "default": "<p>Não é assinatura: compra única com acesso de 1 ano, podendo parcelar em até 12x.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "plan",
+      "name": "Plano",
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Tag pequena (ex: Trilha)", "default": "Trilha" },
+        { "type": "text", "id": "name", "label": "Nome do plano" },
+        { "type": "textarea", "id": "tagline", "label": "Frase curta abaixo do nome" },
+        { "type": "textarea", "id": "features", "label": "Itens inclusos (1 por linha)" },
+        { "type": "text", "id": "installments", "label": "Parcelamento (ex: 12x R$ 42,90)" },
+        { "type": "text", "id": "total_label", "label": "Texto auxiliar (ex: ou à vista R$ 499)" },
+        { "type": "text", "id": "btn_label", "label": "Texto do botão", "default": "Quero esse plano" },
+        { "type": "url", "id": "link", "label": "Link / Checkout" },
+        { "type": "text", "id": "disclaimer", "label": "Asterisco / observação" },
+        { "type": "checkbox", "id": "highlight", "label": "Plano em destaque (visual maior)", "default": false },
+        { "type": "text", "id": "highlight_label", "label": "Texto da faixa de destaque", "default": "Mais completo" },
+        { "type": "checkbox", "id": "coming_soon", "label": "Lançamento futuro", "default": false },
+        { "type": "text", "id": "launch_date", "label": "Data de lançamento", "default": "19 de Agosto de 2026" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Escola — Planos",
+      "blocks": [
+        {
+          "type": "plan",
+          "settings": {
+            "eyebrow": "Trilha",
+            "name": "Mulheres de Rocha",
+            "tagline": "A trilha completa para mulheres consagradas.",
+            "installments": "12x R$ 42,90",
+            "btn_label": "Quero esse plano",
+            "disclaimer": "* Compra única, acesso por 12 meses."
+          }
+        },
+        {
+          "type": "plan",
+          "settings": {
+            "eyebrow": "Trilha",
+            "name": "Famílias Consagradas",
+            "tagline": "Para casais e famílias que querem caminhar juntos na fé.",
+            "features": "Todos os cursos do Mulheres de Rocha\nTodos os cursos Forjados na Graça\nCursos exclusivos para famílias",
+            "installments": "12x R$ 79,90",
+            "highlight": true,
+            "highlight_label": "Mais completo",
+            "coming_soon": true,
+            "launch_date": "19 de Agosto de 2026",
+            "btn_label": "Garantir pré-venda",
+            "disclaimer": "* Compra única, acesso por 12 meses."
+          }
+        },
+        {
+          "type": "plan",
+          "settings": {
+            "eyebrow": "Trilha",
+            "name": "Forjados na Graça",
+            "tagline": "Para homens que querem se tornar guerreiros da fé.",
+            "installments": "12x R$ 42,90",
+            "coming_soon": true,
+            "launch_date": "19 de Agosto de 2026",
+            "btn_label": "Garantir pré-venda",
+            "disclaimer": "* Compra única, acesso por 12 meses."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

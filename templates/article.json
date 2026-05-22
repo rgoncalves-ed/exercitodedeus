@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "show_related": true,
+        "related_heading": "Leia também"
+      }
+    }
+  },
+  "order": ["main"]
+}
