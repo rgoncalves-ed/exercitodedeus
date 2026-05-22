@@ -62,6 +62,10 @@
 
       {%- if product.description != blank -%}
         <div class="product__short-description">{{ product.description | strip_html | truncatewords: 50, "" }}</div>
+        {%- assign desc_words = product.description | strip_html | split: ' ' | size -%}
+        {%- if desc_words > 50 -%}
+          <a href="#product-full-description" class="product__read-more" data-product-read-more>Ler descrição completa ↓</a>
+        {%- endif -%}
       {%- endif -%}
 
       <div class="product__price">
@@ -246,7 +250,7 @@
   {%- endif -%}
 
   {%- if product.description != blank or product.metafields.specs.list != blank -%}
-    <div class="product-details">
+    <div class="product-details" id="product-full-description">
       <div class="product-details__column">
         <h2 class="product-details__heading">Sobre</h2>
         <div class="product-details__text">
