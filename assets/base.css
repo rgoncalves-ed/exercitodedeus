@@ -111,12 +111,19 @@ p { margin: 0 0 1em; }
 /* ----------------------- Topbar (contatos + redes sociais) ----------------------- */
 
 .topbar {
-  background: var(--color-primary);
-  color: rgba(255,255,255,0.92);
+  background: linear-gradient(90deg, var(--topbar-bg-1, #564999) 0%, var(--topbar-bg-2, #7ec0d5) 100%);
+  color: var(--topbar-text, #fff);
   font-size: 0.78rem;
   letter-spacing: 0.01em;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 51;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+body.is-scrolled-down .topbar { transform: translateY(-100%); }
 
 .topbar__inner {
   display: flex;
@@ -226,12 +233,14 @@ p { margin: 0 0 1em; }
     0 1px 0 rgba(0, 0, 0, 0.06),
     0 12px 32px -20px rgba(0, 0, 0, 0.12);
   position: fixed;
-  top: 0;
+  top: var(--topbar-height, 0px);
   left: 0;
   right: 0;
   z-index: 50;
+  transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-body { padding-top: var(--header-height, 64px); }
+body.is-scrolled-down .site-header { top: 0; }
+body { padding-top: calc(var(--topbar-height, 0px) + var(--header-height, 64px)); }
 @supports not ((-webkit-backdrop-filter: blur(28px)) or (backdrop-filter: blur(28px))) {
   .site-header { background: #fff; border-bottom: 1px solid var(--color-border); }
 }
@@ -1078,10 +1087,19 @@ body { padding-top: var(--header-height, 64px); }
 }
 
 /* Coluna de redes sociais (esquerda) */
+.site-footer__socials-group { margin-bottom: 22px; }
+.site-footer__socials-label {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted) !important;
+  margin: 0 0 10px !important;
+}
 .site-footer__socials {
   list-style: none;
   padding: 0;
-  margin: 0 0 28px;
+  margin: 0;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;

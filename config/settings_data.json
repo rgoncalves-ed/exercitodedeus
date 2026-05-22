@@ -9,8 +9,8 @@
  */
 {
   "current": {
-    "color_primary": "#1A1A1A",
-    "color_accent": "#B91C1C",
+    "color_primary": "#564999",
+    "color_accent": "#7EC0D5",
     "color_background": "#FFFFFF",
     "color_surface": "#F8F8F8",
     "color_text": "#1A1A1A",
@@ -44,8 +44,8 @@
   },
   "presets": {
     "Padrão": {
-      "color_primary": "#1A1A1A",
-      "color_accent": "#B91C1C",
+      "color_primary": "#564999",
+      "color_accent": "#7EC0D5",
       "color_background": "#FFFFFF",
       "color_surface": "#F8F8F8",
       "color_text": "#1A1A1A"

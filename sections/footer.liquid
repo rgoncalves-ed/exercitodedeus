@@ -5,31 +5,60 @@
   assign cnpj = section.settings.cnpj
   assign phone_clean = phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', ''
   assign wa_number = settings.social_whatsapp | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-'
+
+  assign ita_wa_raw = section.settings.ita_whatsapp
+  assign ita_wa = ita_wa_raw | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-'
+  assign ana_label = section.settings.ana_label | default: 'Redes Ana'
+  assign ita_label = section.settings.ita_label | default: 'Redes Ita'
+  assign has_ita = false
+  if section.settings.ita_instagram != blank or section.settings.ita_facebook != blank or ita_wa != blank
+    assign has_ita = true
+  endif
 -%}
 
 <footer class="site-footer" role="contentinfo">
   <div class="page-width">
     <div class="site-footer__top">
 
-      {%- comment -%} 1. SOCIAL — coluna de ícones {%- endcomment -%}
+      {%- comment -%} 1. SOCIAL — Redes Ana + Redes Ita {%- endcomment -%}
       <div class="site-footer__col site-footer__col--social">
-        <ul class="site-footer__socials" role="list" aria-label="Redes sociais">
-          {%- if settings.social_instagram != blank -%}
-            <li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon-instagram' %}</a></li>
-          {%- endif -%}
-          {%- if settings.social_facebook != blank -%}
-            <li><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon-facebook' %}</a></li>
-          {%- endif -%}
-          {%- if settings.social_tiktok != blank -%}
-            <li><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon-tiktok' %}</a></li>
-          {%- endif -%}
-          {%- if settings.social_whatsapp != blank -%}
-            <li><a href="https://wa.me/{{ wa_number }}" target="_blank" rel="noopener" aria-label="WhatsApp">{% render 'icon-whatsapp' %}</a></li>
-          {%- endif -%}
-          {%- if settings.social_youtube != blank -%}
-            <li><a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon-youtube' %}</a></li>
-          {%- endif -%}
-        </ul>
+        <div class="site-footer__socials-group">
+          <h4 class="site-footer__heading site-footer__socials-label">{{ ana_label }}</h4>
+          <ul class="site-footer__socials" role="list" aria-label="{{ ana_label }}">
+            {%- if settings.social_instagram != blank -%}
+              <li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram {{ ana_label }}">{% render 'icon-instagram' %}</a></li>
+            {%- endif -%}
+            {%- if settings.social_facebook != blank -%}
+              <li><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook {{ ana_label }}">{% render 'icon-facebook' %}</a></li>
+            {%- endif -%}
+            {%- if settings.social_tiktok != blank -%}
+              <li><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok {{ ana_label }}">{% render 'icon-tiktok' %}</a></li>
+            {%- endif -%}
+            {%- if settings.social_whatsapp != blank -%}
+              <li><a href="https://wa.me/{{ wa_number }}" target="_blank" rel="noopener" aria-label="WhatsApp {{ ana_label }}">{% render 'icon-whatsapp' %}</a></li>
+            {%- endif -%}
+            {%- if settings.social_youtube != blank -%}
+              <li><a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube {{ ana_label }}">{% render 'icon-youtube' %}</a></li>
+            {%- endif -%}
+          </ul>
+        </div>
+
+        {%- if has_ita -%}
+          <div class="site-footer__socials-group">
+            <h4 class="site-footer__heading site-footer__socials-label">{{ ita_label }}</h4>
+            <ul class="site-footer__socials" role="list" aria-label="{{ ita_label }}">
+              {%- if section.settings.ita_instagram != blank -%}
+                <li><a href="{{ section.settings.ita_instagram }}" target="_blank" rel="noopener" aria-label="Instagram {{ ita_label }}">{% render 'icon-instagram' %}</a></li>
+              {%- endif -%}
+              {%- if section.settings.ita_facebook != blank -%}
+                <li><a href="{{ section.settings.ita_facebook }}" target="_blank" rel="noopener" aria-label="Facebook {{ ita_label }}">{% render 'icon-facebook' %}</a></li>
+              {%- endif -%}
+              {%- if ita_wa != blank -%}
+                <li><a href="https://wa.me/{{ ita_wa }}" target="_blank" rel="noopener" aria-label="WhatsApp {{ ita_label }}">{% render 'icon-whatsapp' %}</a></li>
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
 
         {%- if section.settings.show_security -%}
           <div class="site-footer__security">
@@ -162,6 +191,16 @@
 {
   "name": "Rodapé",
   "settings": [
+    { "type": "header", "content": "Redes sociais — Ana" },
+    { "type": "paragraph", "content": "Os links abaixo ficam em Theme settings → Redes sociais. Aqui você só escolhe o nome que aparece em cima dos ícones." },
+    { "type": "text", "id": "ana_label", "label": "Texto do grupo (Ana)", "default": "Redes Ana" },
+
+    { "type": "header", "content": "Redes sociais — Ita" },
+    { "type": "text", "id": "ita_label", "label": "Texto do grupo (Ita)", "default": "Redes Ita" },
+    { "type": "url", "id": "ita_instagram", "label": "Instagram (Ita)" },
+    { "type": "url", "id": "ita_facebook", "label": "Facebook (Ita)" },
+    { "type": "text", "id": "ita_whatsapp", "label": "WhatsApp (Ita)", "info": "Número com DDI, ex: 5543999999999. Deixe vazio se não tiver." },
+
     { "type": "header", "content": "Coluna Institucional" },
     { "type": "text", "id": "col1_heading", "label": "Título", "default": "Institucional" },
     { "type": "link_list", "id": "col1_menu", "label": "Menu (opcional)" },

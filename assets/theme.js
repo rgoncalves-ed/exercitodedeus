@@ -5,20 +5,50 @@
 (function () {
   'use strict';
 
-  // ---------- Header height -> CSS var (para offset do body com header fixed) ----------
+  // ---------- Topbar + Header height -> CSS vars (offset do body com elementos fixed) ----------
   (function () {
     var header = document.querySelector('[data-site-header]');
-    if (!header) return;
+    var topbar = document.querySelector('[data-topbar]');
+    if (!header && !topbar) return;
     function update() {
-      document.body.style.setProperty('--header-height', header.offsetHeight + 'px');
+      if (header) document.body.style.setProperty('--header-height', header.offsetHeight + 'px');
+      if (topbar) document.body.style.setProperty('--topbar-height', topbar.offsetHeight + 'px');
     }
     update();
     window.addEventListener('resize', update);
     window.addEventListener('load', update);
     if (window.ResizeObserver) {
       var ro = new ResizeObserver(update);
-      ro.observe(header);
+      if (header) ro.observe(header);
+      if (topbar) ro.observe(topbar);
     }
+  })();
+
+  // ---------- Topbar hide on scroll-down (mostra de novo no scroll-up) ----------
+  (function () {
+    var topbar = document.querySelector('[data-topbar]');
+    if (!topbar) return;
+    var lastY = window.scrollY;
+    var ticking = false;
+    var threshold = 8;
+    function onScroll() {
+      var y = window.scrollY;
+      var delta = y - lastY;
+      var topbarH = topbar.offsetHeight || 32;
+      if (y > topbarH && delta > threshold) {
+        document.body.classList.add('is-scrolled-down');
+      } else if (delta < -threshold || y <= topbarH) {
+        document.body.classList.remove('is-scrolled-down');
+      }
+      lastY = y;
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
   })();
 
   // ---------- Mobile drawer ----------

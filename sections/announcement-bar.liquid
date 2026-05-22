@@ -9,7 +9,11 @@
 -%}
 
 {%- if show_message != blank or show_phone != blank or show_email != blank or show_social -%}
-  <div class="topbar" role="region" aria-label="Informações de contato e redes sociais">
+  <div class="topbar" role="region" aria-label="Informações de contato e redes sociais"
+       data-topbar
+       style="--topbar-bg-1: {{ section.settings.bg_color_1 | default: '#564999' }};
+              --topbar-bg-2: {{ section.settings.bg_color_2 | default: '#7ec0d5' }};
+              --topbar-text: {{ section.settings.text_color | default: '#ffffff' }};">
     <div class="page-width topbar__inner">
       <div class="topbar__contacts">
         {%- if show_phone != blank -%}
@@ -164,6 +168,28 @@
       "type": "url",
       "id": "mulheres_url",
       "label": "Link \"Mulheres de Rocha\" (ícone diamante)"
+    },
+    {
+      "type": "header",
+      "content": "Cores da barra"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_1",
+      "label": "Cor de fundo (gradient início)",
+      "default": "#564999"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_2",
+      "label": "Cor de fundo (gradient fim)",
+      "default": "#7ec0d5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor do texto",
+      "default": "#FFFFFF"
     }
   ]
 }
