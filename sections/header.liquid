@@ -10,8 +10,9 @@
       </a>
 
       {%- if section.settings.menu != blank -%}
+        {%- assign menu_limit = section.settings.menu_max_items | default: 3 -%}
         <nav class="site-header__nav" aria-label="Menu principal">
-          {%- for link in section.settings.menu.links -%}
+          {%- for link in section.settings.menu.links limit: menu_limit -%}
             <a href="{{ link.url }}">{{ link.title }}</a>
           {%- endfor -%}
         </nav>
@@ -68,6 +69,16 @@
       "id": "menu",
       "label": "Menu inline (ao lado do logo)",
       "default": "main-menu"
+    },
+    {
+      "type": "range",
+      "id": "menu_max_items",
+      "label": "Máximo de itens no menu",
+      "info": "Os primeiros N itens do menu acima aparecem no topo. O restante vai pro menu mobile.",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 3
     }
   ]
 }
