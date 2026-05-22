@@ -740,8 +740,8 @@ body { padding-top: calc(var(--topbar-height, 0px) + var(--header-height, 64px))
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 24px 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px 14px;
 }
 
 /* Em destaque na home: N colunas exatas no desktop */
@@ -784,7 +784,7 @@ body { padding-top: calc(var(--topbar-height, 0px) + var(--header-height, 64px))
   background: #FAFAFA;
   display: block;
   overflow: hidden;
-  padding: 28px 32px;
+  padding: 14px 18px;
 }
 
 .product-card__media--portrait { aspect-ratio: 1; }
@@ -1447,7 +1447,7 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
 /* ----------------------- Collection page ----------------------- */
 
 .collection-banner {
-  padding: 48px 24px;
+  padding: 28px 24px 24px;
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
 }
@@ -1459,9 +1459,9 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding-block: 20px;
+  padding-block: 12px;
   border-bottom: 1px solid var(--color-border);
-  margin-bottom: 28px;
+  margin-bottom: 18px;
   flex-wrap: wrap;
 }
 
@@ -3432,12 +3432,13 @@ body.cart-open .cart-drawer { transform: translateX(0); }
 .collection-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 32px;
+  gap: 24px;
   align-items: start;
 }
 .collection-grid--no-filters {
   grid-template-columns: 1fr !important;
 }
+.collection-page { padding-top: 8px; }
 .collection-page { padding-bottom: 60px; }
 
 .collection-filters {
