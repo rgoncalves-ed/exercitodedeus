@@ -5,6 +5,22 @@
 (function () {
   'use strict';
 
+  // ---------- Header height -> CSS var (para offset do body com header fixed) ----------
+  (function () {
+    var header = document.querySelector('[data-site-header]');
+    if (!header) return;
+    function update() {
+      document.body.style.setProperty('--header-height', header.offsetHeight + 'px');
+    }
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(update);
+      ro.observe(header);
+    }
+  })();
+
   // ---------- Mobile drawer ----------
   (function () {
     var drawer = document.querySelector('[data-mobile-drawer]');

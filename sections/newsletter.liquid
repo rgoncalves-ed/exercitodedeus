@@ -1,51 +1,41 @@
 <section class="newsletter">
   <div class="page-width">
-    <div class="newsletter__card{% if section.settings.glass %} newsletter__card--glass{% endif %}"
-         style="--news-bg: {{ section.settings.bg_color }};
-                --news-bg-2: {{ section.settings.bg_color_2 }};
-                --news-text: {{ section.settings.text_color }};">
-      {%- if section.settings.show_icon -%}
-        <span class="newsletter__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </span>
+    <div class="newsletter__card">
+      <span class="newsletter__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </span>
+
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="newsletter__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="newsletter__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="newsletter__sub">{{ section.settings.subheading }}</p>
       {%- endif -%}
 
-      <div class="newsletter__body">
-        {%- if section.settings.eyebrow != blank -%}
-          <span class="newsletter__eyebrow">{{ section.settings.eyebrow }}</span>
-        {%- endif -%}
-        <h2 class="newsletter__heading">{{ section.settings.heading }}</h2>
-        {%- if section.settings.subheading != blank -%}
-          <p class="newsletter__sub">{{ section.settings.subheading }}</p>
-        {%- endif -%}
-
-        {% form 'customer', class: 'newsletter__form' %}
-          {%- if form.posted_successfully? -%}
-            <p class="newsletter__success">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Inscrição confirmada! Fica de olho na sua caixa de entrada.
-            </p>
-          {%- else -%}
-            <input type="hidden" name="contact[tags]" value="newsletter">
+      {% form 'customer', class: 'newsletter__form' %}
+        {%- if form.posted_successfully? -%}
+          <p class="newsletter__success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Inscrição confirmada! Fica de olho na sua caixa de entrada.
+          </p>
+        {%- else -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="newsletter__field">
             <input type="email" name="contact[email]" placeholder="seu@email.com" aria-label="E-mail" required>
             <button type="submit" class="newsletter__submit">
-              <span>{{ section.settings.btn_label | default: 'Quero receber' }}</span>
+              <span>{{ section.settings.btn_label | default: 'Inscrever' }}</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
-            {%- if form.errors -%}
-              <p class="newsletter__error">{{ form.errors | default_errors }}</p>
-            {%- endif -%}
+          </div>
+          {%- if form.errors -%}
+            <p class="newsletter__error">{{ form.errors | default_errors }}</p>
           {%- endif -%}
-        {% endform %}
-
-        {%- if section.settings.fine_print != blank -%}
-          <p class="newsletter__fine">{{ section.settings.fine_print }}</p>
         {%- endif -%}
-      </div>
+      {% endform %}
 
-      {%- if section.settings.show_orbs -%}
-        <span class="newsletter__orb newsletter__orb--1" aria-hidden="true"></span>
-        <span class="newsletter__orb newsletter__orb--2" aria-hidden="true"></span>
+      {%- if section.settings.fine_print != blank -%}
+        <p class="newsletter__fine">{{ section.settings.fine_print }}</p>
       {%- endif -%}
     </div>
   </div>
@@ -58,15 +48,8 @@
     { "type": "text", "id": "eyebrow", "label": "Texto pequeno superior", "default": "Newsletter" },
     { "type": "text", "id": "heading", "label": "Título", "default": "Receba nossas novidades" },
     { "type": "text", "id": "subheading", "label": "Subtítulo", "default": "Lançamentos, promoções e conteúdo exclusivo direto no seu e-mail." },
-    { "type": "text", "id": "btn_label", "label": "Texto do botão", "default": "Quero receber" },
-    { "type": "text", "id": "fine_print", "label": "Letra miúda (LGPD)", "default": "Você pode descadastrar a qualquer momento. Sem spam." },
-    { "type": "checkbox", "id": "show_icon", "label": "Mostrar ícone de envelope", "default": true },
-    { "type": "checkbox", "id": "show_orbs", "label": "Mostrar 'orbs' coloridos no fundo", "default": true, "info": "Bolas borradas que dão o efeito moderno." },
-    { "type": "checkbox", "id": "glass", "label": "Usar efeito liquid glass", "default": true },
-    { "type": "header", "content": "Cores" },
-    { "type": "color", "id": "bg_color", "label": "Cor de fundo (gradient 1)", "default": "#1F2D4A" },
-    { "type": "color", "id": "bg_color_2", "label": "Cor de fundo (gradient 2)", "default": "#7A2F2F" },
-    { "type": "color", "id": "text_color", "label": "Cor do texto", "default": "#FFFFFF" }
+    { "type": "text", "id": "btn_label", "label": "Texto do botão", "default": "Inscrever" },
+    { "type": "text", "id": "fine_print", "label": "Letra miúda (LGPD)", "default": "Você pode descadastrar a qualquer momento. Sem spam." }
   ],
   "presets": [
     { "name": "Newsletter" }
