@@ -10,7 +10,7 @@
       </a>
 
       {%- if section.settings.menu != blank -%}
-        {%- assign menu_limit = section.settings.menu_max_items | default: 3 -%}
+        {%- assign menu_limit = section.settings.menu_max_items | default: 8 -%}
         <nav class="site-header__nav" aria-label="Menu principal">
           {%- for link in section.settings.menu.links limit: menu_limit -%}
             {%- if link.links.size > 0 -%}
@@ -131,11 +131,11 @@
       "type": "range",
       "id": "menu_max_items",
       "label": "Máximo de itens no menu (desktop)",
-      "info": "Os primeiros N itens aparecem no topo. O restante continua disponível no menu mobile completo.",
+      "info": "Os primeiros N itens aparecem no topo. O restante continua disponível no menu mobile completo. Default 8.",
       "min": 1,
-      "max": 8,
+      "max": 12,
       "step": 1,
-      "default": 3
+      "default": 8
     }
   ]
 }
