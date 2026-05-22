@@ -1,4 +1,4 @@
-<header class="site-header" role="banner">
+<header class="site-header" role="banner" data-site-header>
   <div class="page-width">
     <div class="site-header__inner">
       <a href="{{ routes.root_url }}" class="site-header__logo" aria-label="{{ shop.name }} - página inicial">
@@ -13,7 +13,25 @@
         {%- assign menu_limit = section.settings.menu_max_items | default: 3 -%}
         <nav class="site-header__nav" aria-label="Menu principal">
           {%- for link in section.settings.menu.links limit: menu_limit -%}
-            <a href="{{ link.url }}">{{ link.title }}</a>
+            {%- if link.links.size > 0 -%}
+              <div class="site-header__nav-item site-header__nav-item--has-children" data-dropdown>
+                <a href="{{ link.url }}" class="site-header__nav-link" aria-haspopup="true" aria-expanded="false" data-dropdown-toggle>
+                  {{ link.title }}
+                  <svg class="site-header__nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                </a>
+                <div class="site-header__dropdown" role="menu" data-dropdown-panel>
+                  <ul role="none">
+                    {%- for sublink in link.links -%}
+                      <li role="none">
+                        <a href="{{ sublink.url }}" role="menuitem">{{ sublink.title }}</a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              </div>
+            {%- else -%}
+              <a href="{{ link.url }}" class="site-header__nav-link">{{ link.title }}</a>
+            {%- endif -%}
           {%- endfor -%}
         </nav>
       {%- endif -%}
@@ -35,7 +53,7 @@
       </form>
 
       <div class="site-header__actions">
-        <button type="button" class="header-action mobile-toggle" aria-label="Abrir menu" data-mobile-toggle>
+        <button type="button" class="header-action mobile-toggle" aria-label="Abrir menu" data-mobile-toggle aria-expanded="false">
           {% render 'icon-menu' %}
         </button>
 
@@ -59,6 +77,44 @@
   </div>
 </header>
 
+{%- if section.settings.menu != blank -%}
+  <div class="mobile-drawer" data-mobile-drawer hidden aria-hidden="true">
+    <div class="mobile-drawer__backdrop" data-mobile-close></div>
+    <aside class="mobile-drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <header class="mobile-drawer__head">
+        <span class="mobile-drawer__title">Menu</span>
+        <button type="button" class="mobile-drawer__close" aria-label="Fechar menu" data-mobile-close>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+      <nav class="mobile-drawer__nav" aria-label="Menu mobile">
+        <ul role="list">
+          {%- for link in section.settings.menu.links -%}
+            <li class="mobile-drawer__item{% if link.links.size > 0 %} mobile-drawer__item--has-children{% endif %}">
+              {%- if link.links.size > 0 -%}
+                <details>
+                  <summary>
+                    <span>{{ link.title }}</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                  </summary>
+                  <ul role="list" class="mobile-drawer__sub">
+                    <li><a href="{{ link.url }}">Ver tudo de {{ link.title }}</a></li>
+                    {%- for sublink in link.links -%}
+                      <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                </details>
+              {%- else -%}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </aside>
+  </div>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Cabeçalho",
@@ -68,13 +124,14 @@
       "type": "link_list",
       "id": "menu",
       "label": "Menu inline (ao lado do logo)",
+      "info": "Cada item pode ter um nível de submenu (Online Store → Navigation → adicionar sub-item).",
       "default": "main-menu"
     },
     {
       "type": "range",
       "id": "menu_max_items",
-      "label": "Máximo de itens no menu",
-      "info": "Os primeiros N itens do menu acima aparecem no topo. O restante vai pro menu mobile.",
+      "label": "Máximo de itens no menu (desktop)",
+      "info": "Os primeiros N itens aparecem no topo. O restante continua disponível no menu mobile completo.",
       "min": 1,
       "max": 8,
       "step": 1,

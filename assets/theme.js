@@ -5,13 +5,71 @@
 (function () {
   'use strict';
 
-  // ---------- Mobile menu ----------
-  document.addEventListener('click', function (e) {
-    var toggle = e.target.closest('[data-mobile-toggle]');
-    if (toggle) {
-      var nav = document.querySelector('[data-site-nav]');
-      if (nav) nav.classList.toggle('is-open');
+  // ---------- Mobile drawer ----------
+  (function () {
+    var drawer = document.querySelector('[data-mobile-drawer]');
+    if (!drawer) return;
+    var toggles = document.querySelectorAll('[data-mobile-toggle]');
+    var closers = drawer.querySelectorAll('[data-mobile-close]');
+
+    function open() {
+      drawer.hidden = false;
+      // double rAF so transition applies after the element becomes visible
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { drawer.classList.add('is-open'); });
+      });
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+      toggles.forEach(function (t) { t.setAttribute('aria-expanded', 'true'); });
     }
+    function close() {
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+      toggles.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
+      setTimeout(function () { drawer.hidden = true; }, 300);
+    }
+
+    toggles.forEach(function (t) { t.addEventListener('click', open); });
+    closers.forEach(function (c) { c.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) close();
+    });
+  })();
+
+  // ---------- Header dropdowns (submenu desktop) ----------
+  document.querySelectorAll('[data-dropdown]').forEach(function (item) {
+    var toggle = item.querySelector('[data-dropdown-toggle]');
+    var panel = item.querySelector('[data-dropdown-panel]');
+    if (!toggle || !panel) return;
+    var openTimer = null;
+    var closeTimer = null;
+
+    function setOpen(state) {
+      item.classList.toggle('is-open', state);
+      toggle.setAttribute('aria-expanded', state ? 'true' : 'false');
+    }
+
+    item.addEventListener('mouseenter', function () {
+      clearTimeout(closeTimer);
+      openTimer = setTimeout(function () { setOpen(true); }, 60);
+    });
+    item.addEventListener('mouseleave', function () {
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(function () { setOpen(false); }, 120);
+    });
+    // keyboard / click open
+    toggle.addEventListener('focus', function () { setOpen(true); });
+    item.addEventListener('focusout', function (e) {
+      if (!item.contains(e.relatedTarget)) setOpen(false);
+    });
+    toggle.addEventListener('click', function (e) {
+      // só intercepta em touch/mobile-like (sem hover) — em desktop deixa navegar
+      if (window.matchMedia('(hover: none)').matches) {
+        e.preventDefault();
+        setOpen(!item.classList.contains('is-open'));
+      }
+    });
   });
 
   // ---------- Hero / CTA slider (carrossel rotativo reutilizável) ----------
