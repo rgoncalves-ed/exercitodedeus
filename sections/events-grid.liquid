@@ -1,0 +1,111 @@
+<section class="events-grid page-width">
+  {%- if section.settings.heading != blank or section.settings.intro != blank -%}
+    <header class="events-grid__header">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="events-grid__eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="events-grid__title">
+            {{ section.settings.heading }}{% if section.settings.heading_highlight != blank %} <span>{{ section.settings.heading_highlight }}</span>{% endif %}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p class="events-grid__intro">{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.view_all_url != blank -%}
+        <a class="events-grid__view-all" href="{{ section.settings.view_all_url }}">
+          {{ section.settings.view_all_label | default: 'Ver todos' }} →
+        </a>
+      {%- endif -%}
+    </header>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="events-grid__list" style="--cols: {{ section.settings.columns | default: 4 }};">
+      {%- for block in section.blocks -%}
+        {%- assign link = block.settings.link | default: '#' -%}
+        <article class="event-card{% if block.settings.sold_out %} event-card--sold-out{% endif %}" {{ block.shopify_attributes }}>
+          <a class="event-card__media" href="{{ link }}" aria-label="{{ block.settings.title | escape }}">
+            {%- if block.settings.image -%}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+            {%- else -%}
+              <div class="event-card__media-empty" style="background: {{ block.settings.bg_color | default: '#1F2D4A' }};">
+                <span aria-hidden="true">{{ block.settings.title | slice: 0, 1 | upcase }}</span>
+              </div>
+            {%- endif -%}
+            {%- if block.settings.tag != blank -%}
+              <span class="event-card__tag">{{ block.settings.tag }}</span>
+            {%- endif -%}
+            {%- if block.settings.sold_out -%}
+              <span class="event-card__sold">Esgotado</span>
+            {%- endif -%}
+          </a>
+          <div class="event-card__body">
+            <a class="event-card__title" href="{{ link }}">{{ block.settings.title }}</a>
+            <ul class="event-card__meta" role="list">
+              {%- if block.settings.date != blank -%}
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  <span>{{ block.settings.date }}</span>
+                </li>
+              {%- endif -%}
+              {%- if block.settings.location != blank -%}
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span>{{ block.settings.location }}</span>
+                </li>
+              {%- endif -%}
+            </ul>
+            <a class="event-card__cta" href="{{ link }}">{{ block.settings.cta_label | default: 'Ver detalhes' }} →</a>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Eventos / Cards",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeno superior" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Eventos em" },
+    { "type": "text", "id": "heading_highlight", "label": "Última palavra do título (destacada)", "default": "Destaque" },
+    { "type": "textarea", "id": "intro", "label": "Subtítulo curto", "default": "Os eventos mais procurados da semana" },
+    { "type": "url", "id": "view_all_url", "label": "Link 'Ver todos'" },
+    { "type": "text", "id": "view_all_label", "label": "Texto do 'Ver todos'", "default": "Ver todos" },
+    { "type": "range", "id": "columns", "label": "Colunas no desktop", "min": 2, "max": 4, "step": 1, "default": 4 }
+  ],
+  "blocks": [
+    {
+      "type": "event",
+      "name": "Evento",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagem (cartaz)" },
+        { "type": "color", "id": "bg_color", "label": "Cor de fundo (se sem imagem)", "default": "#1F2D4A" },
+        { "type": "text", "id": "title", "label": "Título do evento" },
+        { "type": "text", "id": "tag", "label": "Etiqueta sobre a imagem (opcional)" },
+        { "type": "text", "id": "date", "label": "Data e hora", "info": "Ex: 30 mai 2026 • 10:00" },
+        { "type": "text", "id": "location", "label": "Local", "info": "Ex: Fortaleza, CE" },
+        { "type": "url", "id": "link", "label": "Link da página do evento" },
+        { "type": "text", "id": "cta_label", "label": "Texto do botão", "default": "Ver detalhes" },
+        { "type": "checkbox", "id": "sold_out", "label": "Esgotado", "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Eventos em destaque",
+      "blocks": [
+        { "type": "event", "settings": { "title": "Festival UMA SÓ VOZ de Arte Cristã", "date": "30 mai 2026 • 10:00", "location": "Fortaleza, CE" } },
+        { "type": "event", "settings": { "title": "FREI GILSON - Estádio Municipal de Juiz de Fora", "date": "18 nov 2026 • 11:00", "location": "Juiz de Fora, MG" } },
+        { "type": "event", "settings": { "title": "Festival de Música Católica Hosana Caxias", "date": "09 dez 2026 • 11:00", "location": "Caxias, MA" } },
+        { "type": "event", "settings": { "title": "Cristo é o Show 2027", "date": "01 mai 2027 • 09:00", "location": "Belo Horizonte, MG" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

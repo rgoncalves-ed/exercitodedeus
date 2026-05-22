@@ -1,0 +1,133 @@
+{
+  "sections": {
+    "hero": {
+      "type": "escola-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "heading": "Aprenda com quem vive a fé católica",
+            "text": "Cursos com Padres e formadores convidados, na palma da sua mão.",
+            "btn_label": "Ver cursos",
+            "bg_color": "#1F2D4A",
+            "text_color": "#FFFFFF",
+            "btn_bg": "#FFFFFF",
+            "btn_color": "#1F2D4A"
+          }
+        }
+      },
+      "block_order": ["slide_1"],
+      "settings": {
+        "eyebrow": "Formação católica",
+        "title": "Cursos",
+        "subtitle": "Conteúdo selecionado para você crescer na fé e formar uma família consagrada.",
+        "autoplay_seconds": 6
+      }
+    },
+    "trilhas": {
+      "type": "escola-trilhas",
+      "blocks": {
+        "t_iniciante": {
+          "type": "trilha",
+          "settings": {
+            "title": "Para começar",
+            "description": "Primeiros passos na fé católica.",
+            "color": "#2A4234",
+            "link": ""
+          }
+        },
+        "t_intermediario": {
+          "type": "trilha",
+          "settings": {
+            "title": "Aprofundamento",
+            "description": "Para quem já caminha e quer ir além.",
+            "color": "#1F4E78",
+            "link": ""
+          }
+        },
+        "t_familia": {
+          "type": "trilha",
+          "settings": {
+            "title": "Família",
+            "description": "Conteúdos para viver a fé em casa.",
+            "color": "#7A2F2F",
+            "link": ""
+          }
+        }
+      },
+      "block_order": ["t_iniciante", "t_intermediario", "t_familia"],
+      "settings": {
+        "eyebrow": "Trilhas de",
+        "heading": "Estudo",
+        "intro": "Escolha o ponto de partida que combina com seu momento."
+      }
+    },
+    "planos": {
+      "type": "escola-plans",
+      "blocks": {
+        "p_individual": {
+          "type": "plan",
+          "settings": {
+            "eyebrow": "Curso",
+            "name": "Curso individual",
+            "tagline": "Acesso a um curso específico.",
+            "features": "Acesso ao curso escolhido\nAulas em vídeo\nMaterial complementar\nCertificado de conclusão",
+            "installments": "12x R$ 19,90",
+            "total_label": "",
+            "btn_label": "Comprar curso",
+            "link": "",
+            "disclaimer": "* Compra única, com acesso de 1 ano.",
+            "highlight": false,
+            "highlight_label": "",
+            "coming_soon": false,
+            "launch_date": ""
+          }
+        },
+        "p_combo": {
+          "type": "plan",
+          "settings": {
+            "eyebrow": "Combo",
+            "name": "Combo Família",
+            "tagline": "O combo mais buscado da Escola.",
+            "features": "Acesso a vários cursos selecionados\nAulas com Padres e formadores convidados\nMaterial complementar\nCertificado em cada curso",
+            "installments": "12x R$ 49,90",
+            "total_label": "",
+            "btn_label": "Garantir o combo",
+            "link": "",
+            "disclaimer": "* Compra única, com acesso de 1 ano.",
+            "highlight": true,
+            "highlight_label": "Mais vendido",
+            "coming_soon": false,
+            "launch_date": ""
+          }
+        },
+        "p_escola": {
+          "type": "plan",
+          "settings": {
+            "eyebrow": "Plano completo",
+            "name": "Escola Exército de Deus",
+            "tagline": "Acesso completo a todos os cursos.",
+            "features": "Todos os cursos da Escola\nLançamentos do ano inclusos\nMaterial complementar\nGrupo fechado de alunos",
+            "installments": "12x R$ 79,90",
+            "total_label": "",
+            "btn_label": "Acessar tudo",
+            "link": "/pages/escola",
+            "disclaimer": "* Compra única, com acesso de 1 ano.",
+            "highlight": false,
+            "highlight_label": "",
+            "coming_soon": false,
+            "launch_date": ""
+          }
+        }
+      },
+      "block_order": ["p_individual", "p_combo", "p_escola"],
+      "settings": {
+        "eyebrow": "Escolha seu",
+        "heading": "Plano",
+        "intro": "Compra única com acesso de 1 ano. Sem mensalidade.",
+        "note": "<p><strong>Importante:</strong> não é assinatura. É uma compra de acesso de 1 ano, que pode ser parcelada em até 12x no cartão.</p>"
+      }
+    }
+  },
+  "order": ["hero", "trilhas", "planos"]
+}

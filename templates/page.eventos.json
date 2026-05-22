@@ -1,0 +1,78 @@
+{
+  "sections": {
+    "hero": {
+      "type": "escola-hero",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "eyebrow": "Agenda",
+        "title": "Eventos",
+        "subtitle": "Festivais, retiros e encontros para viver a fé em comunidade.",
+        "autoplay_seconds": 6
+      }
+    },
+    "destaques": {
+      "type": "events-grid",
+      "blocks": {
+        "ev_1": {
+          "type": "event",
+          "settings": {
+            "title": "Festival UMA SÓ VOZ de Arte Cristã",
+            "tag": "30 DE MAIO",
+            "date": "30 mai 2026 • 10:00",
+            "location": "Fortaleza, CE",
+            "link": "",
+            "cta_label": "Ver detalhes",
+            "bg_color": "#1F4E78"
+          }
+        },
+        "ev_2": {
+          "type": "event",
+          "settings": {
+            "title": "FREI GILSON — Estádio Municipal de Juiz de Fora",
+            "tag": "18 NOV",
+            "date": "18 nov 2026 • 11:00",
+            "location": "Juiz de Fora, MG",
+            "link": "",
+            "cta_label": "Ver detalhes",
+            "bg_color": "#7A2F2F"
+          }
+        },
+        "ev_3": {
+          "type": "event",
+          "settings": {
+            "title": "Festival de Música Católica Hosana Caxias",
+            "tag": "09 DEZ",
+            "date": "09 dez 2026 • 11:00",
+            "location": "Caxias, MA",
+            "link": "",
+            "cta_label": "Ver detalhes",
+            "bg_color": "#5E2A6E"
+          }
+        },
+        "ev_4": {
+          "type": "event",
+          "settings": {
+            "title": "Cristo é o Show 2027",
+            "date": "01 mai 2027 • 09:00",
+            "location": "Belo Horizonte, MG",
+            "link": "",
+            "cta_label": "Ver detalhes",
+            "bg_color": "#0F1B2D"
+          }
+        }
+      },
+      "block_order": ["ev_1", "ev_2", "ev_3", "ev_4"],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Eventos em",
+        "heading_highlight": "Destaque",
+        "intro": "Os eventos mais procurados da semana",
+        "view_all_url": "",
+        "view_all_label": "Ver todos",
+        "columns": 4
+      }
+    }
+  },
+  "order": ["hero", "destaques"]
+}
