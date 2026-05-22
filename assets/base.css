@@ -4026,14 +4026,18 @@ a.contact-info__row:hover { color: var(--color-accent); }
   font-weight: 600;
 }
 
-/* Selos de confiança */
+/* Selos de confiança — coluna 1 (abaixo da galeria) */
 .product__trust {
+  grid-column: 1 / 2;
   list-style: none;
   padding: 0;
-  margin: 18px 0;
+  margin: 16px 0 0;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+}
+@media (max-width: 900px) {
+  .product__trust { grid-column: auto; }
 }
 @media (max-width: 480px) {
   .product__trust { grid-template-columns: 1fr; }
@@ -4053,6 +4057,7 @@ a.contact-info__row:hover { color: var(--color-accent); }
   color: var(--color-primary);
   flex-shrink: 0;
 }
+.product__trust-wa svg { color: #25D366 !important; }
 .product__trust strong {
   display: block;
   font-weight: 700;

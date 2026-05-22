@@ -178,29 +178,6 @@
         </div>
       {%- endif -%}
 
-      {%- if section.settings.show_trust_badges -%}
-        <ul class="product__trust" role="list">
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span><strong>Compra segura</strong> SSL · Criptografada</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-            <span><strong>Frete pra todo Brasil</strong> Frenet · PAC · SEDEX</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-            <span><strong>Troca em 30 dias</strong> Garantia satisfação</span>
-          </li>
-          {%- if settings.social_whatsapp != blank -%}
-            <li>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="color:#25D366;"><path d="M17.6 14.2c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.4-1.5-.9-.8-1.5-1.8-1.6-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.2.2-.4.1-.2.1-.3 0-.5 0-.1-.6-1.5-.9-2-.2-.5-.5-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2 0 1.3.9 2.6 1.1 2.7.1.2 1.9 2.9 4.6 4 .6.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.2-.2-.5-.3M12 21.5c-1.5 0-3-.4-4.3-1.2l-.3-.2-3.2 1 1-3.1-.2-.3c-.9-1.4-1.3-3-1.3-4.6 0-4.7 3.8-8.5 8.4-8.5 2.3 0 4.4.9 6 2.5 1.6 1.6 2.5 3.7 2.5 6 0 4.7-3.8 8.4-8.5 8.4M20.5 3.5C18.3 1.2 15.3 0 12 0 5.4 0 0 5.4 0 12c0 2.1.5 4.2 1.6 6L0 24l6.2-1.6c1.7.9 3.7 1.4 5.8 1.4 6.6 0 12-5.4 12-12 0-3.3-1.2-6.3-3.5-8.5"/></svg>
-              <span><strong>Atendimento WhatsApp</strong> Respondemos em 1h útil</span>
-            </li>
-          {%- endif -%}
-        </ul>
-      {%- endif -%}
-
       {% render 'shipping-calculator',
          variant_id: product.selected_or_first_available_variant.id,
          unique: product.id %}
@@ -224,6 +201,29 @@
         </button>
       </div>
     </div>
+
+    {%- if section.settings.show_trust_badges -%}
+      <ul class="product__trust" role="list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span><strong>Compra segura</strong> SSL · Criptografada</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <span><strong>Frete pra todo Brasil</strong> Frenet · PAC · SEDEX</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          <span><strong>Troca em 30 dias</strong> Garantia satisfação</span>
+        </li>
+        {%- if settings.social_whatsapp != blank -%}
+          <li class="product__trust-wa">
+            {% render 'icon-whatsapp' %}
+            <span><strong>Atendimento WhatsApp</strong> Respondemos em 1h útil</span>
+          </li>
+        {%- endif -%}
+      </ul>
+    {%- endif -%}
   </div>
 
   {%- comment -%} Sticky add-to-cart no mobile (aparece quando scrolla além do botão original) {%- endcomment -%}
@@ -340,7 +340,7 @@
   {%- if section.settings.show_related and product.collections.size > 0 -%}
     {%- assign related_collection = product.collections.first -%}
     {%- assign related_count = 0 -%}
-    {%- assign related_limit = section.settings.related_count | default: 4 -%}
+    {%- assign related_limit = 3 -%}
 
     <section class="related-products">
       <div class="section-heading section-heading--simple">
@@ -348,7 +348,7 @@
         <a href="{{ related_collection.url }}" class="section-heading__link">Ver mais →</a>
       </div>
 
-      <div class="product-grid product-grid--3">
+      <div class="product-grid product-grid--3 related-products__grid">
         {%- for related in related_collection.products -%}
           {%- if related.id != product.id and related_count < related_limit -%}
             {% render 'product-card', product: related %}
@@ -460,15 +460,6 @@
       "id": "related_heading",
       "label": "Título",
       "default": "Você também pode gostar"
-    },
-    {
-      "type": "range",
-      "id": "related_count",
-      "label": "Quantos produtos mostrar",
-      "min": 3,
-      "max": 8,
-      "step": 1,
-      "default": 4
     }
   ],
   "blocks": [
