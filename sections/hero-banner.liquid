@@ -7,7 +7,7 @@
          aria-roledescription="carousel">
   <div class="page-width">
     {%- if section.settings.welcome_text != blank -%}
-      <p class="hero-welcome">{{ section.settings.welcome_text | newline_to_br }}</p>
+      <div class="hero-welcome">{{ section.settings.welcome_text }}</div>
     {%- endif -%}
     <div class="hero-slider__viewport">
       <div class="hero-slider__track" data-slider-track>
@@ -91,11 +91,11 @@
   "name": "Banner rotativo (hero)",
   "settings": [
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "welcome_text",
       "label": "Frase de boas-vindas (acima do banner)",
-      "info": "Use Enter para quebrar linha. Aparece à esquerda, em duas linhas.",
-      "default": "Bem-vindo à Loja do Exército de Deus,\na loja das Famílias Consagradas."
+      "info": "Use negrito (B) na parte que deve ficar em preto. O resto fica em cinza claro.",
+      "default": "<p><strong>Bem-vindo à Loja do Exército de Deus,</strong> a loja das Famílias Consagradas.</p>"
     },
     {
       "type": "range",
