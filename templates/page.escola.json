@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -6,17 +15,21 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "heading": "Conheça a Escola Exército de Deus",
-            "text": "Formação católica para a sua família.",
-            "btn_label": "Veja os planos",
-            "bg_color": "#1F2D4A",
-            "text_color": "#FFFFFF",
-            "btn_bg": "#FFFFFF",
-            "btn_color": "#1F2D4A"
+            "image": "shopify://shop_images/DESKTOP.png",
+            "heading": "",
+            "text": "",
+            "btn_label": "",
+            "link": "",
+            "bg_color": "#1f2d4a",
+            "text_color": "#ffffff",
+            "btn_bg": "#ffffff",
+            "btn_color": "#1f2d4a"
           }
         }
       },
-      "block_order": ["slide_1"],
+      "block_order": [
+        "slide_1"
+      ],
       "settings": {
         "eyebrow": "Escola Exército de Deus",
         "title": "Escola Exército de Deus",
@@ -32,7 +45,7 @@
           "settings": {
             "title": "Mulheres de Rocha",
             "description": "Formação para mulheres que querem viver a fé com firmeza.",
-            "color": "#7A2F2F",
+            "color": "#7a2f2f",
             "link": ""
           }
         },
@@ -41,7 +54,7 @@
           "settings": {
             "title": "Famílias Consagradas",
             "description": "Caminho de fé para casais, pais e filhos.",
-            "color": "#1F4E78",
+            "color": "#1f4e78",
             "link": ""
           }
         },
@@ -50,12 +63,17 @@
           "settings": {
             "title": "Forjados na Graça",
             "description": "Para homens que buscam viver como guerreiros da fé.",
-            "color": "#2A4234",
+            "color": "#2a4234",
             "link": ""
           }
         }
       },
-      "block_order": ["t_mulheres", "t_familias", "t_forjados"],
+      "block_order": [
+        "t_mulheres",
+        "t_familias",
+        "t_forjados"
+      ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Nossas",
         "heading": "Trilhas",
@@ -85,6 +103,7 @@
         },
         "p_familias": {
           "type": "plan",
+          "disabled": true,
           "settings": {
             "eyebrow": "Trilha",
             "name": "Famílias Consagradas",
@@ -103,6 +122,7 @@
         },
         "p_forjados": {
           "type": "plan",
+          "disabled": true,
           "settings": {
             "eyebrow": "Trilha",
             "name": "Forjados na Graça",
@@ -120,7 +140,11 @@
           }
         }
       },
-      "block_order": ["p_mulheres", "p_familias", "p_forjados"],
+      "block_order": [
+        "p_mulheres",
+        "p_familias",
+        "p_forjados"
+      ],
       "settings": {
         "eyebrow": "Escolha seu",
         "heading": "Plano",
@@ -129,5 +153,9 @@
       }
     }
   },
-  "order": ["hero", "trilhas", "planos"]
+  "order": [
+    "hero",
+    "trilhas",
+    "planos"
+  ]
 }
