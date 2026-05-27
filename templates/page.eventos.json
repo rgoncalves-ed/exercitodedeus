@@ -1,13 +1,20 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "escola-hero",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "eyebrow": "Agenda",
         "title": "Eventos",
-        "subtitle": "Festivais, retiros e encontros para viver a fé em comunidade.",
+        "subtitle": "Em breve mais informações",
         "autoplay_seconds": 6
       }
     },
@@ -17,52 +24,63 @@
         "ev_1": {
           "type": "event",
           "settings": {
+            "bg_color": "#1f4e78",
             "title": "Festival UMA SÓ VOZ de Arte Cristã",
             "tag": "30 DE MAIO",
             "date": "30 mai 2026 • 10:00",
             "location": "Fortaleza, CE",
             "link": "",
             "cta_label": "Ver detalhes",
-            "bg_color": "#1F4E78"
+            "sold_out": false
           }
         },
         "ev_2": {
           "type": "event",
           "settings": {
+            "bg_color": "#7a2f2f",
             "title": "FREI GILSON — Estádio Municipal de Juiz de Fora",
             "tag": "18 NOV",
             "date": "18 nov 2026 • 11:00",
             "location": "Juiz de Fora, MG",
             "link": "",
             "cta_label": "Ver detalhes",
-            "bg_color": "#7A2F2F"
+            "sold_out": false
           }
         },
         "ev_3": {
           "type": "event",
           "settings": {
+            "bg_color": "#5e2a6e",
             "title": "Festival de Música Católica Hosana Caxias",
             "tag": "09 DEZ",
             "date": "09 dez 2026 • 11:00",
             "location": "Caxias, MA",
             "link": "",
             "cta_label": "Ver detalhes",
-            "bg_color": "#5E2A6E"
+            "sold_out": false
           }
         },
         "ev_4": {
           "type": "event",
           "settings": {
+            "bg_color": "#0f1b2d",
             "title": "Cristo é o Show 2027",
+            "tag": "",
             "date": "01 mai 2027 • 09:00",
             "location": "Belo Horizonte, MG",
             "link": "",
             "cta_label": "Ver detalhes",
-            "bg_color": "#0F1B2D"
+            "sold_out": false
           }
         }
       },
-      "block_order": ["ev_1", "ev_2", "ev_3", "ev_4"],
+      "block_order": [
+        "ev_1",
+        "ev_2",
+        "ev_3",
+        "ev_4"
+      ],
+      "disabled": true,
       "settings": {
         "eyebrow": "",
         "heading": "Eventos em",
@@ -74,5 +92,8 @@
       }
     }
   },
-  "order": ["hero", "destaques"]
+  "order": [
+    "hero",
+    "destaques"
+  ]
 }
