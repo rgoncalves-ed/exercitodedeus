@@ -1,0 +1,83 @@
+{%- liquid
+  assign raw_url = section.settings.video_url
+  assign video_id = ''
+  if raw_url contains 'youtu.be/'
+    assign video_id = raw_url | split: 'youtu.be/' | last | split: '?' | first | split: '&' | first
+  elsif raw_url contains 'youtube.com/watch'
+    assign video_id = raw_url | split: 'v=' | last | split: '&' | first
+  elsif raw_url contains 'youtube.com/embed/'
+    assign video_id = raw_url | split: 'embed/' | last | split: '?' | first
+  endif
+
+  assign wa_raw = section.settings.wa_number | default: settings.social_whatsapp
+  assign wa_number = wa_raw | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-'
+  assign wa_msg = section.settings.wa_message | default: 'Olá! Quero contratar o Exército de Deus para o meu evento.' | url_encode
+-%}
+
+<section class="contrate page-width">
+  {%- if video_id != blank -%}
+    <div class="contrate__video"
+         data-video-embed
+         data-video-id="{{ video_id }}"
+         role="button"
+         tabindex="0"
+         aria-label="Tocar vídeo">
+      <img class="contrate__video-poster"
+           src="https://i.ytimg.com/vi/{{ video_id }}/maxresdefault.jpg"
+           onerror="this.src='https://i.ytimg.com/vi/{{ video_id }}/hqdefault.jpg'"
+           alt="{{ section.settings.title | escape | default: 'Vídeo' }}"
+           loading="eager">
+      <span class="contrate__video-overlay" aria-hidden="true"></span>
+      <span class="contrate__video-play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+    </div>
+  {%- endif -%}
+
+  <div class="contrate__body">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="contrate__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h1 class="contrate__title">{{ section.settings.title }}</h1>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="contrate__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- if wa_number != blank -%}
+      <a href="https://wa.me/{{ wa_number }}?text={{ wa_msg }}"
+         target="_blank"
+         rel="noopener"
+         class="contrate__cta">
+        {% render 'icon-whatsapp' %}
+        <span>{{ section.settings.cta_label | default: 'Entrar em contato pelo WhatsApp' }}</span>
+      </a>
+    {%- endif -%}
+
+    {%- if section.settings.fine_print != blank -%}
+      <p class="contrate__fine">{{ section.settings.fine_print }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contrate — página",
+  "settings": [
+    { "type": "header", "content": "Vídeo do topo" },
+    { "type": "url", "id": "video_url", "label": "URL do vídeo YouTube", "info": "Cole o link completo do YouTube (https://www.youtube.com/watch?v=... ou https://youtu.be/...). Clique no thumbnail pra tocar." },
+
+    { "type": "header", "content": "Conteúdo" },
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeno superior", "default": "Leve o Exército de Deus até você" },
+    { "type": "text", "id": "title", "label": "Título principal", "default": "Leve o Exército de Deus até você" },
+    { "type": "richtext", "id": "text", "label": "Texto / descrição", "default": "<p>Nós somos testemunhas vivas de que Deus realiza maravilhas quando abrimos as portas do nosso coração. Temos visto, com imensa alegria e humildade, que pela infinita misericórdia do Senhor, por onde o Exército de Deus passa, uma nova graça é levantada! Isso não acontece por mérito nosso, que somos apenas pequenos instrumentos, mas porque o Espírito Santo anseia profundamente por curar, libertar e restaurar os lares.</p><p>O nosso grande chamado é viver na prática o dom de ser uma família que evangeliza famílias. Quando subimos em um palco, num altar ou num trio, nós não fazemos apenas um evento ou um show; nós entregamos a nossa própria vida, o nosso testemunho e o nosso coração para resgatar almas e proporcionar um momento de verdadeira alegria.</p><p>Sabemos que o Senhor merece sempre o nosso melhor. Por isso, unimos a força da pregação e da oração a uma estrutura musical de excelência. Através do dom do Ítalo Poeta e da Ana Clara Rocha, com canções autorais e uma musicalidade de alta qualidade, preparada com todo o zelo e profissionalismo, a música se torna uma flecha de amor que ultrapassa as barreiras humanas e toca naquelas feridas onde só Deus consegue alcançar.</p><p>Entre em contato com nossa equipe e leve o nosso show para sua cidade!</p>" },
+
+    { "type": "header", "content": "Botão WhatsApp" },
+    { "type": "text", "id": "cta_label", "label": "Texto do botão", "default": "Entrar em contato pelo WhatsApp" },
+    { "type": "text", "id": "wa_number", "label": "Número do WhatsApp", "info": "Deixe vazio pra usar o configurado em Theme settings > Redes sociais. Formato com DDI: 5543999999999." },
+    { "type": "textarea", "id": "wa_message", "label": "Mensagem pré-preenchida", "default": "Olá! Quero contratar o Exército de Deus para o meu evento." },
+    { "type": "text", "id": "fine_print", "label": "Texto pequeno embaixo do botão" }
+  ]
+}
+{% endschema %}

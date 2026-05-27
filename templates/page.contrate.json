@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "contrate-page",
+      "settings": {
+        "video_url": "https://www.youtube.com/watch?v=YLVhXI8JP-Q",
+        "eyebrow": "Leve o Exército de Deus até você",
+        "title": "Leve o Exército de Deus até você",
+        "cta_label": "Entrar em contato pelo WhatsApp",
+        "wa_message": "Olá! Quero contratar o Exército de Deus para o meu evento."
+      }
+    }
+  },
+  "order": ["main"]
+}

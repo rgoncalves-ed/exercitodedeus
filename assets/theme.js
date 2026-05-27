@@ -194,6 +194,37 @@
     start();
   });
 
+  // ---------- YouTube embed generico: clica no poster e carrega iframe ----------
+  function loadVideoEmbed(trigger) {
+    if (!trigger || trigger.dataset.loaded === '1') return;
+    var id = trigger.dataset.videoId;
+    if (!id) return;
+    trigger.dataset.loaded = '1';
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+    iframe.title = 'YouTube';
+    iframe.loading = 'lazy';
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.frameBorder = '0';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = '0';
+    trigger.innerHTML = '';
+    trigger.appendChild(iframe);
+  }
+  document.addEventListener('click', function (e) {
+    var trigger = e.target.closest('[data-video-embed]');
+    if (trigger) loadVideoEmbed(trigger);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var trigger = e.target.closest && e.target.closest('[data-video-embed]');
+    if (!trigger) return;
+    e.preventDefault();
+    loadVideoEmbed(trigger);
+  });
+
   // ---------- YouTube Shorts: clica na thumb e troca por iframe ----------
   document.addEventListener('click', function (e) {
     var trigger = e.target.closest('[data-shorts-video]');
