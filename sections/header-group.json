@@ -14,14 +14,25 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "settings": {
-        "text": "Frete grátis acima de R$ 199 • Parcelamos em até 12x"
+        "text": "",
+        "contact_phone": "(43) 9993-5389",
+        "contact_email": "loja@grupoexercitodedeus.com.br",
+        "show_cep_widget": true,
+        "show_track_order": true,
+        "track_order_label": "Acompanhar pedido",
+        "track_order_url": "",
+        "mulheres_url": "",
+        "bg_color_1": "#564999",
+        "bg_color_2": "#7ec0d5",
+        "text_color": "#ffffff"
       }
     },
     "header": {
       "type": "header",
       "settings": {
         "logo": "shopify://shop_images/logo-loja.png",
-        "menu": "main-menu"
+        "menu": "main-menu",
+        "menu_max_items": 8
       }
     }
   },
