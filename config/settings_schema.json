@@ -294,6 +294,12 @@
     "settings": [
       {
         "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon (ícone da aba do navegador)",
+        "info": "PNG quadrado. Recomendado: 512×512px (Shopify gera os tamanhos menores automaticamente)."
+      },
+      {
+        "type": "image_picker",
         "id": "share_image",
         "label": "Imagem padrão de compartilhamento",
         "info": "Aparece quando o site é compartilhado no WhatsApp, Facebook, etc. Recomendado: 1200×630px."
