@@ -4213,6 +4213,115 @@ a.contact-info__row:hover { color: var(--color-accent); }
   .contrate__text { font-size: 1rem; margin-bottom: 28px; }
   .contrate__cta { width: 100%; justify-content: center; padding: 16px 22px; }
 }
+
+/* ==========================================================
+   Paginas de politicas (privacidade / entrega / troca)
+   ========================================================== */
+
+.policy-page {
+  max-width: 820px;
+  margin-inline: auto;
+  padding-block: 40px 80px;
+}
+
+.policy-page__breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.policy-page__breadcrumbs a { color: var(--color-text-muted); }
+.policy-page__breadcrumbs a:hover { color: var(--color-accent); }
+.policy-page__breadcrumbs strong { color: var(--color-text); font-weight: 600; }
+
+.policy-page__header {
+  text-align: center;
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--color-border);
+}
+.policy-page__eyebrow {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 14px;
+}
+.policy-page__header h1 {
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  letter-spacing: -0.022em;
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+.policy-page__sub {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+.policy-page__updated {
+  margin: 8px 0 0;
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.policy-page__content {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text);
+}
+.policy-page__content > * + * { margin-top: 1em; }
+.policy-page__content h2 {
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  letter-spacing: -0.015em;
+  color: var(--color-primary);
+  margin: 2.2em 0 0.6em;
+  padding-top: 4px;
+}
+.policy-page__content h3 {
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+  color: var(--color-text);
+  margin: 1.8em 0 0.5em;
+}
+.policy-page__content p { margin: 0 0 1.1em; }
+.policy-page__content ul,
+.policy-page__content ol {
+  padding-left: 1.4em;
+  margin: 0 0 1.2em;
+}
+.policy-page__content li { margin-bottom: 0.55em; }
+.policy-page__content li::marker { color: var(--color-accent); }
+.policy-page__content strong { color: var(--color-primary); font-weight: 700; }
+.policy-page__content em { color: var(--color-accent); font-style: italic; }
+.policy-page__content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.policy-page__content a:hover { text-decoration-thickness: 2px; }
+
+.policy-page__callout {
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  border-left: 4px solid var(--color-accent);
+  padding: 14px 18px;
+  border-radius: 0 12px 12px 0;
+  margin: 1.4em 0 !important;
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+.policy-page__callout p { margin: 0 0 0.6em; }
+.policy-page__callout p:last-child { margin-bottom: 0; }
+
+@media (max-width: 700px) {
+  .policy-page { padding-block: 24px 56px; }
+  .policy-page__header { margin-bottom: 32px; padding-bottom: 24px; }
+  .policy-page__content { font-size: 0.96rem; line-height: 1.7; }
+}
 .product__trust strong {
   display: block;
   font-weight: 700;
