@@ -182,11 +182,6 @@
       </div>
 
       {%- comment -%} 6. PAGAMENTO {%- endcomment -%}
-      <div class="site-footer__col site-footer__col--payments">
-        <h4 class="site-footer__heading">{{ section.settings.payment_heading | default: 'Formas de pagamento' }}</h4>
-        {% render 'payment-icons' %}
-      </div>
-
       {%- for block in section.blocks -%}
         {%- if block.type == 'text' -%}
           <div class="site-footer__col site-footer__col--text" {{ block.shopify_attributes }}>
@@ -199,6 +194,11 @@
           </div>
         {%- endif -%}
       {%- endfor -%}
+    </div>
+
+    <div class="site-footer__payments">
+      <span class="site-footer__payments-label">{{ section.settings.payment_heading | default: 'Formas de pagamento' }}</span>
+      {% render 'payment-icons' %}
     </div>
 
     <div class="site-footer__bottom">
