@@ -234,6 +234,12 @@
         "id": "social_whatsapp",
         "label": "WhatsApp (número com DDI, ex: 5551999999999)",
         "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_spotify",
+        "label": "Spotify (URL do artista/perfil)",
+        "default": ""
       }
     ]
   },

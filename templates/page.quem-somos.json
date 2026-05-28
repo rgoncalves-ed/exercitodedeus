@@ -1,0 +1,75 @@
+{
+  "sections": {
+    "main": {
+      "type": "quem-somos",
+      "blocks": {
+        "h_quem":   { "type": "heading",   "settings": { "text": "Quem somos" } },
+        "p1":       { "type": "paragraph", "settings": { "text": "<p>Somos uma família, um casal de leigos, filhos da nossa amada Igreja de Fortaleza, que tem como pastor <strong>Dom Gregório Paixão</strong>. Juntos, pela graça de Deus, fundamos o Exército de Deus e vivemos como uma grande família espiritual — formando um verdadeiro exército de pessoas que, somando todas as nossas redes, chegam a <strong>6 milhões de almas</strong> lutando unidas em busca da santidade! Nós nos reunimos, física e virtualmente, para louvar e glorificar o nome de Jesus Cristo, crescendo e auxiliando-nos mutuamente no chamado de sermos uma verdadeira \"Igreja Doméstica\".</p>" } },
+        "p2":       { "type": "paragraph", "settings": { "text": "<p>A nossa vida é entregue para viver a missão de transformar vidas! Dedicamos o nosso cotidiano inteiramente à evangelização através das redes sociais, de shows, canções autorais e palestras. Não queremos apenas produzir conteúdos na internet; nós entregamos a nossa própria vida, as nossas lutas familiares e a nossa fé para resgatar os lares, curar feridas e levar esperança a quem mais precisa.</p>" } },
+        "p3":       { "type": "paragraph", "settings": { "text": "<p>Por meio de nossa vocação do matrimônio, sabemos que, como ensinava São João Paulo II, a própria família é o grande mistério de Deus. Como «igreja doméstica», ela é a esposa de Cristo. Somente se tomam parte em tal amor e nesse «grande mistério», é que os esposos podem amar «até ao fim»<sup>¹</sup>.</p>" } },
+        "p4":       { "type": "paragraph", "settings": { "text": "<p>E é por vivermos esse mistério na pele que não guardamos essa graça só para nós. A doutrina da nossa Igreja é claríssima ao ensinar que o apostolado dos leigos deriva da nossa própria vocação cristã e jamais poderá faltar na Igreja.</p><ul><li>A família cristã constitui uma verdadeira comunidade de fé, de esperança e de caridade.</li><li>Por isso, ela é chamada a ser «evangelizadora e missionária».</li><li>As relações no seio da nossa casa formam uma comunidade privilegiada para realizar a comunhão das almas.</li></ul>" } },
+        "p5":       { "type": "paragraph", "settings": { "text": "<p>Movidos por essa essência missionária e sabendo da urgência de salvar as famílias, nós assumimos a linha de frente do ambiente online. Como missionários, levamos a sério a exortação para as redes sociais:</p>" } },
+        "q1":       { "type": "quote",     "settings": { "text": "<p>A Igreja nos chama a focar a evangelização digital na criação de conexões humanas e na cura espiritual, superando a simples produção de conteúdo. Esse chamado enfatiza a necessidade de buscar os que sofrem e necessitam de Deus, oferecendo um sentido para a vida através do encontro.<sup>²</sup></p>", "cite": "Papa Leão XIV" } },
+        "p6":       { "type": "paragraph", "settings": { "text": "<p>É para promover esse encontro que o Exército de Deus existe. Uma verdadeira cruzada de amor, de pais e filhos marchando juntos, abençoada pelo próprio e saudoso <strong>Papa Francisco</strong> com o grito que nos impulsiona todos os dias a não desistir:</p>" } },
+        "q2":       { "type": "quote",     "settings": { "text": "<p>Meu Deus, que grande Exército! Continuem, Avante!</p>", "cite": "Papa Francisco" } },
+
+        "div1":     { "type": "divider",   "settings": {} },
+
+        "h_hist":   { "type": "heading",   "settings": { "text": "Nossa história" } },
+        "p7":       { "type": "paragraph", "settings": { "text": "<p>Somos uma prova viva de que a obediência a Deus faz milagres e de que Ele age nos momentos de maior escuridão. O Exército de Deus não nasceu de um grande planejamento humano, mas de um encontro profundo com o amor do Senhor. Tudo começou com um abraço que recebi — um abraço espiritual indescritível onde senti o próprio Deus me acolhendo, me curando e me chamando para uma grande missão. Logo em seguida, para que não houvesse dúvidas, o Senhor cuidou de enviar uma confirmação profética por meio de outra pessoa, atestando que aquele chamado para transformar vidas era real e inegável.</p>" } },
+        "p8":       { "type": "paragraph", "settings": { "text": "<p>Foi movidos por essa obediência cega que, no dia <strong>13 de maio de 2020</strong>, no auge do cenário assustador da pandemia, demos o nosso primeiro passo. Sem pleno domínio das ferramentas digitais, simplesmente apertamos o botão de \"transmitir ao vivo\" no Instagram para iniciarmos um momento de oração.</p>" } },
+        "p9":       { "type": "paragraph", "settings": { "text": "<p>Aquela primeira live carregava a mesma simplicidade da Sagrada Família em Nazaré: sem holofotes, sem grandes produções, apenas um lar humilde de portas abertas para a vontade de Deus. Mas foi nessa simplicidade que Deus nos fez uma promessa extraordinária: a de que ergueria a partir dali um exército imenso e numeroso. E a fidelidade d'Ele se manifestou de forma fulminante! <strong>Em apenas cinco minutos, aquele pequeno grupo inicial de 35 pessoas saltou para 1.500 almas rezando conosco!</strong></p>" } },
+
+        "h_fatima": { "type": "subheading","settings": { "text": "A marca de Fátima e a arma do Rosário" } },
+        "p10":      { "type": "paragraph", "settings": { "text": "<p>Em Deus não existem coincidências. O nosso movimento nasceu exatamente no <strong>dia de Nossa Senhora de Fátima</strong>. Fátima é a única aparição mariana reconhecida pela Igreja onde a Sagrada Família inteira aparece: São José e o Menino Jesus surgem ao lado de Maria abençoando o mundo!</p>" } },
+        "p11":      { "type": "paragraph", "settings": { "text": "<p>E foi justamente através de Fátima que Nossa Senhora nos deu um alerta profético de que a última batalha entre Deus e o inimigo seria travada dentro das famílias. Para vencermos essa guerra, a Virgem Maria nos apresentou a arma mais poderosa para alcançar a paz e blindar os lares: <strong>o mistério do Santo Rosário</strong>. O Senhor levantou o Exército de Deus para resgatar essa devoção e fazer com que cada lar se torne uma fortaleza de oração.</p>" } },
+
+        "h_rosas":  { "type": "subheading","settings": { "text": "O cheiro de rosas e o mistério da graça" } },
+        "p12":      { "type": "paragraph", "settings": { "text": "<p>Foi logo naquela primeira transmissão que recebemos o selo do Céu. Durante a recitação do <strong>Quinto Mistério Glorioso (O Mistério da Graça)</strong> do nosso Rosário, houve uma manifestação espiritual fortíssima de Nossa Senhora, que transmitiu a seguinte mensagem interna:</p>" } },
+        "q3":       { "type": "quote",     "settings": { "text": "<p>Eis o mistério da graça. Se você sentir cheiro de rosas inexplicavelmente, ou receber uma rosa sem motivo aparente, sou eu preparando a tua graça, pois tenho visto a tua perseverança na presença do meu filho. Pede e o Filho atende.</p>", "cite": "Nossa Senhora" } },
+        "p13":      { "type": "paragraph", "settings": { "text": "<p>Imediatamente, um forte e inexplicável <strong>perfume de rosas</strong> começou a invadir os ambientes das casas de diversos participantes! O sinal, no entanto, não era coletivo ou simultâneo para todos, mas maravilhosamente direcionado de forma individual àqueles a quem Nossa Senhora estava entregando uma graça específica e consolando o coração.</p>" } },
+        "p14":      { "type": "paragraph", "settings": { "text": "<p>Um dos testemunhos mais comoventes colhidos desse dia foi o de um senhor que lutava bravamente contra um câncer. Ao caminhar com sua esposa em frente a um lixão, ele sentiu de repente aquele forte e inconfundível perfume de rosas. Diante da óbvia impossibilidade física daquele odor sagrado e delicado estar presente num local de descarte e mau cheiro, ele compreendeu o sinal espiritual, tomou posse da promessa pela fé e <strong>foi curado da doença</strong>!</p>" } },
+        "p15":      { "type": "paragraph", "settings": { "text": "<p>Neste cenário de incertezas, medo, e obediência ao chamado de Deus é que nasceu esta grande família de intercessão: o Exército de Deus.</p>" } },
+
+        "div2":     { "type": "divider",   "settings": {} },
+
+        "h_sangue": { "type": "heading",   "settings": { "text": "O sangue de Jesus é a chave" } },
+        "p16":      { "type": "paragraph", "settings": { "text": "<p>O Sangue Precioso de Jesus é a chave que cura, liberta e defende as nossas vidas. <strong>O Terço da Defesa</strong> não nasceu de uma invenção humana, mas de uma profunda revelação e de um clamor do coração de Deus para socorrer os seus filhos.</p>" } },
+        "p17":      { "type": "paragraph", "settings": { "text": "<p>Dando continuidade aos mistérios de Deus em nossa vida, em 2020, permanecemos firmes nas nossas orações nas madrugadas, quando o mundo inteiro parou com a pandemia. Naquele cenário sombrio, onde a humanidade sofria não apenas com o vírus, mas com o isolamento, a depressão e o pânico, o Senhor me disse:</p>" } },
+        "q4":       { "type": "quote",     "settings": { "text": "<p>Reze com essas pessoas, você e seu esposo. Meus filhos estão padecendo; não estão morrendo só de Covid-19, mas de tristeza, de desolação, de falta de esperança, de medo. Eles precisam saber que Eu estou com eles.</p>", "cite": "Voz do Senhor" } },
+        "p18":      { "type": "paragraph", "settings": { "text": "<p>Ficou claro, então, que o Exército de Deus havia sido levantado com a missão específica de interceder.</p>" } },
+        "p19":      { "type": "paragraph", "settings": { "text": "<p>Foi nesse contexto que, em um momento de profunda oração e adoração à Paixão de Cristo, diante de Jesus chagado e ferido na Cruz, o Senhor me revelou visualmente o desenho de um <strong>terço de cor vermelha</strong>. No centro dele, estava a imagem de Jesus ferido; na cruz, Ele crucificado, com especial destaque para as Suas <strong>Cinco Chagas</strong> (mãos, pés e o lado aberto), remetendo fortemente à profecia de Isaías: \"Por Suas chagas fomos curados\". Junto à imagem deste terço e de uma chave, o Senhor me fez uma forte promessa:</p>" } },
+        "q5":       { "type": "quote",     "settings": { "text": "<p>O meu sangue abre todas as portas.</p>", "cite": "Jesus Cristo" } },
+        "p20":      { "type": "paragraph", "settings": { "text": "<p>Para garantir que essa revelação vinha inteiramente do Céu, e afastar qualquer interferência humana ou maligna, pedi o discernimento a Deus. Sabendo que a voz de Deus traz uma paz profunda e certezas que superam a lógica do mundo, eu fiz um propósito com o Senhor. Eu disse: \"Senhor, não vou mostrar esse Terço a ninguém... Milagre só quem faz é o Senhor... me dê, então, uma confirmação\". O trato foi o seguinte: o terço só seria propagado se o Senhor enviasse uma pessoa necessitada, que utilizasse exclusivamente essa oração e recebesse um milagre incontestável.</p>" } },
+        "p21":      { "type": "paragraph", "settings": { "text": "<p>A resposta divina não demorou. Naquela mesma madrugada, uma grande amiga ligou em completo desespero. O seu pai, um senhor idoso, havia sido internado às pressas na UTI após um grave acidente, entubado e desenganado pelos médicos com um prognóstico terrível. Imediatamente o Senhor me instruiu: \"Envie para ela o Terço da Defesa e a instrua a rezar, sem ninguém saber. Assim você verá a Glória por meio do Meu Sangue Precioso\". A orientação que dei a ela foi clara: ela deveria ter muita fé, impor as mãos na direção do pai (mesmo paramentada na UTI) e rezar apenas este terço diariamente.</p>" } },
+        "p22":      { "type": "paragraph", "settings": { "text": "<p>E ela obedeceu! Após um período de aproximadamente <strong>30 dias</strong> de oração perseverante, o milagre aconteceu de forma gloriosa. Aquele homem, que os médicos diziam que não iria resistir, contrariou todos os diagnósticos negativos, recebeu a cura completa, teve alta e até gravou um vídeo testemunhando a sua recuperação e a glória de Deus.</p>" } },
+        "p23":      { "type": "paragraph", "settings": { "text": "<p>Foi assim que nasceu o <strong>Terço da Defesa</strong>, onde clamamos o Preciosíssimo Sangue de Jesus, uma arma espiritual que o Senhor nos entregou, pois a vitória só é possível pelo Sangue do Cordeiro: <em>\"Eles o venceram pelo sangue do Cordeiro e pela palavra do seu testemunho\" (Ap 12, 11)</em>.</p>" } },
+        "p24":      { "type": "paragraph", "settings": { "text": "<p>Este é o terço das <strong>Famílias Consagradas</strong>, daquelas que querem ser uma nova Nazaré, e sabem que é no \"sim\" de José e de Maria, e no Sacrifício de Cristo que as suas vidas são fecundadas, como verdadeiras Igrejas Domésticas.</p>" } },
+
+        "footnotes": { "type": "footnotes", "settings": { "text": "<p><sup>¹</sup> JOÃO PAULO II, Papa. <em>Carta às Famílias (Gratissimam Sane)</em>. Cidade do Vaticano: Santa Sé, 2 de fev. de 1994, n. 19. Disponível em: <a href=\"https://www.vatican.va\" target=\"_blank\" rel=\"noopener\">www.vatican.va</a>.</p><p><sup>²</sup> PAPA LEÃO XIV. <em>Saudação aos participantes do Jubileu dos Missionários Digitais e Influenciadores Católicos</em>. Cidade do Vaticano: Santa Sé, 29 de julho de 2025.</p>" } }
+      },
+      "block_order": [
+        "h_quem","p1","p2","p3","p4","p5","q1","p6","q2",
+        "div1",
+        "h_hist","p7","p8","p9",
+        "h_fatima","p10","p11",
+        "h_rosas","p12","q3","p13","p14","p15",
+        "div2",
+        "h_sangue","p16","p17","q4","p18","p19","q5","p20","p21","p22","p23","p24",
+        "footnotes"
+      ],
+      "settings": {
+        "hero_image": "https://cdn.shopify.com/s/files/1/0818/6911/1551/files/PAPA_jpg.jpg?v=1779917341",
+        "hero_alt": "Encontro com Papa Francisco",
+        "hero_eyebrow": "Família que evangeliza famílias",
+        "hero_title": "Quem somos",
+        "hero_sub": "Conheça a história e o chamado do Exército de Deus.",
+        "sidebar_collection": "",
+        "sidebar_heading": "Conheça nossa loja",
+        "sidebar_sub": "Artigos devocionais selecionados",
+        "sidebar_limit": 5
+      }
+    }
+  },
+  "order": ["main"]
+}

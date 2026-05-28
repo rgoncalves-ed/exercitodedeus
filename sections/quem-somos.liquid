@@ -1,0 +1,161 @@
+{%- liquid
+  assign hero_image = section.settings.hero_image
+  assign sidebar_collection = collections[section.settings.sidebar_collection]
+-%}
+
+<article class="quem-somos">
+  {%- if hero_image != blank -%}
+    <header class="quem-somos__hero">
+      <img src="{{ hero_image }}" alt="{{ section.settings.hero_alt | default: 'Exército de Deus' | escape }}" loading="eager">
+      <div class="quem-somos__hero-overlay">
+        <div class="page-width">
+          {%- if section.settings.hero_eyebrow != blank -%}
+            <span class="quem-somos__hero-eyebrow">{{ section.settings.hero_eyebrow }}</span>
+          {%- endif -%}
+          {%- if section.settings.hero_title != blank -%}
+            <h1 class="quem-somos__hero-title">{{ section.settings.hero_title }}</h1>
+          {%- endif -%}
+          {%- if section.settings.hero_sub != blank -%}
+            <p class="quem-somos__hero-sub">{{ section.settings.hero_sub }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </header>
+  {%- endif -%}
+
+  <div class="page-width quem-somos__layout">
+    <div class="quem-somos__main">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'heading' -%}
+            <h2 class="quem-somos__section-title" {{ block.shopify_attributes }}>{{ block.settings.text }}</h2>
+          {%- when 'subheading' -%}
+            <h3 class="quem-somos__subtitle" {{ block.shopify_attributes }}>{{ block.settings.text }}</h3>
+          {%- when 'paragraph' -%}
+            <div class="quem-somos__paragraph" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {%- when 'quote' -%}
+            <blockquote class="quem-somos__quote" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+              {%- if block.settings.cite != blank -%}<cite>— {{ block.settings.cite }}</cite>{%- endif -%}
+            </blockquote>
+          {%- when 'image' -%}
+            {%- if block.settings.image != blank -%}
+              <figure class="quem-somos__figure" {{ block.shopify_attributes }}>
+                <img src="{{ block.settings.image }}" alt="{{ block.settings.alt | escape }}" loading="lazy">
+                {%- if block.settings.caption != blank -%}<figcaption>{{ block.settings.caption }}</figcaption>{%- endif -%}
+              </figure>
+            {%- endif -%}
+          {%- when 'divider' -%}
+            <hr class="quem-somos__divider" {{ block.shopify_attributes }}>
+          {%- when 'footnotes' -%}
+            <aside class="quem-somos__footnotes" {{ block.shopify_attributes }}>
+              <div class="quem-somos__footnotes-divider"></div>
+              {{ block.settings.text }}
+            </aside>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if sidebar_collection != blank and sidebar_collection.products.size > 0 -%}
+      <aside class="quem-somos__sidebar" aria-label="Produtos relacionados">
+        <div class="quem-somos__sidebar-inner">
+          <h2 class="quem-somos__sidebar-title">{{ section.settings.sidebar_heading | default: 'Conheça nossa loja' }}</h2>
+          {%- if section.settings.sidebar_sub != blank -%}
+            <p class="quem-somos__sidebar-sub">{{ section.settings.sidebar_sub }}</p>
+          {%- endif -%}
+          <div class="quem-somos__sidebar-list">
+            {%- assign sidebar_limit = section.settings.sidebar_limit | default: 4 -%}
+            {%- for product in sidebar_collection.products limit: sidebar_limit -%}
+              <a href="{{ product.url }}" class="quem-somos__sidebar-card">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 220 }}" alt="{{ product.title | escape }}" loading="lazy">
+                {%- endif -%}
+                <div>
+                  <span class="quem-somos__sidebar-card-title">{{ product.title | truncate: 48 }}</span>
+                  <span class="quem-somos__sidebar-card-price">{{ product.price | money }}</span>
+                </div>
+              </a>
+            {%- endfor -%}
+          </div>
+          <a href="{{ sidebar_collection.url }}" class="quem-somos__sidebar-link">Ver todos →</a>
+        </div>
+      </aside>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Quem somos",
+  "settings": [
+    { "type": "header", "content": "Imagem do topo" },
+    { "type": "url", "id": "hero_image", "label": "URL da imagem", "info": "Cole a URL completa (ex: https://cdn.shopify.com/.../PAPA_jpg.jpg)" },
+    { "type": "text", "id": "hero_alt", "label": "Texto alternativo (acessibilidade)" },
+    { "type": "text", "id": "hero_eyebrow", "label": "Texto pequeno sobre o título" },
+    { "type": "text", "id": "hero_title", "label": "Título sobre a imagem", "default": "Quem somos" },
+    { "type": "textarea", "id": "hero_sub", "label": "Subtítulo sobre a imagem" },
+
+    { "type": "header", "content": "Sidebar (produtos)" },
+    { "type": "collection", "id": "sidebar_collection", "label": "Coleção exibida na lateral" },
+    { "type": "text", "id": "sidebar_heading", "label": "Título da sidebar", "default": "Conheça nossa loja" },
+    { "type": "text", "id": "sidebar_sub", "label": "Subtítulo da sidebar", "default": "Artigos devocionais selecionados" },
+    { "type": "range", "id": "sidebar_limit", "label": "Quantos produtos mostrar", "min": 3, "max": 8, "step": 1, "default": 5 }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Título de seção",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "QUEM SOMOS" }
+      ]
+    },
+    {
+      "type": "subheading",
+      "name": "Subtítulo",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "name": "Parágrafo",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Texto" }
+      ]
+    },
+    {
+      "type": "quote",
+      "name": "Citação",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Texto da citação" },
+        { "type": "text", "id": "cite", "label": "Fonte (autor)" }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Imagem ilustrativa",
+      "settings": [
+        { "type": "url", "id": "image", "label": "URL da imagem" },
+        { "type": "text", "id": "alt", "label": "Texto alternativo" },
+        { "type": "text", "id": "caption", "label": "Legenda (opcional)" }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divisor",
+      "settings": []
+    },
+    {
+      "type": "footnotes",
+      "name": "Notas de rodapé",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Notas (suporta HTML básico)" }
+      ]
+    }
+  ],
+  "max_blocks": 50,
+  "presets": [
+    { "name": "Quem somos" }
+  ]
+}
+{% endschema %}

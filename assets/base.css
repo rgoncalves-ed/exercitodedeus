@@ -1217,6 +1217,29 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   .site-footer__bottom { margin-inline: -16px; padding-inline: 16px; text-align: center; justify-content: center; }
 }
 
+/* Selo "O site que você Adora" */
+.site-footer__adora {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 24px;
+  margin-inline: -24px;
+  background: #0F0F0F;
+  color: #fff;
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background 0.18s ease;
+}
+.site-footer__adora:hover { background: #1A1A1A; color: #fff; }
+.site-footer__adora-label { font-weight: 600; opacity: 0.95; }
+.site-footer__adora-logo { height: 22px; width: auto; }
+@media (max-width: 749px) {
+  .site-footer__adora { margin-inline: -16px; padding: 16px; font-size: 0.82rem; }
+  .site-footer__adora-logo { height: 18px; }
+}
+
 @media (max-width: 1100px) {
   .site-footer__top {
     grid-template-columns: repeat(3, 1fr);
@@ -5963,4 +5986,228 @@ body.no-scroll { overflow: hidden; }
   .newsletter__field input[type="email"] { width: 100%; padding: 12px 14px; text-align: center; }
   .newsletter__submit { width: 100%; justify-content: center; padding: 12px 22px; }
 }
+
+/* ==========================================================
+   Pagina Quem somos
+   ========================================================== */
+
+.quem-somos__hero {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 50vw, 560px);
+  overflow: hidden;
+  isolation: isolate;
+}
+.quem-somos__hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.quem-somos__hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  padding-block: 48px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.65) 100%);
+  color: #fff;
+}
+.quem-somos__hero-eyebrow {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 12px;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-radius: 999px;
+}
+.quem-somos__hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin: 0 0 14px;
+  color: #fff;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.35);
+}
+.quem-somos__hero-sub {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  opacity: 0.95;
+  margin: 0;
+  max-width: 560px;
+}
+
+.quem-somos__layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 64px;
+  padding-block: 64px 80px;
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .quem-somos__layout { grid-template-columns: 1fr; gap: 40px; padding-block: 40px 60px; }
+}
+
+.quem-somos__main {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--color-text);
+  max-width: 720px;
+}
+
+.quem-somos__section-title {
+  font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+  letter-spacing: -0.025em;
+  margin: 2em 0 0.6em;
+  color: var(--color-primary);
+  text-transform: uppercase;
+}
+.quem-somos__section-title:first-child { margin-top: 0; }
+
+.quem-somos__subtitle {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  margin: 1.8em 0 0.5em;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.quem-somos__paragraph { margin: 0 0 1.1em; }
+.quem-somos__paragraph p { margin: 0 0 1em; }
+.quem-somos__paragraph strong { color: var(--color-primary); font-weight: 700; }
+.quem-somos__paragraph em { color: var(--color-accent); font-style: italic; }
+.quem-somos__paragraph sup { color: var(--color-accent); font-weight: 700; }
+.quem-somos__paragraph ul, .quem-somos__paragraph ol { padding-left: 1.4em; margin: 0 0 1.2em; }
+.quem-somos__paragraph li { margin-bottom: 0.5em; }
+.quem-somos__paragraph li::marker { color: var(--color-accent); }
+.quem-somos__paragraph a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+.quem-somos__quote {
+  border-left: 4px solid var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 6%, transparent);
+  padding: 18px 24px;
+  margin: 1.6em 0;
+  border-radius: 0 12px 12px 0;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  font-style: italic;
+}
+.quem-somos__quote p { margin: 0; }
+.quem-somos__quote cite {
+  display: block;
+  margin-top: 10px;
+  font-style: normal;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.quem-somos__figure { margin: 2em 0; }
+.quem-somos__figure img { width: 100%; height: auto; border-radius: 14px; }
+.quem-somos__figure figcaption {
+  margin-top: 10px;
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+.quem-somos__divider {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-border) 20%, var(--color-border) 80%, transparent);
+  margin: 3em 0;
+}
+
+.quem-somos__footnotes {
+  margin-top: 3em;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+}
+.quem-somos__footnotes p { margin: 0 0 0.6em; }
+.quem-somos__footnotes sup { color: var(--color-accent); font-weight: 700; }
+
+/* Sidebar */
+.quem-somos__sidebar { position: sticky; top: 120px; }
+@media (max-width: 960px) {
+  .quem-somos__sidebar { position: static; }
+}
+.quem-somos__sidebar-inner {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  padding: 24px;
+}
+.quem-somos__sidebar-title {
+  font-size: 1.1rem;
+  margin: 0 0 6px;
+  letter-spacing: -0.015em;
+}
+.quem-somos__sidebar-sub {
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+  margin: 0 0 18px;
+  line-height: 1.5;
+}
+.quem-somos__sidebar-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.quem-somos__sidebar-card {
+  display: flex;
+  gap: 12px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.quem-somos__sidebar-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -12px color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+.quem-somos__sidebar-card img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: var(--color-surface);
+}
+.quem-somos__sidebar-card-title {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.quem-somos__sidebar-card-price {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--color-accent);
+}
+.quem-somos__sidebar-link {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-accent);
+}
+.quem-somos__sidebar-link:hover { text-decoration: underline; }
 
