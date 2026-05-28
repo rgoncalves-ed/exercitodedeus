@@ -220,39 +220,33 @@
       {
         "type": "text",
         "id": "social_youtube",
-        "label": "YouTube",
-        "default": ""
+        "label": "YouTube"
       },
       {
         "type": "text",
         "id": "social_tiktok",
-        "label": "TikTok",
-        "default": ""
+        "label": "TikTok"
       },
       {
         "type": "text",
         "id": "social_whatsapp",
-        "label": "WhatsApp (número com DDI, ex: 5551999999999)",
-        "default": ""
+        "label": "WhatsApp (número com DDI, ex: 5551999999999)"
       },
       {
         "type": "text",
         "id": "social_spotify",
-        "label": "Spotify (URL do artista/perfil)",
-        "default": ""
+        "label": "Spotify (URL do artista/perfil)"
       },
       {
         "type": "text",
         "id": "social_kwai",
-        "label": "Kwai (URL do perfil)",
-        "default": ""
+        "label": "Kwai (URL do perfil)"
       },
       {
         "type": "text",
         "id": "social_wa_channel",
         "label": "Canal do WhatsApp (URL completa)",
-        "info": "Cole o link do canal (https://whatsapp.com/channel/...) — aparece como botão 'Participe do canal' no rodapé.",
-        "default": ""
+        "info": "Cole o link do canal (https://whatsapp.com/channel/...) — aparece como botão 'Participe do canal' no rodapé."
       }
     ]
   },

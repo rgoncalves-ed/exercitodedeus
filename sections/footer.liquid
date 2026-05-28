@@ -186,6 +186,19 @@
         <h4 class="site-footer__heading">{{ section.settings.payment_heading | default: 'Formas de pagamento' }}</h4>
         {% render 'payment-icons' %}
       </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'text' -%}
+          <div class="site-footer__col site-footer__col--text" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h4 class="site-footer__heading">{{ block.settings.heading }}</h4>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="site-footer__text">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
 
     <div class="site-footer__bottom">
@@ -290,12 +303,23 @@
     { "type": "header", "content": "Selo Adora (bem no fim)" },
     { "type": "text", "id": "adora_label", "label": "Frase ao lado do logo", "default": "O site que você" },
     { "type": "text", "id": "adora_logo", "label": "URL do logo (PNG/SVG)", "default": "https://cdn.shopify.com/s/files/1/0818/6911/1551/files/logo-adora.png?v=1779971113" },
-    { "type": "url", "id": "adora_url", "label": "Link", "default": "https://adora.com.br" },
+    { "type": "url", "id": "adora_url", "label": "Link" },
 
     { "type": "header", "content": "Botão flutuante WhatsApp" },
     { "type": "checkbox", "id": "float_whatsapp", "label": "Ativar botão flutuante", "default": true, "info": "Usa o número configurado em \"Theme settings → Redes sociais\"." },
     { "type": "text", "id": "float_whatsapp_label", "label": "Texto ao lado (opcional)", "default": "Fale conosco" },
     { "type": "textarea", "id": "float_whatsapp_msg", "label": "Mensagem pré-preenchida", "default": "Olá! Tenho interesse nos produtos da loja." }
-  ]
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Coluna de texto extra",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título da coluna", "default": "Mais um link" },
+        { "type": "richtext", "id": "body", "label": "Conteúdo (HTML básico)" }
+      ]
+    }
+  ],
+  "max_blocks": 4
 }
 {% endschema %}
