@@ -146,8 +146,8 @@
         </ul>
       </div>
 
-      {%- comment -%} 5. ATENDIMENTO {%- endcomment -%}
-      <div class="site-footer__col">
+      {%- comment -%} 5. ATENDIMENTO + PAGAMENTO {%- endcomment -%}
+      <div class="site-footer__col site-footer__col--atendimento">
         <h4 class="site-footer__heading">{{ section.settings.contact_heading | default: 'Atendimento' }}</h4>
         <ul class="site-footer__contact" role="list">
           {%- if phone != blank -%}
@@ -179,9 +179,13 @@
             </li>
           {%- endif -%}
         </ul>
+
+        <div class="site-footer__payments-inline">
+          <h4 class="site-footer__heading site-footer__heading--small">{{ section.settings.payment_heading | default: 'Formas de pagamento' }}</h4>
+          {% render 'payment-icons' %}
+        </div>
       </div>
 
-      {%- comment -%} 6. PAGAMENTO {%- endcomment -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'text' -%}
           <div class="site-footer__col site-footer__col--text" {{ block.shopify_attributes }}>
@@ -195,13 +199,10 @@
         {%- endif -%}
       {%- endfor -%}
     </div>
+  </div>
 
-    <div class="site-footer__payments">
-      <span class="site-footer__payments-label">{{ section.settings.payment_heading | default: 'Formas de pagamento' }}</span>
-      {% render 'payment-icons' %}
-    </div>
-
-    <div class="site-footer__bottom">
+  <div class="site-footer__bottom-wrap">
+    <div class="page-width site-footer__bottom">
       <div class="site-footer__legal">
         © {{ 'now' | date: '%Y' }} {{ section.settings.legal_name | default: shop.name }}.
         {%- if cnpj != blank %} CNPJ: {{ cnpj }}.{% endif %}

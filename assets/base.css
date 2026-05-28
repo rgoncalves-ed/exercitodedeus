@@ -1087,25 +1087,24 @@ body { padding-top: calc(var(--topbar-height, 0px) + var(--header-height, 64px))
   text-underline-offset: 3px;
 }
 
-/* Faixa de pagamento — horizontal entre top e bottom */
-.site-footer__payments {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  padding-block: 20px;
+/* Formas de pagamento dentro da coluna de Atendimento (parte de baixo) */
+.site-footer__payments-inline {
+  margin-top: 26px;
+  padding-top: 20px;
   border-top: 1px solid var(--color-border);
-  flex-wrap: wrap;
 }
-.site-footer__payments-label {
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+.site-footer__heading--small {
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #1A1A1A;
+  color: #1A1A1A !important;
+  margin-bottom: 12px !important;
 }
-@media (max-width: 749px) {
-  .site-footer__payments { padding-block: 16px; gap: 10px; }
+.site-footer__payments-inline .payment-grid {
+  grid-template-columns: repeat(4, minmax(48px, 1fr));
+  max-width: 240px;
+  gap: 8px;
 }
 
 /* Coluna de redes sociais (esquerda) */
@@ -1220,7 +1219,14 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
-/* Bottom (copyright + Adora) — barra em tom da marca */
+/* Wrapper full-width da bottom bar (vai de borda a borda do viewport) */
+.site-footer__bottom-wrap {
+  background: #564999;
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* Bottom (copyright + Adora) — conteudo dentro do wrap centralizado */
 .site-footer__bottom {
   padding-block: 22px;
   border-top: 0;
@@ -1229,11 +1235,8 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   gap: 16px;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   color: #FFFFFF;
-  background: #564999;
-  margin-inline: calc(-1 * var(--page-gutter, 24px));
-  padding-inline: var(--page-gutter, 24px);
   margin-top: 0;
 }
 .site-footer__legal {
@@ -1242,7 +1245,7 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   font-weight: 500;
 }
 @media (max-width: 749px) {
-  .site-footer__bottom { --page-gutter: 16px; text-align: center; justify-content: center; }
+  .site-footer__bottom { text-align: center; justify-content: center; }
 }
 
 /* CTA "Participe do canal do WhatsApp" no topo do footer */
@@ -1318,11 +1321,12 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
 }
 .site-footer__adora-label { font-weight: 700; color: #FFFFFF; }
 .site-footer__adora-logo {
-  height: 22px;
+  height: 32px;
   width: auto;
   display: block;
   filter: brightness(0) invert(1);
 }
+@media (max-width: 600px) { .site-footer__adora-logo { height: 26px; } }
 @media (max-width: 600px) {
   .site-footer__adora { justify-content: center; }
 }
