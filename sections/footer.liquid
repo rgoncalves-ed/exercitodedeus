@@ -11,13 +11,25 @@
   assign ana_label = section.settings.ana_label | default: 'Redes Ana'
   assign ita_label = section.settings.ita_label | default: 'Redes Ita'
   assign has_ita = false
-  if section.settings.ita_instagram != blank or section.settings.ita_facebook != blank or ita_wa != blank or section.settings.ita_tiktok != blank or section.settings.ita_spotify != blank or section.settings.ita_youtube != blank
+  if section.settings.ita_instagram != blank or section.settings.ita_facebook != blank or ita_wa != blank or section.settings.ita_tiktok != blank or section.settings.ita_spotify != blank or section.settings.ita_youtube != blank or section.settings.ita_kwai != blank
     assign has_ita = true
   endif
 -%}
 
 <footer class="site-footer" role="contentinfo">
   <div class="page-width">
+    {%- if settings.social_wa_channel != blank and section.settings.show_wa_channel_cta -%}
+      <a class="site-footer__wa-channel" href="{{ settings.social_wa_channel }}" target="_blank" rel="noopener">
+        <span class="site-footer__wa-channel-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.2 0 0 7.2 0 16c0 2.8.7 5.6 2.1 8L.1 32l8.2-2.1c2.3 1.3 5 2 7.8 2 8.8 0 16-7.2 16-16S24.8 0 16 0zm7.3 19.2c-.4-.2-2.4-1.2-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.5.3-.9.1-2.4-1.2-3.9-2.1-5.5-4.8-.4-.7.4-.7 1.2-2.2.1-.3.1-.5 0-.7-.1-.2-.9-2.2-1.2-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.3 0 2 1.4 3.9 1.6 4.1.2.3 2.8 4.3 6.8 6 1 .4 1.7.6 2.3.8.9.3 1.8.3 2.5.2.7-.1 2.4-1 2.7-1.9.3-.9.3-1.7.2-1.9-.1-.2-.4-.3-.8-.5z"/></svg>
+        </span>
+        <span class="site-footer__wa-channel-text">
+          <strong>{{ section.settings.wa_channel_title | default: 'Participe do nosso canal no WhatsApp' }}</strong>
+          <small>{{ section.settings.wa_channel_sub | default: 'Receba reflexões, lançamentos e novidades direto no celular.' }}</small>
+        </span>
+        <span class="site-footer__wa-channel-btn">{{ section.settings.wa_channel_btn | default: 'Entrar no canal' }} →</span>
+      </a>
+    {%- endif -%}
     <div class="site-footer__top">
 
       {%- comment -%} 1. SOCIAL — Redes Ana + Redes Ita {%- endcomment -%}
@@ -33,6 +45,9 @@
             {%- endif -%}
             {%- if settings.social_tiktok != blank -%}
               <li><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok {{ ana_label }}">{% render 'icon-tiktok' %}</a></li>
+            {%- endif -%}
+            {%- if settings.social_kwai != blank -%}
+              <li><a href="{{ settings.social_kwai }}" target="_blank" rel="noopener" aria-label="Kwai {{ ana_label }}">{% render 'icon-kwai' %}</a></li>
             {%- endif -%}
             {%- if settings.social_spotify != blank -%}
               <li><a href="{{ settings.social_spotify }}" target="_blank" rel="noopener" aria-label="Spotify {{ ana_label }}">{% render 'icon-spotify' %}</a></li>
@@ -58,6 +73,9 @@
               {%- endif -%}
               {%- if section.settings.ita_tiktok != blank -%}
                 <li><a href="{{ section.settings.ita_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok {{ ita_label }}">{% render 'icon-tiktok' %}</a></li>
+              {%- endif -%}
+              {%- if section.settings.ita_kwai != blank -%}
+                <li><a href="{{ section.settings.ita_kwai }}" target="_blank" rel="noopener" aria-label="Kwai {{ ita_label }}">{% render 'icon-kwai' %}</a></li>
               {%- endif -%}
               {%- if section.settings.ita_spotify != blank -%}
                 <li><a href="{{ section.settings.ita_spotify }}" target="_blank" rel="noopener" aria-label="Spotify {{ ita_label }}">{% render 'icon-spotify' %}</a></li>
@@ -218,6 +236,12 @@
 {
   "name": "Rodapé",
   "settings": [
+    { "type": "header", "content": "Canal do WhatsApp (CTA topo do footer)" },
+    { "type": "checkbox", "id": "show_wa_channel_cta", "label": "Mostrar botão 'Participe do canal'", "default": true, "info": "Usa o link configurado em Theme settings → Redes sociais → Canal do WhatsApp." },
+    { "type": "text", "id": "wa_channel_title", "label": "Título do CTA", "default": "Participe do nosso canal no WhatsApp" },
+    { "type": "text", "id": "wa_channel_sub", "label": "Subtítulo", "default": "Receba reflexões, lançamentos e novidades direto no celular." },
+    { "type": "text", "id": "wa_channel_btn", "label": "Texto do botão", "default": "Entrar no canal" },
+
     { "type": "header", "content": "Redes sociais — Ana" },
     { "type": "paragraph", "content": "Os links abaixo ficam em Theme settings → Redes sociais. Aqui você só escolhe o nome que aparece em cima dos ícones." },
     { "type": "text", "id": "ana_label", "label": "Texto do grupo (Ana)", "default": "Redes Ana" },
@@ -227,6 +251,7 @@
     { "type": "url", "id": "ita_instagram", "label": "Instagram (Ita)" },
     { "type": "url", "id": "ita_facebook", "label": "Facebook (Ita)" },
     { "type": "url", "id": "ita_tiktok", "label": "TikTok (Ita)" },
+    { "type": "url", "id": "ita_kwai", "label": "Kwai (Ita)" },
     { "type": "url", "id": "ita_spotify", "label": "Spotify (Ita)" },
     { "type": "url", "id": "ita_youtube", "label": "YouTube (Ita)" },
     { "type": "text", "id": "ita_whatsapp", "label": "WhatsApp (Ita)", "info": "Número com DDI, ex: 5543999999999. Deixe vazio se não tiver." },

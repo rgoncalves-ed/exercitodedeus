@@ -240,6 +240,19 @@
         "id": "social_spotify",
         "label": "Spotify (URL do artista/perfil)",
         "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_kwai",
+        "label": "Kwai (URL do perfil)",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_wa_channel",
+        "label": "Canal do WhatsApp (URL completa)",
+        "info": "Cole o link do canal (https://whatsapp.com/channel/...) — aparece como botão 'Participe do canal' no rodapé.",
+        "default": ""
       }
     ]
   },
