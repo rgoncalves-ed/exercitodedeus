@@ -1198,21 +1198,22 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
-/* Bottom (copyright + dev) */
+/* Bottom (copyright + Adora) */
 .site-footer__bottom {
-  padding-block: 18px;
-  border-top: 1px solid rgba(0,0,0,0.08);
+  padding-block: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   justify-content: space-between;
   align-items: center;
   font-size: 0.78rem;
-  color: var(--color-text-muted);
-  background: rgba(0,0,0,0.03);
+  color: rgba(255,255,255,0.78);
+  background: #0F0F12;
   margin-inline: -24px;
   padding-inline: 24px;
 }
+.site-footer__legal { color: rgba(255,255,255,0.78); }
 @media (max-width: 749px) {
   .site-footer__bottom { margin-inline: -16px; padding-inline: 16px; text-align: center; justify-content: center; }
 }
@@ -1272,20 +1273,31 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   .site-footer__wa-channel-btn { width: 100%; }
 }
 
-/* Selo "O SITE QUE VOCÊ Adora" — canto direito da bottom bar */
+/* Selo "O SITE QUE VOCÊ Adora" — canto direito da bottom bar (escura) */
 .site-footer__adora {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: var(--color-text-muted);
+  gap: 10px;
+  color: rgba(255,255,255,0.85);
   text-decoration: none;
   font-size: 0.78rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   transition: color 0.18s ease, transform 0.18s ease;
 }
-.site-footer__adora:hover { color: var(--color-text); transform: translateY(-1px); }
-.site-footer__adora-label { font-weight: 600; }
-.site-footer__adora-logo { height: 18px; width: auto; display: block; }
+.site-footer__adora:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+.site-footer__adora-label { font-weight: 700; }
+.site-footer__adora-logo {
+  height: 20px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  transition: opacity 0.18s ease;
+}
+.site-footer__adora:hover .site-footer__adora-logo { opacity: 1; }
 @media (max-width: 600px) {
   .site-footer__adora { justify-content: center; }
 }
