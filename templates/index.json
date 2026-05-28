@@ -35,7 +35,7 @@
             "heading": "",
             "text": "",
             "button_label": "",
-            "button_url": "",
+            "button_url": "https://pay.hotmart.com/K97380924Y?off=ix9op6ae&checkoutMode=10&bid=1779961155422",
             "background_color": "#7a2f2f",
             "text_color": "#ffffff",
             "button_bg": "#ffffff",
@@ -64,6 +64,7 @@
         "slide_3"
       ],
       "settings": {
+        "welcome_text": "<p><strong>Bem-vindo à Loja do Exército de Deus,</strong> a loja das Famílias Consagradas.</p>",
         "autoplay_seconds": 6
       }
     },
