@@ -20,30 +20,11 @@
     },
     "footer": {
       "type": "footer",
-      "blocks": {
-        "text_Lcfhx9": {
-          "type": "text",
-          "settings": {
-            "heading": "Pagamento e envio",
-            "body": "<ul><li><a href=\"https://loja.grupoexercitodedeus.com.br/politica-de-privacidade-e-cookies/\">POLÍTICA E PRIVACIDADE</a></li><li><a href=\"https://loja.grupoexercitodedeus.com.br/termos-de-uso/\">TERMOS DE USO</a></li><li><a href=\"https://loja.grupoexercitodedeus.com.br/trocas-e-devolucoes/\">TROCAS E DEVOLUÇÕES</a></li><li><a href=\"https://loja.grupoexercitodedeus.com.br/formas-de-pagamento/\">FORMAS DE PAGAMENTO</a></li><li><a href=\"https://loja.grupoexercitodedeus.com.br/politica-de-entrega/\">POLÍTICA DE ENTREGA</a></li></ul>"
-          }
-        },
-        "text_AgbDEW": {
-          "type": "text",
-          "settings": {
-            "heading": "Contato",
-            "body": "<p><strong>ENDEREÇO</strong>Rua Carmela Dutra 190, Jardim Morumbi, CEP 86036-360, Londrina/PR</p><p><strong>E-MAIL</strong><a href=\"mailto:loja@grupoexercitodedeus.com.br\" title=\"Mail to: loja@grupoexercitodedeus.com.br\">loja@grupoexercitodedeus.com.br</a></p><p><strong>TELEFONE</strong>(43) 9993-5389</p>"
-          }
-        }
-      },
-      "block_order": [
-        "text_Lcfhx9",
-        "text_AgbDEW"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "tagline": "Ad Maiorem Dei Gloriam",
-        "ita_instagram": "https://www.instagram.com/italopoeta/",
-        "ita_spotify": "https://open.spotify.com/intl-pt/artist/71AbzsMMAod08OaUvW0pce?si=0cIcyFh8Sp6WXIY7S3_FVA"
+        "adora_url": "https://www.instagram.com/adora.comunicacao/"
       }
     }
   },

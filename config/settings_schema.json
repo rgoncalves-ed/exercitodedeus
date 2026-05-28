@@ -247,6 +247,45 @@
         "id": "social_wa_channel",
         "label": "Canal do WhatsApp (URL completa)",
         "info": "Cole o link do canal (https://whatsapp.com/channel/...) — aparece como botão 'Participe do canal' no rodapé."
+      },
+      {
+        "type": "header",
+        "content": "Redes do Ítalo"
+      },
+      {
+        "type": "text",
+        "id": "ita_instagram",
+        "label": "Instagram Ítalo"
+      },
+      {
+        "type": "text",
+        "id": "ita_facebook",
+        "label": "Facebook Ítalo"
+      },
+      {
+        "type": "text",
+        "id": "ita_youtube",
+        "label": "YouTube Ítalo"
+      },
+      {
+        "type": "text",
+        "id": "ita_tiktok",
+        "label": "TikTok Ítalo"
+      },
+      {
+        "type": "text",
+        "id": "ita_kwai",
+        "label": "Kwai Ítalo"
+      },
+      {
+        "type": "text",
+        "id": "ita_spotify",
+        "label": "Spotify Ítalo"
+      },
+      {
+        "type": "text",
+        "id": "ita_whatsapp",
+        "label": "WhatsApp Ítalo (número com DDI)"
       }
     ]
   },

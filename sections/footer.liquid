@@ -6,12 +6,12 @@
   assign phone_clean = phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', ''
   assign wa_number = settings.social_whatsapp | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-'
 
-  assign ita_wa_raw = section.settings.ita_whatsapp
+  assign ita_wa_raw = settings.ita_whatsapp
   assign ita_wa = ita_wa_raw | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-'
   assign ana_label = section.settings.ana_label | default: 'Redes Ana'
   assign ita_label = section.settings.ita_label | default: 'Redes Ita'
   assign has_ita = false
-  if section.settings.ita_instagram != blank or section.settings.ita_facebook != blank or ita_wa != blank or section.settings.ita_tiktok != blank or section.settings.ita_spotify != blank or section.settings.ita_youtube != blank or section.settings.ita_kwai != blank
+  if settings.ita_instagram != blank or settings.ita_facebook != blank or ita_wa != blank or settings.ita_tiktok != blank or settings.ita_spotify != blank or settings.ita_youtube != blank or settings.ita_kwai != blank
     assign has_ita = true
   endif
 -%}
@@ -65,23 +65,23 @@
           <div class="site-footer__socials-group">
             <h4 class="site-footer__heading site-footer__socials-label">{{ ita_label }}</h4>
             <ul class="site-footer__socials" role="list" aria-label="{{ ita_label }}">
-              {%- if section.settings.ita_instagram != blank -%}
-                <li><a href="{{ section.settings.ita_instagram }}" target="_blank" rel="noopener" aria-label="Instagram {{ ita_label }}">{% render 'icon-instagram' %}</a></li>
+              {%- if settings.ita_instagram != blank -%}
+                <li><a href="{{ settings.ita_instagram }}" target="_blank" rel="noopener" aria-label="Instagram {{ ita_label }}">{% render 'icon-instagram' %}</a></li>
               {%- endif -%}
-              {%- if section.settings.ita_facebook != blank -%}
-                <li><a href="{{ section.settings.ita_facebook }}" target="_blank" rel="noopener" aria-label="Facebook {{ ita_label }}">{% render 'icon-facebook' %}</a></li>
+              {%- if settings.ita_facebook != blank -%}
+                <li><a href="{{ settings.ita_facebook }}" target="_blank" rel="noopener" aria-label="Facebook {{ ita_label }}">{% render 'icon-facebook' %}</a></li>
               {%- endif -%}
-              {%- if section.settings.ita_tiktok != blank -%}
-                <li><a href="{{ section.settings.ita_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok {{ ita_label }}">{% render 'icon-tiktok' %}</a></li>
+              {%- if settings.ita_tiktok != blank -%}
+                <li><a href="{{ settings.ita_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok {{ ita_label }}">{% render 'icon-tiktok' %}</a></li>
               {%- endif -%}
-              {%- if section.settings.ita_kwai != blank -%}
-                <li><a href="{{ section.settings.ita_kwai }}" target="_blank" rel="noopener" aria-label="Kwai {{ ita_label }}">{% render 'icon-kwai' %}</a></li>
+              {%- if settings.ita_kwai != blank -%}
+                <li><a href="{{ settings.ita_kwai }}" target="_blank" rel="noopener" aria-label="Kwai {{ ita_label }}">{% render 'icon-kwai' %}</a></li>
               {%- endif -%}
-              {%- if section.settings.ita_spotify != blank -%}
-                <li><a href="{{ section.settings.ita_spotify }}" target="_blank" rel="noopener" aria-label="Spotify {{ ita_label }}">{% render 'icon-spotify' %}</a></li>
+              {%- if settings.ita_spotify != blank -%}
+                <li><a href="{{ settings.ita_spotify }}" target="_blank" rel="noopener" aria-label="Spotify {{ ita_label }}">{% render 'icon-spotify' %}</a></li>
               {%- endif -%}
-              {%- if section.settings.ita_youtube != blank -%}
-                <li><a href="{{ section.settings.ita_youtube }}" target="_blank" rel="noopener" aria-label="YouTube {{ ita_label }}">{% render 'icon-youtube' %}</a></li>
+              {%- if settings.ita_youtube != blank -%}
+                <li><a href="{{ settings.ita_youtube }}" target="_blank" rel="noopener" aria-label="YouTube {{ ita_label }}">{% render 'icon-youtube' %}</a></li>
               {%- endif -%}
               {%- if ita_wa != blank -%}
                 <li><a href="https://wa.me/{{ ita_wa }}" target="_blank" rel="noopener" aria-label="WhatsApp {{ ita_label }}">{% render 'icon-whatsapp' %}</a></li>
@@ -208,25 +208,20 @@
         Todos os direitos reservados.
         {%- if section.settings.tagline != blank %} {{ section.settings.tagline }}{% endif -%}
       </div>
-      {%- if section.settings.dev_credit != blank -%}
-        <div class="site-footer__dev">{{ section.settings.dev_credit }}</div>
+
+      {%- if section.settings.adora_logo != blank -%}
+        <a class="site-footer__adora"
+           href="{{ section.settings.adora_url }}"
+           target="_blank"
+           rel="noopener"
+           aria-label="{{ section.settings.adora_label | default: 'O site que você Adora' }}">
+          {%- if section.settings.adora_label != blank -%}
+            <span class="site-footer__adora-label">{{ section.settings.adora_label }}</span>
+          {%- endif -%}
+          <img src="{{ section.settings.adora_logo }}" alt="Adora" class="site-footer__adora-logo" loading="lazy">
+        </a>
       {%- endif -%}
     </div>
-
-    {%- if section.settings.adora_label != blank or section.settings.adora_logo != blank -%}
-      <a class="site-footer__adora"
-         href="{{ section.settings.adora_url | default: 'https://adora.com.br' }}"
-         target="_blank"
-         rel="noopener"
-         aria-label="{{ section.settings.adora_label | default: 'O site que você Adora' }}">
-        {%- if section.settings.adora_label != blank -%}
-          <span class="site-footer__adora-label">{{ section.settings.adora_label }}</span>
-        {%- endif -%}
-        {%- if section.settings.adora_logo != blank -%}
-          <img src="{{ section.settings.adora_logo }}" alt="Adora" class="site-footer__adora-logo" loading="lazy">
-        {%- endif -%}
-      </a>
-    {%- endif -%}
   </div>
 </footer>
 
@@ -260,14 +255,8 @@
     { "type": "text", "id": "ana_label", "label": "Texto do grupo (Ana)", "default": "Redes Ana" },
 
     { "type": "header", "content": "Redes sociais — Ita" },
+    { "type": "paragraph", "content": "Os links do Ítalo ficam em Theme settings → Redes sociais → Redes do Ítalo. Aqui você só escolhe o título exibido." },
     { "type": "text", "id": "ita_label", "label": "Texto do grupo (Ita)", "default": "Redes Ita" },
-    { "type": "url", "id": "ita_instagram", "label": "Instagram (Ita)" },
-    { "type": "url", "id": "ita_facebook", "label": "Facebook (Ita)" },
-    { "type": "url", "id": "ita_tiktok", "label": "TikTok (Ita)" },
-    { "type": "url", "id": "ita_kwai", "label": "Kwai (Ita)" },
-    { "type": "url", "id": "ita_spotify", "label": "Spotify (Ita)" },
-    { "type": "url", "id": "ita_youtube", "label": "YouTube (Ita)" },
-    { "type": "text", "id": "ita_whatsapp", "label": "WhatsApp (Ita)", "info": "Número com DDI, ex: 5543999999999. Deixe vazio se não tiver." },
 
     { "type": "header", "content": "Coluna Institucional" },
     { "type": "text", "id": "col1_heading", "label": "Título", "default": "Institucional" },
@@ -300,10 +289,10 @@
     { "type": "text", "id": "tagline", "label": "Tagline (após \"Todos os direitos reservados\")" },
     { "type": "text", "id": "dev_credit", "label": "Crédito de desenvolvimento" },
 
-    { "type": "header", "content": "Selo Adora (bem no fim)" },
-    { "type": "text", "id": "adora_label", "label": "Frase ao lado do logo", "default": "O site que você" },
+    { "type": "header", "content": "Selo Adora (canto direito do rodapé)" },
+    { "type": "text", "id": "adora_label", "label": "Frase ao lado do logo", "default": "O SITE QUE VOCÊ" },
     { "type": "text", "id": "adora_logo", "label": "URL do logo (PNG/SVG)", "default": "https://cdn.shopify.com/s/files/1/0818/6911/1551/files/logo-adora.png?v=1779971113" },
-    { "type": "url", "id": "adora_url", "label": "Link" },
+    { "type": "url", "id": "adora_url", "label": "Link", "info": "Cole a URL do Instagram da Adora (https://www.instagram.com/adora.comunicacao/)" },
 
     { "type": "header", "content": "Botão flutuante WhatsApp" },
     { "type": "checkbox", "id": "float_whatsapp", "label": "Ativar botão flutuante", "default": true, "info": "Usa o número configurado em \"Theme settings → Redes sociais\"." },

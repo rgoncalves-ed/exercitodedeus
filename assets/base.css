@@ -1272,27 +1272,22 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   .site-footer__wa-channel-btn { width: 100%; }
 }
 
-/* Selo "O site que você Adora" */
+/* Selo "O SITE QUE VOCÊ Adora" — canto direito da bottom bar */
 .site-footer__adora {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 18px 24px;
-  margin-inline: -24px;
-  background: #0F0F0F;
-  color: #fff;
-  font-size: 0.86rem;
-  letter-spacing: 0.02em;
+  gap: 8px;
+  color: var(--color-text-muted);
   text-decoration: none;
-  transition: background 0.18s ease;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  transition: color 0.18s ease, transform 0.18s ease;
 }
-.site-footer__adora:hover { background: #1A1A1A; color: #fff; }
-.site-footer__adora-label { font-weight: 600; opacity: 0.95; }
-.site-footer__adora-logo { height: 22px; width: auto; }
-@media (max-width: 749px) {
-  .site-footer__adora { margin-inline: -16px; padding: 16px; font-size: 0.82rem; }
-  .site-footer__adora-logo { height: 18px; }
+.site-footer__adora:hover { color: var(--color-text); transform: translateY(-1px); }
+.site-footer__adora-label { font-weight: 600; }
+.site-footer__adora-logo { height: 18px; width: auto; display: block; }
+@media (max-width: 600px) {
+  .site-footer__adora { justify-content: center; }
 }
 
 @media (max-width: 1100px) {
