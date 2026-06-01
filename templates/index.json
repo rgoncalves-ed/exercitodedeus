@@ -16,6 +16,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Sangue-de-Jesus.png",
+            "mobile_image": "shopify://shop_images/Sangue-de-Jesus.png",
             "eyebrow": "",
             "heading": "",
             "text": "",
