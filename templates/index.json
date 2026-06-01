@@ -15,7 +15,7 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Desktop_4.png",
+            "image": "shopify://shop_images/Combo-Providencia-v2_1.png",
             "eyebrow": "",
             "heading": "",
             "text": "",
@@ -74,25 +74,25 @@
         "cat_biblias": {
           "type": "category",
           "settings": {
-            "title": "Bíblias",
-            "image": "shopify://shop_images/5a02dec7d4019e21d4d0f89d5176e0c0.jpg",
-            "collection": ""
+            "title": "Terços",
+            "image": "shopify://shop_images/d6668276e30fcac149de572e96e74f4c.jpg",
+            "collection": "tercos-exercito-de-deus"
           }
         },
-        "cat_espiritualidade": {
+        "category_JpDpby": {
           "type": "category",
           "settings": {
-            "title": "Espiritualidade",
-            "image": "shopify://shop_images/6d0ea9784a41e01fb631868a51e46c69.jpg",
-            "collection": ""
+            "title": "Sangue de Jesus",
+            "image": "shopify://shop_images/1bbfeceeb6b0c15f19f949c81db81702.jpg",
+            "collection": "tercos-exercito-de-deus"
           }
         },
         "cat_familia": {
           "type": "category",
           "settings": {
             "title": "São José",
-            "image": "shopify://shop_images/9d5150ce0ea792eebd95219ea1e753f7.png",
-            "collection": ""
+            "image": "shopify://shop_images/Combo_Sao_Jose_Providencia_v2_1.png",
+            "collection": "sao-jose"
           }
         },
         "cat_infantil": {
@@ -100,7 +100,7 @@
           "settings": {
             "title": "Uniforme",
             "image": "shopify://shop_images/mockup_02.png",
-            "collection": ""
+            "collection": "uniforme-exercito-de-deus"
           }
         },
         "cat_devocionais": {
@@ -108,13 +108,13 @@
           "settings": {
             "title": "Livros",
             "image": "shopify://shop_images/Mockup_01.png",
-            "collection": ""
+            "collection": "livros"
           }
         }
       },
       "block_order": [
         "cat_biblias",
-        "cat_espiritualidade",
+        "category_JpDpby",
         "cat_familia",
         "cat_infantil",
         "cat_devocionais"
@@ -194,7 +194,7 @@
       "type": "featured-collection",
       "settings": {
         "heading": "Os mais vendidos",
-        "collection": "",
+        "collection": "mais-vendidos",
         "layout": "carousel",
         "desktop_cols": 4,
         "products_to_show": 6,
@@ -207,11 +207,12 @@
         "cta_slide_1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/UNIFORMES.png",
             "eyebrow": "",
-            "heading": "Um combo para explicar a fé católica às crianças",
+            "heading": "Vista-se com o Exército de Deus",
             "text": "",
             "button_label": "Garantir",
-            "button_url": "",
+            "button_url": "shopify://collections/uniforme-exercito-de-deus",
             "background_color": "#dce9f1",
             "text_color": "#1a1a1a",
             "button_bg": "#1f4e78",
