@@ -247,7 +247,7 @@
       "type": "featured-collection",
       "settings": {
         "heading": "Favoritos dos leitores",
-        "collection": "",
+        "collection": "livros",
         "layout": "carousel",
         "desktop_cols": 4,
         "products_to_show": 6,
