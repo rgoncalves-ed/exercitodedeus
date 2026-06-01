@@ -64,6 +64,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/DESKTOP.png",
+            "mobile_image": "shopify://shop_images/DESKTOP.png",
             "eyebrow": "",
             "heading": "",
             "text": "",
