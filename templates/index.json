@@ -12,6 +12,21 @@
     "hero": {
       "type": "hero-banner",
       "blocks": {
+        "slide_ztBb6L": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Sangue-de-Jesus.png",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "button_url": "",
+            "background_color": "#2a4234",
+            "text_color": "#ffffff",
+            "button_bg": "#1f4e78",
+            "button_color": "#ffffff"
+          }
+        },
         "slide_1": {
           "type": "slide",
           "settings": {
@@ -59,6 +74,7 @@
         }
       },
       "block_order": [
+        "slide_ztBb6L",
         "slide_1",
         "slide_2",
         "slide_3"
