@@ -24,24 +24,25 @@
         "ev_1": {
           "type": "event",
           "settings": {
-            "image": "shopify://shop_images/5cfe23737668de011354e5149a57abe9.png",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
             "bg_color": "#1f4e78",
-            "title": "Festival UMA SÓ VOZ de Arte Cristã",
-            "tag": "30 DE MAIO",
-            "date": "30 mai 2026 • 10:00",
+            "title": "São João com Ana Clara & Italo Poeta",
+            "tag": "08 DE JUNHO",
+            "date": "08 jun 2026 • 10:00",
             "location": "Fortaleza, CE",
             "link": "",
-            "cta_label": "",
+            "cta_label": "Ver detalhes",
             "sold_out": false
           }
         },
-        "ev_2": {
+        "event_hBFJEh": {
           "type": "event",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
             "bg_color": "#7a2f2f",
-            "title": "FREI GILSON — Estádio Municipal de Juiz de Fora",
-            "tag": "18 NOV",
-            "date": "18 nov 2026 • 11:00",
+            "title": "São João com Ana Clara & Italo Poeta",
+            "tag": "08 de junho",
+            "date": "08 jun 2026 • 19:00",
             "location": "Juiz de Fora, MG",
             "link": "",
             "cta_label": "",
@@ -51,11 +52,12 @@
         "ev_3": {
           "type": "event",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
             "bg_color": "#5e2a6e",
-            "title": "Festival de Música Católica Hosana Caxias",
-            "tag": "09 DEZ",
-            "date": "09 dez 2026 • 11:00",
-            "location": "Caxias, MA",
+            "title": "São João com Ana Clara & Italo Poeta",
+            "tag": "09 de junho",
+            "date": "09 jun 2026 • 11:00",
+            "location": "Campina Grande, PB",
             "link": "",
             "cta_label": "Ver detalhes",
             "sold_out": false
@@ -64,11 +66,82 @@
         "ev_4": {
           "type": "event",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
             "bg_color": "#0f1b2d",
-            "title": "Cristo é o Show 2027",
-            "tag": "",
-            "date": "01 mai 2027 • 09:00",
-            "location": "Belo Horizonte, MG",
+            "title": "São João com Ana Clara & Italo Poeta",
+            "tag": "20 de junho",
+            "date": "20 jun 2026 • 09:00",
+            "location": "Teresina, PI",
+            "link": "",
+            "cta_label": "Ver detalhes",
+            "sold_out": false
+          }
+        },
+        "event_WWYzgT": {
+          "type": "event",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "bg_color": "#0f1b2d",
+            "title": "São João com Ana Clara & Italo Poeta",
+            "tag": "21 de junho",
+            "date": "21 jun 2026 • 09:00",
+            "location": "Sebastião Leal, PI",
+            "link": "",
+            "cta_label": "Ver detalhes",
+            "sold_out": false
+          }
+        },
+        "event_wJJKB4": {
+          "type": "event",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "bg_color": "#0f1b2d",
+            "title": "São João com Ana Clara & Italo Poeta",
+            "tag": "23 de junho",
+            "date": "23 jun 2026 • 09:00",
+            "location": "Ipupiara, BA",
+            "link": "",
+            "cta_label": "Ver detalhes",
+            "sold_out": false
+          }
+        },
+        "event_CA9QXj": {
+          "type": "event",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "bg_color": "#0f1b2d",
+            "title": "São João com Ana Clara & Italo Poeta",
+            "tag": "24 de junho",
+            "date": "24 jun 2026 • 09:00",
+            "location": "Uruburetama, CE",
+            "link": "",
+            "cta_label": "Ver detalhes",
+            "sold_out": false
+          }
+        },
+        "event_XWYNVj": {
+          "type": "event",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "bg_color": "#0f1b2d",
+            "title": "São João com Ana Clara & Italo Poeta",
+            "tag": "28 de junho",
+            "date": "28 jun 2026 • 09:00",
+            "location": "São Pedro, RN",
+            "link": "",
+            "cta_label": "Ver detalhes",
+            "sold_out": false
+          }
+        },
+        "event_G3Hmdq": {
+          "type": "event",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "bg_color": "#0f1b2d",
+            "title": "São João com Ana Clara & Italo Poeta",
+            "tag": "29 de junho",
+            "date": "29 jun 2026 • 09:00",
+            "location": "Parambu, CE",
             "link": "",
             "cta_label": "Ver detalhes",
             "sold_out": false
@@ -77,9 +150,14 @@
       },
       "block_order": [
         "ev_1",
-        "ev_2",
+        "event_hBFJEh",
         "ev_3",
-        "ev_4"
+        "ev_4",
+        "event_WWYzgT",
+        "event_wJJKB4",
+        "event_CA9QXj",
+        "event_XWYNVj",
+        "event_G3Hmdq"
       ],
       "settings": {
         "eyebrow": "",
@@ -88,7 +166,7 @@
         "intro": "Os eventos mais procurados da semana",
         "view_all_url": "",
         "view_all_label": "Ver todos",
-        "columns": 4
+        "columns": 3
       }
     }
   },
