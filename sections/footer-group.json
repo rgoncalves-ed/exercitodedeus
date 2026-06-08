@@ -14,15 +14,45 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
+        "eyebrow": "Newsletter",
         "heading": "Receba nossas novidades",
-        "subheading": "Lançamentos, promoções e conteúdo exclusivo direto no seu e-mail."
+        "subheading": "Lançamentos, promoções e conteúdo exclusivo direto no seu e-mail.",
+        "btn_label": "Inscrever",
+        "fine_print": "Você pode descadastrar a qualquer momento. Sem spam."
       }
     },
     "footer": {
       "type": "footer",
       "settings": {
+        "show_wa_channel_cta": true,
+        "wa_channel_title": "Participe do nosso canal no WhatsApp",
+        "wa_channel_sub": "Receba reflexões, lançamentos e novidades direto no celular.",
+        "wa_channel_btn": "Entrar no canal",
+        "ana_label": "Redes Ana",
+        "ita_label": "Redes Italo",
+        "col1_heading": "Institucional",
+        "col1_menu": "",
+        "col2_heading": "Informações",
+        "col2_menu": "",
+        "col3_heading": "Minha conta",
+        "col3_menu": "",
+        "contact_heading": "Atendimento",
+        "phone": "(43) 9993-5389",
+        "email": "loja@grupoexercitodedeus.com.br",
+        "address": "Rua Carmela Dutra 190, Jardim Morumbi, CEP 86036-360, Londrina/PR",
+        "payment_heading": "Formas de pagamento",
+        "show_security": true,
+        "security_heading": "Segurança",
+        "legal_name": "Exército de Deus",
+        "cnpj": "46.386.798/0002-33",
         "tagline": "Ad Maiorem Dei Gloriam",
-        "adora_url": "https://www.instagram.com/adora.comunicacao/"
+        "dev_credit": "",
+        "adora_label": "O SITE QUE VOCÊ",
+        "adora_logo": "https://cdn.shopify.com/s/files/1/0818/6911/1551/files/logo-adora.png?v=1779971113",
+        "adora_url": "https://www.instagram.com/adora.comunicacao/",
+        "float_whatsapp": true,
+        "float_whatsapp_label": "Fale conosco",
+        "float_whatsapp_msg": "Olá! Tenho interesse nos produtos da loja."
       }
     }
   },
