@@ -24,6 +24,7 @@
         "ev_1": {
           "type": "event",
           "settings": {
+            "image": "shopify://shop_images/5cfe23737668de011354e5149a57abe9.png",
             "bg_color": "#1f4e78",
             "title": "Festival UMA SÓ VOZ de Arte Cristã",
             "tag": "30 DE MAIO",
@@ -80,7 +81,6 @@
         "ev_3",
         "ev_4"
       ],
-      "disabled": true,
       "settings": {
         "eyebrow": "",
         "heading": "Eventos em",
