@@ -1,6 +1,562 @@
+{% doc %}
+  @prompt
+    Preciso que apareça botões que levem a categorias diferentes de produtos
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-category-buttons-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.section_padding }}px 0;
+  }
+
+  .ai-category-buttons__container-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.gap }}px;
+    width: 100%;
+  }
+
+  .ai-category-buttons__item-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-category-buttons__item-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-category-buttons__link-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: {{ block.settings.button_padding }}px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    min-height: {{ block.settings.button_height }}px;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .ai-category-buttons__link-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+    color: {{ block.settings.button_hover_text_color }};
+  }
+
+  .ai-category-buttons__image-wrapper-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .ai-category-buttons__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-category-buttons__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: {{ block.settings.placeholder_bg_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-category-buttons__placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-category-buttons__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+  }
+
+  .ai-category-buttons__description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    text-align: center;
+    margin-top: 4px;
+    opacity: 0.8;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-category-buttons__container-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .ai-category-buttons__image-wrapper-{{ ai_gen_id }} {
+      width: {{ block.settings.icon_size | times: 0.8 }}px;
+      height: {{ block.settings.icon_size | times: 0.8 }}px;
+    }
+
+    .ai-category-buttons__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.9 }}px;
+    }
+
+    .ai-category-buttons__description-{{ ai_gen_id }} {
+      font-size: {{ block.settings.description_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-category-buttons-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-category-buttons__container-{{ ai_gen_id }}">
+    {% for i in (1..6) %}
+      {% liquid
+        assign category_enabled_key = 'category_' | append: i | append: '_enabled'
+        assign category_collection_key = 'category_' | append: i | append: '_collection'
+        assign category_title_key = 'category_' | append: i | append: '_title'
+        assign category_description_key = 'category_' | append: i | append: '_description'
+        assign category_image_key = 'category_' | append: i | append: '_image'
+
+        assign category_enabled = block.settings[category_enabled_key]
+        assign category_collection = block.settings[category_collection_key]
+        assign category_title = block.settings[category_title_key]
+        assign category_description = block.settings[category_description_key]
+        assign category_image = block.settings[category_image_key]
+      %}
+
+      {% if category_enabled %}
+        <div class="ai-category-buttons__item-{{ ai_gen_id }}">
+          {% if category_collection != blank %}
+            <a href="{{ category_collection.url }}" class="ai-category-buttons__link-{{ ai_gen_id }}">
+              {% if category_image != blank %}
+                <div class="ai-category-buttons__image-wrapper-{{ ai_gen_id }}">
+                  <img
+                    src="{{ category_image | image_url: width: 200 }}"
+                    alt="{{ category_image.alt | default: category_title | escape }}"
+                    class="ai-category-buttons__image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="200"
+                    height="200"
+                  >
+                </div>
+              {% else %}
+                <div class="ai-category-buttons__image-wrapper-{{ ai_gen_id }}">
+                  <div class="ai-category-buttons__placeholder-{{ ai_gen_id }}">
+                    {{ 'collection-1' | placeholder_svg_tag }}
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if category_title != blank %}
+                <h3 class="ai-category-buttons__title-{{ ai_gen_id }}">{{ category_title }}</h3>
+              {% else %}
+                <h3 class="ai-category-buttons__title-{{ ai_gen_id }}">{{ category_collection.title }}</h3>
+              {% endif %}
+
+              {% if category_description != blank %}
+                <p class="ai-category-buttons__description-{{ ai_gen_id }}">{{ category_description }}</p>
+              {% endif %}
+            </a>
+          {% else %}
+            <div class="ai-category-buttons__link-{{ ai_gen_id }}" style="cursor: default;">
+              <div class="ai-category-buttons__image-wrapper-{{ ai_gen_id }}">
+                <div class="ai-category-buttons__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              </div>
+              <h3 class="ai-category-buttons__title-{{ ai_gen_id }}">
+                {% if category_title != blank %}
+                  {{ category_title }}
+                {% else %}
+                  Categoria {{ i }}
+                {% endif %}
+              </h3>
+              {% if category_description != blank %}
+                <p class="ai-category-buttons__description-{{ ai_gen_id }}">{{ category_description }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Botões de categorias",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Largura no desktop",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Colunas no desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Colunas no celular",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Espaço entre botões",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Espaçamento vertical",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Estilo dos botões"
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Altura mínima",
+      "min": 120,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "button_padding",
+      "label": "Espaçamento interno",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Arredondamento das bordas",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Espessura da borda",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Cor de fundo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Cor do texto",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Cor da borda",
+      "default": "#E5E5E5"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Cor de fundo ao passar o mouse",
+      "default": "#564999"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Cor do texto ao passar o mouse",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Ícones e imagens"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamanho do ícone",
+      "min": 40,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "color",
+      "id": "placeholder_bg_color",
+      "label": "Cor de fundo do placeholder",
+      "default": "#F8F8F8"
+    },
+    {
+      "type": "header",
+      "content": "Tipografia"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamanho do título",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Tamanho da descrição",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Categoria 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "category_1_enabled",
+      "label": "Ativar categoria 1",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "category_1_collection",
+      "label": "Coleção"
+    },
+    {
+      "type": "text",
+      "id": "category_1_title",
+      "label": "Título personalizado"
+    },
+    {
+      "type": "text",
+      "id": "category_1_description",
+      "label": "Descrição"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_1_image",
+      "label": "Ícone ou imagem"
+    },
+    {
+      "type": "header",
+      "content": "Categoria 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "category_2_enabled",
+      "label": "Ativar categoria 2",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "category_2_collection",
+      "label": "Coleção"
+    },
+    {
+      "type": "text",
+      "id": "category_2_title",
+      "label": "Título personalizado"
+    },
+    {
+      "type": "text",
+      "id": "category_2_description",
+      "label": "Descrição"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_2_image",
+      "label": "Ícone ou imagem"
+    },
+    {
+      "type": "header",
+      "content": "Categoria 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "category_3_enabled",
+      "label": "Ativar categoria 3",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "category_3_collection",
+      "label": "Coleção"
+    },
+    {
+      "type": "text",
+      "id": "category_3_title",
+      "label": "Título personalizado"
+    },
+    {
+      "type": "text",
+      "id": "category_3_description",
+      "label": "Descrição"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_3_image",
+      "label": "Ícone ou imagem"
+    },
+    {
+      "type": "header",
+      "content": "Categoria 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "category_4_enabled",
+      "label": "Ativar categoria 4",
+      "default": false
+    },
+    {
+      "type": "collection",
+      "id": "category_4_collection",
+      "label": "Coleção"
+    },
+    {
+      "type": "text",
+      "id": "category_4_title",
+      "label": "Título personalizado"
+    },
+    {
+      "type": "text",
+      "id": "category_4_description",
+      "label": "Descrição"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_4_image",
+      "label": "Ícone ou imagem"
+    },
+    {
+      "type": "header",
+      "content": "Categoria 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "category_5_enabled",
+      "label": "Ativar categoria 5",
+      "default": false
+    },
+    {
+      "type": "collection",
+      "id": "category_5_collection",
+      "label": "Coleção"
+    },
+    {
+      "type": "text",
+      "id": "category_5_title",
+      "label": "Título personalizado"
+    },
+    {
+      "type": "text",
+      "id": "category_5_description",
+      "label": "Descrição"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_5_image",
+      "label": "Ícone ou imagem"
+    },
+    {
+      "type": "header",
+      "content": "Categoria 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "category_6_enabled",
+      "label": "Ativar categoria 6",
+      "default": false
+    },
+    {
+      "type": "collection",
+      "id": "category_6_collection",
+      "label": "Coleção"
+    },
+    {
+      "type": "text",
+      "id": "category_6_title",
+      "label": "Título personalizado"
+    },
+    {
+      "type": "text",
+      "id": "category_6_description",
+      "label": "Descrição"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_6_image",
+      "label": "Ícone ou imagem"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Botões de categorias"
+    }
+  ]
+}
 {% endschema %}
