@@ -21,34 +21,6 @@
     "destaques": {
       "type": "events-grid",
       "blocks": {
-        "ev_1": {
-          "type": "event",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
-            "bg_color": "#1f4e78",
-            "title": "São João com Ana Clara & Italo Poeta",
-            "tag": "08 DE JUNHO",
-            "date": "08 jun 2026 • 10:00",
-            "location": "Fortaleza, CE",
-            "link": "",
-            "cta_label": "Ver detalhes",
-            "sold_out": false
-          }
-        },
-        "event_hBFJEh": {
-          "type": "event",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
-            "bg_color": "#7a2f2f",
-            "title": "São João com Ana Clara & Italo Poeta",
-            "tag": "08 de junho",
-            "date": "08 jun 2026 • 19:00",
-            "location": "Juiz de Fora, MG",
-            "link": "",
-            "cta_label": "",
-            "sold_out": false
-          }
-        },
         "ev_3": {
           "type": "event",
           "settings": {
@@ -149,8 +121,6 @@
         }
       },
       "block_order": [
-        "ev_1",
-        "event_hBFJEh",
         "ev_3",
         "ev_4",
         "event_WWYzgT",
