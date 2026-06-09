@@ -622,6 +622,10 @@ body { padding-top: calc(var(--topbar-height, 0px) + var(--header-height, 64px))
   .hero-slider__arrow { width: 36px; height: 36px; }
   .hero-slider__arrow--prev { left: 8px; }
   .hero-slider__arrow--next { right: 8px; }
+
+  /* Banner com imagem mobile dedicada (ex.: 900x1100) — mostra a imagem inteira, sem cortar */
+  .hero-slide--has-mobile { min-height: 0; aspect-ratio: 9 / 11; }
+  .hero-slide--has-mobile .hero-slide__inner { min-height: 100%; }
 }
 
 /* ----------------------- CTA slider ----------------------- */

@@ -18,7 +18,7 @@
           {%- if block.settings.image == blank and has_video == false -%}{%- assign is_empty = true -%}{%- endif -%}
 
           <a href="{{ block.settings.button_url | default: '#' }}"
-             class="hero-slide{% if is_empty %} hero-slide--empty{% endif %}"
+             class="hero-slide{% if is_empty %} hero-slide--empty{% endif %}{% if block.settings.mobile_image != blank %} hero-slide--has-mobile{% endif %}"
              style="{% unless is_empty %}background-color: {{ block.settings.background_color }};{% endunless %} color: {{ block.settings.text_color }};"
              data-slide
              aria-roledescription="slide"
