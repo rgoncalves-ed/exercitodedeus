@@ -118,7 +118,7 @@
         "slide_3"
       ],
       "settings": {
-        "welcome_text": "<p><strong>Bem-vindo ao Exército de Deus</strong>, o movimento das <strong>famílias consagradas do Brasil</strong>, liderado por <strong>Ana Clara Rocha e Italo Poeta.</strong></p>",
+        "welcome_text": "<p><strong>Bem-vindo ao Exército de Deus</strong>, o movimento das famílias<strong> consagradas </strong>do Brasil, liderado por </p><p><strong>Ana Clara Rocha e Italo Poeta.</strong></p>",
         "autoplay_seconds": 6
       }
     },
