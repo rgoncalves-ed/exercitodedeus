@@ -15,7 +15,9 @@
         "eyebrow": "Agenda",
         "title": "Eventos",
         "subtitle": "Em breve mais informações",
-        "autoplay_seconds": 6
+        "autoplay_seconds": 6,
+        "support_link": "",
+        "support_label": "Precisa de ajuda? Fale com o suporte"
       }
     },
     "destaques": {
@@ -24,98 +26,112 @@
         "ev_3": {
           "type": "event",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
             "bg_color": "#5e2a6e",
             "title": "São João com Ana Clara & Italo Poeta",
             "tag": "09 de junho",
             "date": "09 jun 2026 • 11:00",
             "location": "Campina Grande, PB",
+            "address": "",
             "link": "",
             "cta_label": "Ver detalhes",
+            "is_free": true,
             "sold_out": false
           }
         },
         "ev_4": {
           "type": "event",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
             "bg_color": "#0f1b2d",
             "title": "São João com Ana Clara & Italo Poeta",
             "tag": "20 de junho",
             "date": "20 jun 2026 • 09:00",
             "location": "Teresina, PI",
+            "address": "",
             "link": "",
             "cta_label": "Ver detalhes",
+            "is_free": true,
             "sold_out": false
           }
         },
         "event_WWYzgT": {
           "type": "event",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
             "bg_color": "#0f1b2d",
             "title": "São João com Ana Clara & Italo Poeta",
             "tag": "21 de junho",
             "date": "21 jun 2026 • 09:00",
             "location": "Sebastião Leal, PI",
+            "address": "",
             "link": "",
             "cta_label": "Ver detalhes",
+            "is_free": true,
             "sold_out": false
           }
         },
         "event_wJJKB4": {
           "type": "event",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
             "bg_color": "#0f1b2d",
             "title": "São João com Ana Clara & Italo Poeta",
             "tag": "23 de junho",
             "date": "23 jun 2026 • 09:00",
             "location": "Ipupiara, BA",
+            "address": "",
             "link": "",
             "cta_label": "Ver detalhes",
+            "is_free": true,
             "sold_out": false
           }
         },
         "event_CA9QXj": {
           "type": "event",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
             "bg_color": "#0f1b2d",
             "title": "São João com Ana Clara & Italo Poeta",
             "tag": "24 de junho",
             "date": "24 jun 2026 • 09:00",
             "location": "Uruburetama, CE",
+            "address": "",
             "link": "",
             "cta_label": "Ver detalhes",
+            "is_free": true,
             "sold_out": false
           }
         },
         "event_XWYNVj": {
           "type": "event",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
             "bg_color": "#0f1b2d",
             "title": "São João com Ana Clara & Italo Poeta",
             "tag": "28 de junho",
             "date": "28 jun 2026 • 09:00",
             "location": "São Pedro, RN",
+            "address": "",
             "link": "",
             "cta_label": "Ver detalhes",
+            "is_free": true,
             "sold_out": false
           }
         },
         "event_G3Hmdq": {
           "type": "event",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-08_at_14.55.49.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
             "bg_color": "#0f1b2d",
             "title": "São João com Ana Clara & Italo Poeta",
             "tag": "29 de junho",
             "date": "29 jun 2026 • 09:00",
             "location": "Parambu, CE",
+            "address": "",
             "link": "",
             "cta_label": "Ver detalhes",
+            "is_free": true,
             "sold_out": false
           }
         }
