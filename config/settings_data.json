@@ -30,9 +30,9 @@
     "social_facebook": "",
     "social_youtube": "https://www.youtube.com/@anaclararocha_exercitodedeus",
     "social_tiktok": "https://www.tiktok.com/@anaclararochaoficial",
-    "social_kwai": "https://www.kwai.com/@AnaClaraRochaOficial",
-    "social_spotify": "https://open.spotify.com/intl-pt/artist/37JrtidQ30OsH52NSFPW6p?si=1h-tbag_QFit2s5xsUOc1A",
     "social_whatsapp": "554399935389",
+    "social_spotify": "https://open.spotify.com/intl-pt/artist/37JrtidQ30OsH52NSFPW6p?si=1h-tbag_QFit2s5xsUOc1A",
+    "social_kwai": "https://www.kwai.com/@AnaClaraRochaOficial",
     "social_wa_channel": "https://whatsapp.com/channel/0029VaSo6zB0wak0Dk8MUO3F",
     "ita_instagram": "https://www.instagram.com/italopoeta/",
     "ita_facebook": "",
@@ -41,14 +41,23 @@
     "ita_kwai": "",
     "ita_spotify": "https://open.spotify.com/intl-pt/artist/71AbzsMMAod08OaUvW0pce?si=0cIcyFh8Sp6WXIY7S3_FVA",
     "ita_whatsapp": "",
+    "favicon": "shopify://shop_images/favicon.png",
+    "share_image": "shopify://shop_images/logo-loja_b0c46012-0a2b-468d-a26b-d7dfca481367.png",
+    "logo": "shopify://shop_images/favicon.png",
     "cookie_banner_enabled": true,
     "free_shipping_enabled": true,
     "free_shipping_threshold": 199,
     "payment_show_pix": true,
     "payment_show_boleto": true,
     "sections": {
-      "header": { "type": "header", "settings": {} },
-      "footer": { "type": "footer", "settings": {} }
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
     },
     "content_for_index": []
   },
