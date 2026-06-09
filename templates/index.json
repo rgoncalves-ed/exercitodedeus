@@ -164,6 +164,14 @@
             "image": "shopify://shop_images/Mockup_01.png",
             "collection": "livros"
           }
+        },
+        "category_hPyDNr": {
+          "type": "category",
+          "settings": {
+            "title": "Espiritualidade",
+            "image": "shopify://shop_images/6d0ea9784a41e01fb631868a51e46c69_65360d9d-c9a5-436d-816e-a6b7d8133369.jpg",
+            "collection": "espiritualidade"
+          }
         }
       },
       "block_order": [
@@ -171,7 +179,8 @@
         "category_JpDpby",
         "cat_familia",
         "cat_infantil",
-        "cat_devocionais"
+        "cat_devocionais",
+        "category_hPyDNr"
       ],
       "settings": {
         "eyebrow": "Navegue por",
