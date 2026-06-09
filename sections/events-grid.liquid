@@ -25,25 +25,45 @@
   {%- if section.blocks.size > 0 -%}
     <div class="events-grid__list" style="--cols: {{ section.settings.columns | default: 4 }};">
       {%- for block in section.blocks -%}
-        {%- assign link = block.settings.link | default: '#' -%}
+        {%- assign has_link = false -%}
+        {%- if block.settings.link != blank -%}
+          {%- assign has_link = true -%}
+        {%- endif -%}
+        {%- assign show_free = false -%}
+        {%- if has_link == false and block.settings.is_free and block.settings.sold_out == false -%}
+          {%- assign show_free = true -%}
+        {%- endif -%}
+
+        {%- capture event_media -%}
+          {%- if block.settings.image -%}
+            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          {%- else -%}
+            <div class="event-card__media-empty" style="background: {{ block.settings.bg_color | default: '#1F2D4A' }};">
+              <span aria-hidden="true">{{ block.settings.title | slice: 0, 1 | upcase }}</span>
+            </div>
+          {%- endif -%}
+          {%- if block.settings.tag != blank -%}
+            <span class="event-card__tag">{{ block.settings.tag }}</span>
+          {%- endif -%}
+          {%- if block.settings.sold_out -%}
+            <span class="event-card__sold">Esgotado</span>
+          {%- elsif show_free -%}
+            <span class="event-card__free-badge">Gratuito</span>
+          {%- endif -%}
+        {%- endcapture -%}
+
         <article class="event-card{% if block.settings.sold_out %} event-card--sold-out{% endif %}" {{ block.shopify_attributes }}>
-          <a class="event-card__media" href="{{ link }}" aria-label="{{ block.settings.title | escape }}">
-            {%- if block.settings.image -%}
-              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-            {%- else -%}
-              <div class="event-card__media-empty" style="background: {{ block.settings.bg_color | default: '#1F2D4A' }};">
-                <span aria-hidden="true">{{ block.settings.title | slice: 0, 1 | upcase }}</span>
-              </div>
-            {%- endif -%}
-            {%- if block.settings.tag != blank -%}
-              <span class="event-card__tag">{{ block.settings.tag }}</span>
-            {%- endif -%}
-            {%- if block.settings.sold_out -%}
-              <span class="event-card__sold">Esgotado</span>
-            {%- endif -%}
-          </a>
+          {%- if has_link -%}
+            <a class="event-card__media" href="{{ block.settings.link }}" aria-label="{{ block.settings.title | escape }}">{{ event_media }}</a>
+          {%- else -%}
+            <div class="event-card__media">{{ event_media }}</div>
+          {%- endif -%}
           <div class="event-card__body">
-            <a class="event-card__title" href="{{ link }}">{{ block.settings.title }}</a>
+            {%- if has_link -%}
+              <a class="event-card__title" href="{{ block.settings.link }}">{{ block.settings.title }}</a>
+            {%- else -%}
+              <span class="event-card__title event-card__title--static">{{ block.settings.title }}</span>
+            {%- endif -%}
             <ul class="event-card__meta" role="list">
               {%- if block.settings.date != blank -%}
                 <li>
@@ -57,8 +77,16 @@
                   <span>{{ block.settings.location }}</span>
                 </li>
               {%- endif -%}
+              {%- if block.settings.address != blank -%}
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V8l6-4 6 4v13"/><path d="M10 21v-5h4v5"/></svg>
+                  <span>{{ block.settings.address }}</span>
+                </li>
+              {%- endif -%}
             </ul>
-            <a class="event-card__cta" href="{{ link }}">{{ block.settings.cta_label | default: 'Ver detalhes' }} →</a>
+            {%- if has_link -%}
+              <a class="event-card__cta" href="{{ block.settings.link }}">{{ block.settings.cta_label | default: 'Comprar agora' }} →</a>
+            {%- endif -%}
           </div>
         </article>
       {%- endfor -%}
@@ -88,9 +116,11 @@
         { "type": "text", "id": "title", "label": "Título do evento" },
         { "type": "text", "id": "tag", "label": "Etiqueta sobre a imagem (opcional)" },
         { "type": "text", "id": "date", "label": "Data e hora", "info": "Ex: 30 mai 2026 • 10:00" },
-        { "type": "text", "id": "location", "label": "Local", "info": "Ex: Fortaleza, CE" },
-        { "type": "url", "id": "link", "label": "Link da página do evento" },
-        { "type": "text", "id": "cta_label", "label": "Texto do botão", "default": "Ver detalhes" },
+        { "type": "text", "id": "location", "label": "Cidade / UF", "info": "Ex: Fortaleza, CE" },
+        { "type": "text", "id": "address", "label": "Endereço do evento (opcional)", "info": "Ex: Praça do Ferreira, Centro" },
+        { "type": "url", "id": "link", "label": "Link de compra do ingresso", "info": "Se preenchido, mostra o botão 'Comprar agora'. Se vazio, o evento aparece como GRATUITO." },
+        { "type": "text", "id": "cta_label", "label": "Texto do botão de compra", "default": "Comprar agora" },
+        { "type": "checkbox", "id": "is_free", "label": "Mostrar etiqueta GRATUITO", "info": "Exibe 'GRATUITO' quando não há link de compra.", "default": true },
         { "type": "checkbox", "id": "sold_out", "label": "Esgotado", "default": false }
       ]
     }

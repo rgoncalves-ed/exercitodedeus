@@ -298,44 +298,45 @@ body { padding-top: calc(var(--topbar-height, 0px) + var(--header-height, 64px))
 .site-header__nav-item { position: relative; }
 .site-header__nav-item.is-open .site-header__nav-caret { transform: rotate(180deg); }
 
-/* Dropdown panel (glass) */
+/* Mega menu — painel branco de largura total abaixo do header */
+.site-header__nav-item--has-children { position: static; }
 .site-header__dropdown {
   position: absolute;
-  top: calc(100% + 6px);
+  top: 100%;
   left: 0;
-  min-width: 240px;
-  background: rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: saturate(180%) blur(24px);
-  backdrop-filter: saturate(180%) blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.22), 0 8px 20px -8px rgba(0, 0, 0, 0.08);
-  border-radius: 14px;
-  padding: 8px;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 26px 40px -26px rgba(0, 0, 0, 0.28);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-6px);
+  transform: translateY(-8px);
   transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
   z-index: 60;
 }
-.site-header__dropdown ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+.site-header__dropdown ul {
+  list-style: none;
+  margin-inline: auto;
+  max-width: var(--page-width);
+  padding: 26px 24px 30px;
+  columns: 5 190px;
+  column-gap: 28px;
+}
+.site-header__dropdown li { break-inside: avoid; }
 .site-header__dropdown a {
   display: block;
-  padding: 9px 14px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  padding: 9px 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--color-text);
-  border-radius: 9px;
-  white-space: nowrap;
+  border-radius: 8px;
   transition: background 0.15s ease, color 0.15s ease;
 }
-.site-header__dropdown a:hover { background: rgba(0, 0, 0, 0.05); color: var(--color-accent); }
+.site-header__dropdown a:hover { background: rgba(0, 0, 0, 0.04); color: var(--color-accent); }
 .site-header__nav-item.is-open .site-header__dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-}
-@supports not ((-webkit-backdrop-filter: blur(24px)) or (backdrop-filter: blur(24px))) {
-  .site-header__dropdown { background: #fff; border-color: var(--color-border); }
 }
 
 .site-header__search {
@@ -5353,6 +5354,33 @@ a.bundle__item-title:hover { color: var(--color-accent); }
   .escola-banner__bg--mobile { display: block; }
 }
 
+/* Botão de suporte (WhatsApp) abaixo do banner */
+.escola-hero__support { display: flex; justify-content: center; margin-top: 22px; }
+.escola-hero__support-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 28px;
+  border-radius: 999px;
+  background: #25D366;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(37,211,102,0.32);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.escola-hero__support-btn:hover {
+  background: #1ebe5b;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(37,211,102,0.40);
+}
+.escola-hero__support-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+@media (max-width: 749px) {
+  .escola-hero__support-btn { width: 100%; max-width: 360px; justify-content: center; }
+}
+
 /* Trilhas */
 .escola-trilhas { padding-block: 56px; }
 .escola-trilhas__header { text-align: center; max-width: 720px; margin: 0 auto 40px; }
@@ -5729,6 +5757,19 @@ a.bundle__item-title:hover { color: var(--color-accent); }
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+.event-card__free-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #1FA85A;
+  color: #fff;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
 .event-card__body {
   padding: 18px 20px 22px;
@@ -5747,6 +5788,8 @@ a.bundle__item-title:hover { color: var(--color-accent); }
   text-decoration: none;
 }
 .event-card__title:hover { text-decoration: underline; }
+.event-card__title--static { cursor: default; }
+.event-card__title--static:hover { text-decoration: none; }
 
 .event-card__meta {
   list-style: none;

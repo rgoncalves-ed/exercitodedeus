@@ -21,6 +21,9 @@
                 </a>
                 <div class="site-header__dropdown" role="menu" data-dropdown-panel>
                   <ul role="none">
+                    <li role="none">
+                      <a href="{{ link.url }}" role="menuitem" class="site-header__dropdown-all">Ver tudo</a>
+                    </li>
                     {%- for sublink in link.links -%}
                       <li role="none">
                         <a href="{{ sublink.url }}" role="menuitem">{{ sublink.title }}</a>

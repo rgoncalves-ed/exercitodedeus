@@ -70,6 +70,21 @@
         </div>
       </div>
     {%- endif -%}
+
+    {%- liquid
+      assign support_link = section.settings.support_link
+      if support_link == blank and template.suffix == 'escola'
+        assign support_link = 'https://api.whatsapp.com/message/4PNZ2KUSBI5UN1?autoload=1&app_absent=0&utm_source=ig'
+      endif
+    -%}
+    {%- if support_link != blank -%}
+      <div class="escola-hero__support">
+        <a class="escola-hero__support-btn" href="{{ support_link }}" target="_blank" rel="noopener nofollow">
+          {%- render 'icon-whatsapp' -%}
+          <span>{{ section.settings.support_label | default: 'Precisa de ajuda? Fale com o suporte' }}</span>
+        </a>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -80,7 +95,11 @@
     { "type": "text", "id": "eyebrow", "label": "Texto pequeno superior", "default": "Escola Exército de Deus" },
     { "type": "text", "id": "title", "label": "Título principal", "default": "Escola Exército de Deus" },
     { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Formando Famílias Consagradas: Onde as virtudes, os valores e a fé católica se tornam sua maior força." },
-    { "type": "range", "id": "autoplay_seconds", "label": "Tempo entre slides (segundos)", "min": 3, "max": 12, "step": 1, "default": 6 }
+    { "type": "range", "id": "autoplay_seconds", "label": "Tempo entre slides (segundos)", "min": 3, "max": 12, "step": 1, "default": 6 },
+    { "type": "header", "content": "Botão de suporte (WhatsApp)" },
+    { "type": "paragraph", "content": "Na página da Escola o botão já aparece com o WhatsApp de suporte. Preencha o link abaixo para personalizar ou para mostrar em outras páginas." },
+    { "type": "url", "id": "support_link", "label": "Link do botão de suporte" },
+    { "type": "text", "id": "support_label", "label": "Texto do botão de suporte", "default": "Precisa de ajuda? Fale com o suporte" }
   ],
   "blocks": [
     {
