@@ -1092,6 +1092,25 @@ body { padding-top: calc(var(--topbar-height, 0px) + var(--header-height, 64px))
   text-underline-offset: 3px;
 }
 
+/* Coluna de texto extra — conteudo longo dividido em 2 colunas */
+.site-footer__col--text { grid-column: span 2; }
+.site-footer__text { columns: 2 200px; column-gap: 36px; }
+.site-footer__text :first-child { margin-top: 0; }
+.site-footer__text ul { list-style: none; padding: 0; margin: 0; }
+.site-footer__text li { break-inside: avoid; margin-bottom: 12px; }
+.site-footer__text p { break-inside: avoid; }
+.site-footer__text a {
+  font-size: 0.92rem;
+  color: #1A1A1A;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+.site-footer__text a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* Formas de pagamento dentro da coluna de Atendimento (parte de baixo) */
 .site-footer__payments-inline {
   margin-top: 26px;
