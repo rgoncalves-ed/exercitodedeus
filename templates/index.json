@@ -12,6 +12,22 @@
     "hero": {
       "type": "hero-banner",
       "blocks": {
+        "slide_AQ9Fiz": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/desktop-canal-whatsapp-v2-1920x700.png",
+            "mobile_image": "shopify://shop_images/mobile-canal-whatsapp-v2-900x1100.png",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "button_url": "https://api.whatsapp.com/message/4PNZ2KUSBI5UN1?autoload=1&app_absent=0&utm_source=ig",
+            "background_color": "#ffffff",
+            "text_color": "#ffffff",
+            "button_bg": "#1f4e78",
+            "button_color": "#ffffff"
+          }
+        },
         "slide_ztBb6L": {
           "type": "slide",
           "settings": {
@@ -78,6 +94,7 @@
         }
       },
       "block_order": [
+        "slide_AQ9Fiz",
         "slide_ztBb6L",
         "slide_1",
         "slide_2",
