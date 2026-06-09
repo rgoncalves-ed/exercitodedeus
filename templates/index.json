@@ -12,6 +12,22 @@
     "hero": {
       "type": "hero-banner",
       "blocks": {
+        "slide_MWTAj6": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/01-desktop-classico-1920x700.png",
+            "mobile_image": "shopify://shop_images/05-mobile-holofote-900x1100.png",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "button_url": "https://www.youtube.com/playlist?list=PLHzRDMOIGgY6_g8ZKOElOSENAO2WZeE4N",
+            "background_color": "#2a4234",
+            "text_color": "#ffffff",
+            "button_bg": "#1f4e78",
+            "button_color": "#ffffff"
+          }
+        },
         "slide_AQ9Fiz": {
           "type": "slide",
           "settings": {
@@ -21,7 +37,7 @@
             "heading": "",
             "text": "",
             "button_label": "",
-            "button_url": "https://api.whatsapp.com/message/4PNZ2KUSBI5UN1?autoload=1&app_absent=0&utm_source=ig",
+            "button_url": "https://www.whatsapp.com/channel/0029VaSo6zB0wak0Dk8MUO3F?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGncEXgUYQJCouR1n-KGvOUo3FaLfQrxD2ILm-BOhMek4JL4fTA6znSYvYLmbc_aem_YWdncwBGalXO4bhlLcnh4xWNyN7s&brid=YWdncwEQ15BeixTf6_K2lrVs1C6E",
             "background_color": "#ffffff",
             "text_color": "#ffffff",
             "button_bg": "#1f4e78",
@@ -94,6 +110,7 @@
         }
       },
       "block_order": [
+        "slide_MWTAj6",
         "slide_AQ9Fiz",
         "slide_ztBb6L",
         "slide_1",
@@ -101,7 +118,7 @@
         "slide_3"
       ],
       "settings": {
-        "welcome_text": "<p><strong>Bem-vindo à Loja do Exército de Deus,</strong> a loja das Famílias Consagradas.</p>",
+        "welcome_text": "<p><strong>Bem-vindo ao Exército de Deus</strong>, o movimento das <strong>famílias consagradas do Brasil</strong>, liderado por <strong>Ana Clara Rocha e Italo Poeta.</strong></p>",
         "autoplay_seconds": 6
       }
     },
