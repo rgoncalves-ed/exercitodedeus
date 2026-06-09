@@ -1379,8 +1379,11 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
 }
 
 @media (max-width: 480px) {
-  .site-footer__top { grid-template-columns: 1fr; }
-  .payment-grid { grid-template-columns: repeat(4, minmax(50px, 1fr)); max-width: 280px; }
+  /* Footer em 2 colunas no celular (em vez de 1 coluna comprida) */
+  .site-footer__top { grid-template-columns: repeat(2, 1fr); column-gap: 18px; row-gap: 26px; }
+  .site-footer__contact-row { display: flex; gap: 8px; font-size: 0.8rem; }
+  .site-footer__contact-row span { min-width: 0; overflow-wrap: anywhere; }
+  .site-footer__payments-inline .payment-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 100%; gap: 6px; }
 }
 
 /* ----------------------- Product page ----------------------- */
