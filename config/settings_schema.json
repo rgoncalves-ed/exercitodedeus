@@ -361,6 +361,25 @@
     ]
   },
   {
+    "name": "Calculadora de frete",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Os prazos retornados pela transportadora são só o tempo de trânsito. Informe aqui o mesmo \"Tempo de processamento\" configurado em Configurações → Frete e entrega → Datas de entrega estimadas, para que ele seja somado ao prazo exibido na calculadora de CEP. A Shopify não expõe essa configuração ao tema, por isso é preciso repetir o valor aqui."
+      },
+      {
+        "type": "range",
+        "id": "shipping_processing_days",
+        "label": "Tempo de processamento (dias úteis)",
+        "min": 0,
+        "max": 15,
+        "step": 1,
+        "default": 2,
+        "unit": "d"
+      }
+    ]
+  },
+  {
     "name": "Pagamentos extras",
     "settings": [
       {

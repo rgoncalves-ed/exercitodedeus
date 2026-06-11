@@ -734,6 +734,7 @@
       itemsEl.innerHTML = '<p class="cart-drawer__empty">Seu carrinho está vazio.</p>';
       if (footerEl) footerEl.setAttribute('hidden', '');
       if (shippingEl) shippingEl.setAttribute('hidden', '');
+      refreshCartShipping(cart);
       return;
     }
 
@@ -767,6 +768,69 @@
     if (totalEl) totalEl.textContent = moneyBR(cart.total_price);
 
     updateFreeShippingBar(cart.total_price);
+    refreshCartShipping(cart);
+  }
+
+  // O frete exibido (linha "Frete" e resultado da calculadora) é calculado
+  // para um estado específico do carrinho. Quando o conteúdo muda — ex.:
+  // remover o produto que garantia frete grátis — recalcula com o CEP salvo;
+  // sem CEP, esconde o valor velho em vez de deixá-lo errado na tela.
+  var cartShipFingerprint = null;
+  var cartShipTimer = null;
+  var cartShipReqSeq = 0;
+
+  function refreshCartShipping(cart) {
+    var fp = cart.items.map(function (i) { return i.key + 'x' + i.quantity; }).join('|');
+    if (fp === cartShipFingerprint) return;
+    var firstRun = cartShipFingerprint === null;
+    cartShipFingerprint = fp;
+    cartShipReqSeq++; // invalida qualquer resposta ainda em voo
+
+    if (firstRun) return; // primeiro render: nada calculado ainda, nada a invalidar
+
+    var rows = document.querySelectorAll('[data-shipping-row]');
+    var results = document.querySelectorAll('[data-shipping-calculator] [data-cep-result]');
+    function hideStale() {
+      rows.forEach(function (row) { row.hidden = true; });
+      results.forEach(function (el) { el.innerHTML = ''; });
+    }
+
+    var zip = loadCEP();
+    if (cart.item_count === 0 || zip.replace(/\D/g, '').length !== 8) {
+      hideStale();
+      return;
+    }
+
+    var hadResult = false;
+    results.forEach(function (el) {
+      if (el.innerHTML.trim() !== '') {
+        hadResult = true;
+        el.innerHTML = '<p class="ship-calc__loading">Recalculando frete…</p>';
+      }
+    });
+    var hadRow = Array.prototype.some.call(rows, function (row) { return !row.hidden; });
+    if (!hadResult && !hadRow) return; // nenhum frete na tela, nada a atualizar
+
+    clearTimeout(cartShipTimer);
+    var seq = cartShipReqSeq;
+    cartShipTimer = setTimeout(function () {
+      shopifyShippingRates(zip)
+        .then(function (rates) {
+          if (seq !== cartShipReqSeq) return; // cart mudou de novo no meio
+          if (!rates || rates.length === 0) {
+            hideStale();
+            return;
+          }
+          results.forEach(function (el) {
+            if (el.innerHTML.trim() !== '') el.innerHTML = renderShippingRates(rates);
+          });
+          updateCheapestShipping(rates);
+        })
+        .catch(function () {
+          if (seq !== cartShipReqSeq) return;
+          hideStale();
+        });
+    }, 600);
   }
 
   // Atualiza a barra de "Frete grátis acima de R$ X" reagindo ao cart
@@ -1059,10 +1123,21 @@
       });
   }
 
+  // Dias úteis de preparo do pedido (settings.shipping_processing_days),
+  // somados ao tempo de trânsito da transportadora — a API de shipping
+  // rates do cart devolve só o trânsito, sem o processamento do admin.
+  function shippingProcessingDays() {
+    var el = document.querySelector('[data-processing-days]');
+    var n = el ? parseInt(el.dataset.processingDays, 10) : 0;
+    return (isNaN(n) || n < 0) ? 0 : n;
+  }
+
   function renderShippingRates(rates) {
     if (!rates || rates.length === 0) {
       return '<p class="ship-calc__error">Nenhuma opção de frete encontrada para este CEP. Confira se o endereço está correto.</p>';
     }
+    var extra = shippingProcessingDays();
+    var hasEstimate = false;
     var rows = rates.map(function (r) {
       var name = escapeHtml(r.presentment_name || r.name || r.code || 'Frete');
       var price = parseFloat(r.price);
@@ -1070,12 +1145,19 @@
       var when = '';
       if (r.delivery_days != null && r.delivery_days !== '') {
         var d = Math.ceil(parseFloat(r.delivery_days));
-        if (!isNaN(d) && d > 0) when = 'até ' + d + (d === 1 ? ' dia útil' : ' dias úteis');
+        if (!isNaN(d) && d > 0) {
+          d += extra;
+          when = 'até ' + d + (d === 1 ? ' dia útil' : ' dias úteis');
+          hasEstimate = true;
+        }
       } else if (r.delivery_range && r.delivery_range.length) {
         var lo = Math.ceil(parseFloat(r.delivery_range[0]));
         var hi = Math.ceil(parseFloat(r.delivery_range[1] != null ? r.delivery_range[1] : r.delivery_range[0]));
         if (!isNaN(lo) && !isNaN(hi)) {
+          lo += extra;
+          hi += extra;
           when = (lo === hi ? lo : lo + '–' + hi) + (hi === 1 ? ' dia útil' : ' dias úteis');
+          hasEstimate = true;
         }
       } else if (r.delivery_date) {
         when = 'entrega ' + r.delivery_date;
@@ -1087,7 +1169,10 @@
         + '  <span class="ship-calc__option-price">' + priceFmt + '</span>'
         + '</li>';
     }).join('');
-    return '<ul class="ship-calc__options">' + rows + '</ul>';
+    var note = (extra > 0 && hasEstimate)
+      ? '<p class="ship-calc__note">Prazo já inclui ' + extra + (extra === 1 ? ' dia útil' : ' dias úteis') + ' de preparo do pedido.</p>'
+      : '';
+    return '<ul class="ship-calc__options">' + rows + '</ul>' + note;
   }
 
   /* ==========================================================

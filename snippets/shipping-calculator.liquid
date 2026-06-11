@@ -8,6 +8,7 @@
 
 <div class="ship-calc"
      data-shipping-calculator
+     data-processing-days="{{ settings.shipping_processing_days | default: 0 }}"
      {% if variant_id %}data-variant-id="{{ variant_id }}"{% endif %}
      {% if quantity %}data-quantity="{{ quantity }}"{% endif %}>
   {%- unless hide_heading -%}

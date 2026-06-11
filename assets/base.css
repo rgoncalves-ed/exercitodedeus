@@ -2985,6 +2985,11 @@ body.cart-open .cart-drawer { transform: translateX(0); }
   color: var(--color-text);
   white-space: nowrap;
 }
+.ship-calc__note {
+  margin: 6px 0 0;
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+}
 
 @media (max-width: 480px) {
   .ship-calc__row { flex-direction: column; align-items: stretch; }
