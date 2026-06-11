@@ -12,6 +12,22 @@
     "hero": {
       "type": "hero-banner",
       "blocks": {
+        "slide_e7PQey": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/DESKTOP_3.png",
+            "mobile_image": "shopify://shop_images/MOBILE_1.png",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "button_url": "shopify://collections/tercos-exercito-de-deus",
+            "background_color": "#2a4234",
+            "text_color": "#ffffff",
+            "button_bg": "#1f4e78",
+            "button_color": "#ffffff"
+          }
+        },
         "slide_MWTAj6": {
           "type": "slide",
           "settings": {
@@ -110,6 +126,7 @@
         }
       },
       "block_order": [
+        "slide_e7PQey",
         "slide_MWTAj6",
         "slide_AQ9Fiz",
         "slide_ztBb6L",
