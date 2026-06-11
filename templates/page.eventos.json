@@ -23,22 +23,6 @@
     "destaques": {
       "type": "events-grid",
       "blocks": {
-        "ev_3": {
-          "type": "event",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
-            "bg_color": "#5e2a6e",
-            "title": "Campina Grande, PB",
-            "tag": "09 de junho",
-            "date": "09 jun 2026",
-            "location": "",
-            "address": "São João com Ana Clara & Italo Poeta",
-            "link": "",
-            "cta_label": "Ver detalhes",
-            "is_free": true,
-            "sold_out": false
-          }
-        },
         "ev_4": {
           "type": "event",
           "settings": {
@@ -137,7 +121,6 @@
         }
       },
       "block_order": [
-        "ev_3",
         "ev_4",
         "event_WWYzgT",
         "event_wJJKB4",
