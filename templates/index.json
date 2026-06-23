@@ -92,22 +92,6 @@
             "button_color": "#1f2d4a"
           }
         },
-        "slide_2": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Aniversario-do-Exercito-de-Deus_2.png",
-            "mobile_image": "shopify://shop_images/ChatGPT_Image_9_de_jun._de_2026_16_52_15.png",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
-            "button_label": "",
-            "button_url": "https://grupoexercitodedeus.com.br/collections/combos",
-            "background_color": "#7a2f2f",
-            "text_color": "#ffffff",
-            "button_bg": "#ffffff",
-            "button_color": "#7a2f2f"
-          }
-        },
         "slide_3": {
           "type": "slide",
           "settings": {
@@ -131,7 +115,6 @@
         "slide_AQ9Fiz",
         "slide_ztBb6L",
         "slide_1",
-        "slide_2",
         "slide_3"
       ],
       "settings": {
@@ -288,9 +271,9 @@
         "cta_slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/UNIFORMES.png",
+            "image": "shopify://shop_images/DESKTOP_3.png",
             "eyebrow": "",
-            "heading": "Vista-se com o Exército de Deus",
+            "heading": "Chegou o mês do Poderosíssimo Sangue de Jesus",
             "text": "",
             "button_label": "Garantir",
             "button_url": "shopify://collections/uniforme-exercito-de-deus",
