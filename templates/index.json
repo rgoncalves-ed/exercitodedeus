@@ -94,6 +94,7 @@
         },
         "slide_3": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/DESKTOP.png",
             "mobile_image": "shopify://shop_images/ChatGPT_Image_9_de_jun._de_2026_16_50_35.png",
@@ -277,7 +278,7 @@
             "text": "",
             "button_label": "Garantir",
             "button_url": "shopify://collections/tercos-exercito-de-deus",
-            "background_color": "#DB979F",
+            "background_color": "#db979f",
             "text_color": "#1a1a1a",
             "button_bg": "#1f4e78",
             "button_color": "#ffffff"
