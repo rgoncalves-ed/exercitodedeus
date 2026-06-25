@@ -23,38 +23,6 @@
     "destaques": {
       "type": "events-grid",
       "blocks": {
-        "event_wJJKB4": {
-          "type": "event",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
-            "bg_color": "#0f1b2d",
-            "title": "Ipupiara, BA",
-            "tag": "23 de junho",
-            "date": "23 jun 2026",
-            "location": "",
-            "address": "São João com Ana Clara & Italo Poeta",
-            "link": "",
-            "cta_label": "Ver detalhes",
-            "is_free": true,
-            "sold_out": false
-          }
-        },
-        "event_CA9QXj": {
-          "type": "event",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-09_at_17.31.51.jpg",
-            "bg_color": "#0f1b2d",
-            "title": "Uruburetama, CE",
-            "tag": "24 de junho",
-            "date": "24 jun 2026",
-            "location": "São João com Ana Clara & Italo Poeta",
-            "address": "",
-            "link": "",
-            "cta_label": "Ver detalhes",
-            "is_free": true,
-            "sold_out": false
-          }
-        },
         "event_XWYNVj": {
           "type": "event",
           "settings": {
@@ -89,8 +57,6 @@
         }
       },
       "block_order": [
-        "event_wJJKB4",
-        "event_CA9QXj",
         "event_XWYNVj",
         "event_G3Hmdq"
       ],
