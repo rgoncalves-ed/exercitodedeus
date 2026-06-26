@@ -86,16 +86,26 @@
                 <a href="{{ product.url }}" class="shorts-item__product-title">{{ product.title }}</a>
                 <span class="shorts-item__product-price">{{ product.price | money }}</span>
               </div>
-              <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="shorts-item__buy-form">
-                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                <button type="submit"
-                        class="shorts-item__buy"
-                        aria-label="Adicionar {{ product.title | escape }} ao carrinho"
-                        {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+              {%- if product.has_only_default_variant -%}
+                <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="shorts-item__buy-form">
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                  <button type="submit"
+                          class="shorts-item__buy"
+                          aria-label="Adicionar {{ product.title | escape }} ao carrinho"
+                          {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+                    {% render 'icon-bag' %}
+                    <span class="shorts-item__buy-plus" aria-hidden="true">+</span>
+                  </button>
+                </form>
+              {%- else -%}
+                {%- comment -%} Com variações: vai pra página escolher o tamanho {%- endcomment -%}
+                <a href="{{ product.url }}"
+                   class="shorts-item__buy"
+                   aria-label="Escolher opções de {{ product.title | escape }}">
                   {% render 'icon-bag' %}
                   <span class="shorts-item__buy-plus" aria-hidden="true">+</span>
-                </button>
-              </form>
+                </a>
+              {%- endif -%}
             </div>
           {%- elsif block.settings.label != blank -%}
             <div class="shorts-item__product shorts-item__product--placeholder">

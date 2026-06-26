@@ -93,13 +93,20 @@
     </div>
 
     <div class="product-card__buttons">
-      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button type="submit" class="product-card__buy"
-                {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-          {% if product.selected_or_first_available_variant.available %}Comprar{% else %}Esgotado{% endif %}
-        </button>
-      </form>
+      {%- if product.has_only_default_variant -%}
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="{{ first_variant.id }}">
+          <button type="submit" class="product-card__buy"
+                  {% unless first_variant.available %}disabled{% endunless %}>
+            {% if first_variant.available %}Comprar{% else %}Esgotado{% endif %}
+          </button>
+        </form>
+      {%- else -%}
+        {%- comment -%} Produto com variações: leva pra página escolher o tamanho {%- endcomment -%}
+        <a href="{{ product.url }}" class="product-card__buy product-card__buy--link{% unless product.available %} is-disabled{% endunless %}">
+          {% if product.available %}Escolher{% else %}Esgotado{% endif %}
+        </a>
+      {%- endif -%}
       <a href="{{ product.url }}" class="product-card__details">
         Ver detalhes
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>

@@ -476,6 +476,95 @@
   }());
 
   /* ==========================================================
+     PDP: seleção de variante — sincroniza o id da variante
+     escolhida no input hidden do form (corrige o bug de
+     "escolhe M mas vai PP pro checkout")
+     ========================================================== */
+
+  (function () {
+    var section = document.querySelector('[data-product-section]');
+    if (!section) return;
+
+    var dataEl = section.querySelector('[data-product-variants]');
+    if (!dataEl) return;
+
+    var variants;
+    try { variants = JSON.parse(dataEl.textContent); } catch (e) { return; }
+    if (!Array.isArray(variants) || variants.length === 0) return;
+
+    var selects = Array.prototype.slice.call(
+      section.querySelectorAll('[data-product-form] select[name^="options["]')
+    );
+    if (selects.length === 0) return;
+
+    // Inclui o form principal e o sticky-cart (ambos com name="id"),
+    // que ficam dentro da mesma section .product-page.
+    var root = section.closest('.product-page') || document;
+    var idInputs = Array.prototype.slice.call(root.querySelectorAll('[data-product-form] input[name="id"]'));
+    var buyBtns = Array.prototype.slice.call(root.querySelectorAll('[data-product-form] button[type="submit"]'));
+    var priceFinal = section.querySelector('.price__final');
+    var priceCompare = section.querySelector('.price__compare');
+
+    // Atualiza só o último nó de texto do botão, preservando o ícone SVG.
+    function setBtnLabel(btn, label) {
+      var node = btn.lastChild;
+      while (node && node.nodeType !== 3) node = node.previousSibling;
+      if (node) node.nodeValue = ' ' + label;
+      else btn.appendChild(document.createTextNode(' ' + label));
+    }
+
+    function currentOptions() {
+      return selects.map(function (s) { return s.value; });
+    }
+
+    function findVariant(opts) {
+      for (var i = 0; i < variants.length; i++) {
+        var v = variants[i];
+        var match = true;
+        for (var j = 0; j < opts.length; j++) {
+          if (v.options[j] !== opts[j]) { match = false; break; }
+        }
+        if (match) return v;
+      }
+      return null;
+    }
+
+    function update() {
+      var variant = findVariant(currentOptions());
+      if (!variant) return;
+
+      idInputs.forEach(function (input) { input.value = variant.id; });
+
+      // Preço
+      if (priceFinal) priceFinal.textContent = moneyBR(variant.price);
+      if (priceCompare) {
+        if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+          priceCompare.textContent = moneyBR(variant.compare_at_price);
+          priceCompare.style.display = '';
+        } else {
+          priceCompare.style.display = 'none';
+        }
+      }
+
+      // Disponibilidade
+      buyBtns.forEach(function (btn) {
+        btn.disabled = !variant.available;
+        if (!variant.available) {
+          if (!btn.dataset.buyLabel) {
+            btn.dataset.buyLabel = (btn.textContent || 'Comprar').trim();
+          }
+          setBtnLabel(btn, 'Indisponível');
+        } else if (btn.dataset.buyLabel) {
+          setBtnLabel(btn, btn.dataset.buyLabel);
+        }
+      });
+    }
+
+    selects.forEach(function (s) { s.addEventListener('change', update); });
+    update();
+  }());
+
+  /* ==========================================================
      Wishlist (localStorage) — funciona logado ou não
      ========================================================== */
 
@@ -591,10 +680,12 @@
           + '    <a href="' + url + '" class="product-card__title-link"><h3 class="product-card__title">' + escapeHtml(p.title) + '</h3></a>'
           + '    <div class="product-card__price">' + compare + '<span class="price__final">' + moneyBR(p.price) + '</span></div>'
           + '    <div class="product-card__buttons">'
-          + '      <form action="/cart/add" method="post" enctype="multipart/form-data">'
-          + '        <input type="hidden" name="id" value="' + p.variants[0].id + '">'
-          + '        <button type="submit" class="product-card__buy">Comprar</button>'
-          + '      </form>'
+          + (p.variants && p.variants.length > 1
+              ? '      <a href="' + url + '" class="product-card__buy product-card__buy--link">Escolher</a>'
+              : '      <form action="/cart/add" method="post" enctype="multipart/form-data">'
+                + '        <input type="hidden" name="id" value="' + p.variants[0].id + '">'
+                + '        <button type="submit" class="product-card__buy">Comprar</button>'
+                + '      </form>')
           + '      <a href="' + url + '" class="product-card__details">Ver detalhes</a>'
           + '    </div>'
           + '  </div>'

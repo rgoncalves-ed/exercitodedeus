@@ -930,6 +930,10 @@ body { padding-top: calc(var(--topbar-height, 0px) + var(--header-height, 64px))
 }
 .product-card__buy:hover { background: #333; }
 .product-card__buy:disabled { background: #c4c4c4; cursor: not-allowed; }
+/* Variante <a> (produto com variacoes -> leva pra PDP escolher o tamanho) */
+.product-card__buy--link { display: inline-block; text-align: center; text-decoration: none; line-height: 1.2; }
+.product-card__buy--link:hover { color: #fff; }
+.product-card__buy--link.is-disabled { background: #c4c4c4; pointer-events: none; }
 
 .product-card__details {
   display: inline-flex;

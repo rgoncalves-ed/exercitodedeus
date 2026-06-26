@@ -139,6 +139,11 @@
       {%- if variant.available -%}
         <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="product__form" data-product-form>
           {%- unless product.has_only_default_variant -%}
+            <script type="application/json" data-product-variants>
+              {{ product.variants | json }}
+            </script>
+          {%- endunless -%}
+          {%- unless product.has_only_default_variant -%}
             {%- for option in product.options_with_values -%}
               <div class="product-option">
                 <label for="Option-{{ forloop.index }}"><strong>{{ option.name }}</strong></label>
@@ -276,12 +281,17 @@
     </div>
   {%- endif -%}
 
-  {%- comment -%} Compre junto (bundle) {%- endcomment -%}
-  {%- if section.settings.show_bundle and product.collections.size > 0 -%}
+  {%- comment -%}
+    Compre junto (bundle) — só para produtos de variante única.
+    O bundle adiciona ao carrinho a 1ª variante de cada item (sem seletor de
+    tamanho), então só aparece quando o produto da página E os sugeridos não
+    têm variações; assim nunca cai o tamanho errado.
+  {%- endcomment -%}
+  {%- if section.settings.show_bundle and product.has_only_default_variant and product.collections.size > 0 -%}
     {%- assign bundle_collection = product.collections.first -%}
     {%- assign bundle_others = '' | split: ',' -%}
     {%- for p in bundle_collection.products -%}
-      {%- if p.id != product.id and p.available and bundle_others.size < 2 -%}
+      {%- if p.id != product.id and p.available and p.has_only_default_variant and bundle_others.size < 2 -%}
         {%- assign bundle_others = bundle_others | concat: '' | push: p -%}
       {%- endif -%}
     {%- endfor -%}
