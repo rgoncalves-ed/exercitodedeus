@@ -145,13 +145,23 @@
           {%- endunless -%}
           {%- unless product.has_only_default_variant -%}
             {%- for option in product.options_with_values -%}
-              <div class="product-option">
-                <label for="Option-{{ forloop.index }}"><strong>{{ option.name }}</strong></label>
-                <select id="Option-{{ forloop.index }}" name="options[{{ option.name }}]">
+              <div class="product-option" data-option-index="{{ forloop.index0 }}">
+                <div class="product-option__head">
+                  <span class="product-option__name">{{ option.name }}</span>
+                  <span class="product-option__selected" data-option-selected>{{ option.selected_value }}</span>
+                </div>
+                <div class="product-option__values" role="radiogroup" aria-label="{{ option.name | escape }}">
                   {%- for value in option.values -%}
-                    <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                    {%- assign opt_id = 'opt-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
+                    <input type="radio"
+                           class="product-option__input"
+                           id="{{ opt_id }}"
+                           name="options[{{ option.name }}]"
+                           value="{{ value | escape }}"
+                           {% if option.selected_value == value %}checked{% endif %}>
+                    <label class="product-option__pill" for="{{ opt_id }}">{{ value }}</label>
                   {%- endfor -%}
-                </select>
+                </div>
               </div>
             {%- endfor -%}
           {%- endunless -%}

@@ -492,10 +492,18 @@
     try { variants = JSON.parse(dataEl.textContent); } catch (e) { return; }
     if (!Array.isArray(variants) || variants.length === 0) return;
 
-    var selects = Array.prototype.slice.call(
-      section.querySelectorAll('[data-product-form] select[name^="options["]')
+    // Grupos de opção (pills com radio; aceita <select> como fallback)
+    var optionGroups = Array.prototype.slice.call(
+      section.querySelectorAll('[data-product-form] [data-option-index]')
     );
-    if (selects.length === 0) return;
+    if (optionGroups.length === 0) return;
+
+    function valueOf(group) {
+      var checked = group.querySelector('input[type="radio"]:checked');
+      if (checked) return checked.value;
+      var sel = group.querySelector('select');
+      return sel ? sel.value : null;
+    }
 
     // Inclui o form principal e o sticky-cart (ambos com name="id"),
     // que ficam dentro da mesma section .product-page.
@@ -514,7 +522,7 @@
     }
 
     function currentOptions() {
-      return selects.map(function (s) { return s.value; });
+      return optionGroups.map(valueOf);
     }
 
     function findVariant(opts) {
@@ -530,6 +538,12 @@
     }
 
     function update() {
+      // Reflete o valor escolhido ao lado do nome da opção (ex: "Tamanho: M")
+      optionGroups.forEach(function (group) {
+        var label = group.querySelector('[data-option-selected]');
+        if (label) label.textContent = valueOf(group) || '';
+      });
+
       var variant = findVariant(currentOptions());
       if (!variant) return;
 
@@ -560,7 +574,11 @@
       });
     }
 
-    selects.forEach(function (s) { s.addEventListener('change', update); });
+    section.addEventListener('change', function (e) {
+      if (e.target.matches('input[type="radio"][name^="options["], select[name^="options["]')) {
+        update();
+      }
+    });
     update();
   }());
 
