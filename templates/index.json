@@ -170,7 +170,6 @@
           "type": "category",
           "settings": {
             "title": "Espiritualidade",
-            "image": "shopify://shop_images/6d0ea9784a41e01fb631868a51e46c69_65360d9d-c9a5-436d-816e-a6b7d8133369.jpg",
             "collection": "espiritualidade"
           }
         }
@@ -287,13 +286,13 @@
         "cta_slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/BANNER_01.png",
-            "eyebrow": "Oferta da semana",
-            "heading": "Mês do Preciosíssimo Sangue de Jesus",
+            "image": "shopify://shop_images/72a4413e03b139f26d49d75907e8c930.png",
+            "eyebrow": "",
+            "heading": "Se aprofunde na sua relação com Deus",
             "text": "",
             "button_label": "Conferir",
-            "button_url": "shopify://products/combo-coracao-sagrado-de-jesus-897384277",
-            "background_color": "#cac7b4",
+            "button_url": "shopify://products/combo-recomecar-897767765",
+            "background_color": "#7F2420",
             "text_color": "#1a1a1a",
             "button_bg": "#7a2f2f",
             "button_color": "#ffffff"
