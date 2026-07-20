@@ -292,9 +292,9 @@
             "text": "",
             "button_label": "Garantir",
             "button_url": "shopify://products/combo-recomecar-897767765",
-            "background_color": "#7f2420",
-            "text_color": "#FFFFFF",
-            "button_bg": "#2F517A",
+            "background_color": "#B2332D",
+            "text_color": "#ffffff",
+            "button_bg": "#2f517a",
             "button_color": "#ffffff"
           }
         }
