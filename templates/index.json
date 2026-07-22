@@ -12,16 +12,16 @@
     "hero": {
       "type": "hero-banner",
       "blocks": {
-        "slide_e7PQey": {
+        "slide_RJ9JLp": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/DESKTOP_3.png",
-            "mobile_image": "shopify://shop_images/MOBILE_1.png",
+            "image": "shopify://shop_images/Quaresma_2026.jpg",
+            "mobile_image": "shopify://shop_images/Mobile_1_1.jpg",
             "eyebrow": "",
             "heading": "",
             "text": "",
             "button_label": "",
-            "button_url": "shopify://collections/tercos-exercito-de-deus",
+            "button_url": "",
             "background_color": "#2a4234",
             "text_color": "#ffffff",
             "button_bg": "#1f4e78",
@@ -55,22 +55,6 @@
             "button_label": "",
             "button_url": "https://www.whatsapp.com/channel/0029VaSo6zB0wak0Dk8MUO3F?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGncEXgUYQJCouR1n-KGvOUo3FaLfQrxD2ILm-BOhMek4JL4fTA6znSYvYLmbc_aem_YWdncwBGalXO4bhlLcnh4xWNyN7s&brid=YWdncwEQ15BeixTf6_K2lrVs1C6E",
             "background_color": "#ffffff",
-            "text_color": "#ffffff",
-            "button_bg": "#1f4e78",
-            "button_color": "#ffffff"
-          }
-        },
-        "slide_ztBb6L": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/BANNER_01.png",
-            "mobile_image": "shopify://shop_images/BANNER_02.png",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
-            "button_label": "",
-            "button_url": "https://grupoexercitodedeus.com.br/collections/tercos-exercito-de-deus",
-            "background_color": "#2a4234",
             "text_color": "#ffffff",
             "button_bg": "#1f4e78",
             "button_color": "#ffffff"
@@ -111,10 +95,9 @@
         }
       },
       "block_order": [
-        "slide_e7PQey",
+        "slide_RJ9JLp",
         "slide_MWTAj6",
         "slide_AQ9Fiz",
-        "slide_ztBb6L",
         "slide_1",
         "slide_3"
       ],
@@ -292,7 +275,7 @@
             "text": "",
             "button_label": "Garantir",
             "button_url": "shopify://products/combo-recomecar-897767765",
-            "background_color": "#B2332D",
+            "background_color": "#b2332d",
             "text_color": "#ffffff",
             "button_bg": "#2f517a",
             "button_color": "#ffffff"
