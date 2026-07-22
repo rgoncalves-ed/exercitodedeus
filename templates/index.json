@@ -268,6 +268,34 @@
     "cta": {
       "type": "cta-banner",
       "blocks": {
+        "slide_jd9eA8": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "",
+            "heading": "Um combo para explicar a fé católica às crianças",
+            "text": "",
+            "button_label": "Garantir",
+            "button_url": "",
+            "background_color": "#dce9f1",
+            "text_color": "#1a1a1a",
+            "button_bg": "#1f4e78",
+            "button_color": "#ffffff"
+          }
+        },
+        "slide_LFYUQC": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "",
+            "heading": "Um combo para explicar a fé católica às crianças",
+            "text": "",
+            "button_label": "Garantir",
+            "button_url": "",
+            "background_color": "#dce9f1",
+            "text_color": "#1a1a1a",
+            "button_bg": "#1f4e78",
+            "button_color": "#ffffff"
+          }
+        },
         "cta_slide_1": {
           "type": "slide",
           "settings": {
@@ -300,6 +328,8 @@
         }
       },
       "block_order": [
+        "slide_jd9eA8",
+        "slide_LFYUQC",
         "cta_slide_1",
         "cta_slide_2"
       ],
