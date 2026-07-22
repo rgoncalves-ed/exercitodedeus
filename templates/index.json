@@ -12,11 +12,11 @@
     "hero": {
       "type": "hero-banner",
       "blocks": {
-        "slide_haLfgg": {
+        "slide_RJ9JLp": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Desktop_2_1.jpg",
-            "mobile_image": "shopify://shop_images/Mobile_2.jpg",
+            "image": "shopify://shop_images/Quaresma_2026.jpg",
+            "mobile_image": "shopify://shop_images/Mobile_1_1.jpg",
             "eyebrow": "",
             "heading": "",
             "text": "",
@@ -28,16 +28,16 @@
             "button_color": "#ffffff"
           }
         },
-        "slide_RJ9JLp": {
+        "slide_haLfgg": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Quaresma_2026.jpg",
-            "mobile_image": "shopify://shop_images/Mobile_1_1.jpg",
+            "image": "shopify://shop_images/Desktop_2_1.jpg",
+            "mobile_image": "shopify://shop_images/Mobile_2.jpg",
             "eyebrow": "",
             "heading": "",
             "text": "",
             "button_label": "",
-            "button_url": "",
+            "button_url": "https://grupoexercitodedeus.com.br/collections/quaresma-de-sao-miguel",
             "background_color": "#2a4234",
             "text_color": "#ffffff",
             "button_bg": "#1f4e78",
@@ -111,8 +111,8 @@
         }
       },
       "block_order": [
-        "slide_haLfgg",
         "slide_RJ9JLp",
+        "slide_haLfgg",
         "slide_MWTAj6",
         "slide_AQ9Fiz",
         "slide_1",
