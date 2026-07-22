@@ -24,7 +24,7 @@
             "button_url": "shopify://products/combo-familia-consagrada",
             "background_color": "#2a4234",
             "text_color": "#ffffff",
-            "button_bg": "#781F1F",
+            "button_bg": "#781f1f",
             "button_color": "#ffffff"
           }
         },
@@ -314,15 +314,15 @@
         "cta_slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/72a4413e03b139f26d49d75907e8c930.png",
+            "image": "shopify://shop_images/Mobile_1_7c000087-589b-4efe-8848-e05b688f05a3.jpg",
             "eyebrow": "",
-            "heading": "Recomeçar nunca é tarde quando Deus conduz o caminho.",
+            "heading": "Fortaleça Sua Fé. Vença as Batalhas Espirituais.",
             "text": "",
             "button_label": "Garantir",
-            "button_url": "shopify://products/combo-recomecar-897767765",
-            "background_color": "#b2332d",
+            "button_url": "https://grupoexercitodedeus.com.br/products/combo-familia-consagrada",
+            "background_color": "#CE6C3B",
             "text_color": "#ffffff",
-            "button_bg": "#2f517a",
+            "button_bg": "#B56767",
             "button_color": "#ffffff"
           }
         }
