@@ -1,9 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-collection",
       "settings": {}
+    },
+    "featured_collection_VWt8Um": {
+      "type": "featured-collection",
+      "name": "Coleção em destaque",
+      "settings": {
+        "heading": "Novidades da loja",
+        "collection": "quaresma-de-sao-miguel",
+        "layout": "carousel",
+        "desktop_cols": 4,
+        "products_to_show": 8,
+        "show_view_all": true
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "featured_collection_VWt8Um"
+  ]
 }
