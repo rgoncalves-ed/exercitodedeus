@@ -277,9 +277,9 @@
             "text": "",
             "button_label": "Garantir",
             "button_url": "https://grupoexercitodedeus.com.br/products/combo-familia-consagrada",
-            "background_color": "#CE6C3B",
+            "background_color": "#ce6c3b",
             "text_color": "#ffffff",
-            "button_bg": "#B72B2B",
+            "button_bg": "#b72b2b",
             "button_color": "#ffffff"
           }
         },
@@ -294,7 +294,7 @@
             "button_url": "",
             "background_color": "#dce9f1",
             "text_color": "#1a1a1a",
-            "button_bg": "#FF5500",
+            "button_bg": "#ff5500",
             "button_color": "#ffffff"
           }
         },
@@ -306,10 +306,10 @@
             "heading": "Arme-se para a Vitória Espiritual Reúna as armas da fé: oração, jejum, confissão e a poderosa intercessão de São Miguel Arcanjo em um único combo exclusivo.",
             "text": "",
             "button_label": "Garantir",
-            "button_url": "shopify://collections/tercos-exercito-de-deus",
-            "background_color": "#FF5500",
+            "button_url": "",
+            "background_color": "#ff5500",
             "text_color": "#1a1a1a",
-            "button_bg": "#25A7B3",
+            "button_bg": "#25a7b3",
             "button_color": "#ffffff"
           }
         },
@@ -322,7 +322,7 @@
             "text": "",
             "button_label": "Garantir",
             "button_url": "",
-            "background_color": "#FD8700",
+            "background_color": "#fd8700",
             "text_color": "#1a1a1a",
             "button_bg": "#1f4e78",
             "button_color": "#ffffff"
