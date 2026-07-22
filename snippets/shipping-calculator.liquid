@@ -4,13 +4,18 @@
     - variant_id (opcional): se passado, na PDP adiciona o produto ao
       cart temporariamente pra calcular, depois remove.
     - quantity (opcional, default 1)
+    - preorder_note (opcional): nota fixa de pré-venda exibida junto dos
+      prazos (usada na PDP). Nas calculadoras de carrinho o JS liga/desliga
+      a nota conforme o conteúdo do cart (data-preorder-cart-msg).
 {%- endcomment -%}
 
 <div class="ship-calc"
      data-shipping-calculator
      data-processing-days="{{ settings.shipping_processing_days | default: 0 }}"
      {% if variant_id %}data-variant-id="{{ variant_id }}"{% endif %}
-     {% if quantity %}data-quantity="{{ quantity }}"{% endif %}>
+     {% if quantity %}data-quantity="{{ quantity }}"{% endif %}
+     {% if preorder_note != blank %}data-preorder-note="{{ preorder_note | escape }}"{% endif %}
+     data-preorder-cart-msg="Seu carrinho tem item(ns) de pré-venda: o prazo acima conta a partir da data de envio da pré-venda.">
   {%- unless hide_heading -%}
     <label class="ship-calc__label" for="ship-cep-{{ unique | default: variant_id | default: 'cart' }}">
       {{ heading | default: 'Calcular frete e prazo' }}

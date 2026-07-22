@@ -12,6 +12,21 @@
   <div class="cart-drawer__body">
     {% render 'free-shipping-bar' %}
 
+    {%- liquid
+      assign preorder_tag = settings.preorder_tag | default: 'pre-venda'
+      assign drawer_has_preorder = false
+      for item in cart.items
+        if item.properties['Pré-venda'] != blank or item.product.tags contains preorder_tag
+          assign drawer_has_preorder = true
+          break
+        endif
+      endfor
+    -%}
+    <div class="cart-preorder-notice cart-preorder-notice--drawer" data-preorder-cart-note {% unless drawer_has_preorder %}hidden{% endunless %}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span><strong>Item de pré-venda no carrinho:</strong> o pedido é enviado completo na data prevista da pré-venda.</span>
+    </div>
+
     <div class="cart-drawer__items" data-cart-items>
       {% if cart.item_count > 0 %}
         {% for item in cart.items %}
@@ -21,6 +36,10 @@
             {% endif %}
             <div class="cart-item__info">
               <h4 class="cart-item__title">{{ item.product.title }}</h4>
+              {%- assign pv_note = item.properties['Pré-venda'] -%}
+              {%- if pv_note != blank -%}
+                <p class="cart-item__preorder">Pré-venda — {{ pv_note }}</p>
+              {%- endif -%}
               <div class="cart-item__price">{{ item.final_price | money }}</div>
               <div class="cart-item__qty">
                 <button type="button" data-line-decrease aria-label="Diminuir">−</button>

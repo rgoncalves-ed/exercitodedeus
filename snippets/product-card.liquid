@@ -27,6 +27,19 @@
     assign is_soldout = true
   endunless
 
+  assign preorder_tag = settings.preorder_tag | default: 'pre-venda'
+  assign is_preorder = false
+  if product.tags contains preorder_tag and is_soldout == false
+    assign is_preorder = true
+    assign preorder_eta = product.metafields.custom.previsao_envio.value | strip
+    if preorder_eta != blank
+      assign preorder_prop = 'Envio ' | append: preorder_eta
+    else
+      assign preorder_note_default = settings.preorder_note_default | default: 'assim que o lote estiver disponível'
+      assign preorder_prop = 'Envio ' | append: preorder_note_default
+    endif
+  endif
+
   assign first_variant = product.selected_or_first_available_variant
   assign low_threshold = settings.low_stock_threshold | default: 5
   assign low_stock_qty = 0
@@ -50,6 +63,9 @@
     {%- if is_soldout -%}
       <span class="product-badge product-badge--soldout">Esgotado</span>
     {%- else -%}
+      {%- if is_preorder -%}
+        <span class="product-badge product-badge--preorder">Pré-venda</span>
+      {%- endif -%}
       {%- if on_sale -%}
         <span class="product-badge product-badge--sale">−{{ discount_pct }}%</span>
       {%- endif -%}
@@ -96,9 +112,12 @@
       {%- if product.has_only_default_variant -%}
         <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
           <input type="hidden" name="id" value="{{ first_variant.id }}">
+          {%- if is_preorder -%}
+            <input type="hidden" name="properties[Pré-venda]" value="{{ preorder_prop | escape }}">
+          {%- endif -%}
           <button type="submit" class="product-card__buy"
                   {% unless first_variant.available %}disabled{% endunless %}>
-            {% if first_variant.available %}Comprar{% else %}Esgotado{% endif %}
+            {% if first_variant.available %}{% if is_preorder %}Reservar{% else %}Comprar{% endif %}{% else %}Esgotado{% endif %}
           </button>
         </form>
       {%- else -%}

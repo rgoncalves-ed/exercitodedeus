@@ -380,6 +380,29 @@
     ]
   },
   {
+    "name": "Pré-venda",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Para colocar um produto em pré-venda: (1) adicione a tag abaixo no produto; (2) em Estoque, marque \"Continuar vendendo quando estiver sem estoque\" — ou informe a quantidade do lote para limitar as reservas; (3) preencha o metafield \"Previsão de envio\" do produto (Configurações → Dados personalizados → Produtos → definição custom.previsao_envio, tipo texto de linha única) com a data ou prazo, ex.: \"a partir de 15/08/2026\". O cliente paga normalmente no checkout e o aviso de envio aparece no produto, carrinho, checkout e e-mail do pedido."
+      },
+      {
+        "type": "text",
+        "id": "preorder_tag",
+        "label": "Tag que ativa a pré-venda",
+        "default": "pre-venda",
+        "info": "Adicione essa tag no produto para ativar selo, avisos e a etiqueta de pré-venda no pedido."
+      },
+      {
+        "type": "text",
+        "id": "preorder_note_default",
+        "label": "Texto quando o produto não tem previsão de envio",
+        "default": "assim que o lote estiver disponível",
+        "info": "Usado no lugar da data quando o metafield \"Previsão de envio\" estiver vazio. Complete a frase \"Envio ...\"."
+      }
+    ]
+  },
+  {
     "name": "Pagamentos extras",
     "settings": [
       {

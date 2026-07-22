@@ -2995,6 +2995,17 @@ body.cart-open .cart-drawer { transform: translateX(0); }
   color: var(--color-text-muted);
 }
 
+.ship-calc__preorder-note {
+  margin: 8px 0 0;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #F5F3FF;
+  border: 1px solid #DDD6FE;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: #5B21B6;
+}
+
 @media (max-width: 480px) {
   .ship-calc__row { flex-direction: column; align-items: stretch; }
   .ship-calc__option { grid-template-columns: 1fr auto; }
@@ -3134,6 +3145,9 @@ body.cart-open .cart-drawer { transform: translateX(0); }
 }
 .product-badge--soldout {
   background: #6B7280;
+}
+.product-badge--preorder {
+  background: #7C3AED;
 }
 .product-badge--last {
   background: #DC2626;
@@ -3295,6 +3309,73 @@ body.cart-open .cart-drawer { transform: translateX(0); }
 }
 .product__stock--low svg { color: #EA580C; }
 .product__stock strong { font-weight: 700; }
+
+/* Pré-venda */
+.product__preorder {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #F5F3FF;
+  border: 1px solid #DDD6FE;
+  color: #5B21B6;
+  font-size: 0.9rem;
+  margin: 0 0 20px;
+}
+.product__preorder svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: #7C3AED;
+  margin-top: 2px;
+}
+.product__preorder-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.product__preorder-text > strong {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+.product__preorder-text span { line-height: 1.45; }
+
+.cart-preorder-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: #F5F3FF;
+  border: 1px solid #DDD6FE;
+  color: #5B21B6;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  margin: 0 0 16px;
+}
+.cart-preorder-notice[hidden] { display: none; }
+.cart-preorder-notice svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #7C3AED;
+  margin-top: 2px;
+}
+.cart-preorder-notice--drawer {
+  font-size: 0.8rem;
+  margin: 0 0 12px;
+}
+
+.cart-row__preorder,
+.cart-item__preorder {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #6D28D9;
+}
 
 /* ==========================================================
    Página /promocoes

@@ -112,7 +112,29 @@
         if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny' and variant.inventory_quantity > 0 and variant.inventory_quantity <= low_threshold
           assign show_low_stock = true
         endif
+
+        assign preorder_tag = settings.preorder_tag | default: 'pre-venda'
+        assign is_preorder = false
+        if product.tags contains preorder_tag and product.available
+          assign is_preorder = true
+          assign preorder_eta = product.metafields.custom.previsao_envio.value | strip
+          if preorder_eta == blank
+            assign preorder_eta = settings.preorder_note_default | default: 'assim que o lote estiver disponível'
+          endif
+          assign preorder_prop = 'Envio ' | append: preorder_eta
+          assign preorder_ship_note = 'Produto em pré-venda: o prazo do frete conta a partir do despacho, que ocorre ' | append: preorder_eta | append: '.'
+        endif
       -%}
+
+      {%- if is_preorder -%}
+        <div class="product__preorder" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <div class="product__preorder-text">
+            <strong>Produto em pré-venda</strong>
+            <span>Você paga agora e garante o seu. Envio <strong>{{ preorder_eta }}</strong>. O prazo do frete conta a partir da data de envio.</span>
+          </div>
+        </div>
+      {%- endif -%}
 
       {%- if show_low_stock -%}
         <div class="product__stock product__stock--low" role="status">
@@ -178,11 +200,14 @@
           </div>
 
           <input type="hidden" name="id" value="{{ variant.id }}">
+          {%- if is_preorder -%}
+            <input type="hidden" name="properties[Pré-venda]" value="{{ preorder_prop | escape }}">
+          {%- endif -%}
 
           <div class="product__cta-row">
             <button type="submit" class="btn btn--primary btn--pill product__buy">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-              Comprar
+              {% if is_preorder %}Reservar pré-venda{% else %}Comprar{% endif %}
             </button>
             <button type="button"
                     class="product__wishlist-btn"
@@ -220,7 +245,8 @@
 
       {% render 'shipping-calculator',
          variant_id: product.selected_or_first_available_variant.id,
-         unique: product.id %}
+         unique: product.id,
+         preorder_note: preorder_ship_note %}
 
       {%- comment -%} Compartilhar com botões diretos {%- endcomment -%}
       {%- assign product_url = shop.url | append: product.url -%}
@@ -258,9 +284,12 @@
         <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form class="product__sticky-cart-form">
           <input type="hidden" name="id" value="{{ variant.id }}">
           <input type="hidden" name="quantity" value="1">
+          {%- if is_preorder -%}
+            <input type="hidden" name="properties[Pré-venda]" value="{{ preorder_prop | escape }}">
+          {%- endif -%}
           <button type="submit" class="btn btn--primary btn--pill">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-            Comprar
+            {% if is_preorder %}Reservar{% else %}Comprar{% endif %}
           </button>
         </form>
       </div>
@@ -297,13 +326,16 @@
     tamanho), então só aparece quando o produto da página E os sugeridos não
     têm variações; assim nunca cai o tamanho errado.
   {%- endcomment -%}
-  {%- if section.settings.show_bundle and product.has_only_default_variant and product.collections.size > 0 -%}
+  {%- comment -%} Pré-venda fica fora do bundle: o form do bundle adiciona via JS sem a etiqueta "Pré-venda", e misturar itens de envio imediato com pré-venda atrasaria o pedido todo. {%- endcomment -%}
+  {%- if section.settings.show_bundle and product.has_only_default_variant and product.collections.size > 0 and is_preorder != true -%}
     {%- assign bundle_collection = product.collections.first -%}
     {%- assign bundle_others = '' | split: ',' -%}
     {%- for p in bundle_collection.products -%}
-      {%- if p.id != product.id and p.available and p.has_only_default_variant and bundle_others.size < 2 -%}
-        {%- assign bundle_others = bundle_others | concat: '' | push: p -%}
-      {%- endif -%}
+      {%- unless p.tags contains preorder_tag -%}
+        {%- if p.id != product.id and p.available and p.has_only_default_variant and bundle_others.size < 2 -%}
+          {%- assign bundle_others = bundle_others | concat: '' | push: p -%}
+        {%- endif -%}
+      {%- endunless -%}
     {%- endfor -%}
 
     {%- if bundle_others.size > 0 -%}

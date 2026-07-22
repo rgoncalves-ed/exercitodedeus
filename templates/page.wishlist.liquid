@@ -14,5 +14,5 @@
     <a href="{{ routes.root_url }}" class="btn btn--primary" style="margin-top: 12px;">Explorar produtos</a>
   </div>
 
-  <div class="product-grid product-grid--3" data-wishlist-list></div>
+  <div class="product-grid product-grid--3" data-wishlist-list data-preorder-tag="{{ settings.preorder_tag | default: 'pre-venda' }}"></div>
 </section>

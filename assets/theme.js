@@ -681,6 +681,7 @@
         if (empty) empty.removeAttribute('hidden');
         return;
       }
+      var preorderTag = container.dataset.preorderTag || 'pre-venda';
       container.innerHTML = valid.map(function (p) {
         var img = p.featured_image
           ? '<img src="' + p.featured_image + '&width=400" alt="' + escapeHtml(p.title) + '" loading="lazy">'
@@ -688,9 +689,27 @@
         var compare = (p.compare_at_price && p.compare_at_price > p.price)
           ? '<span class="price__compare">' + moneyBR(p.compare_at_price) + '</span>' : '';
         var url = '/products/' + p.handle;
+        // Pré-venda: manda pra PDP (onde está o aviso e a etiqueta no form)
+        // em vez de adicionar direto ao carrinho sem a marcação.
+        var isPreorder = p.available && p.tags && p.tags.indexOf(preorderTag) !== -1;
+        var buyHtml;
+        if (isPreorder) {
+          buyHtml = '      <a href="' + url + '" class="product-card__buy product-card__buy--link">Reservar</a>';
+        } else if (p.variants && p.variants.length > 1) {
+          buyHtml = '      <a href="' + url + '" class="product-card__buy product-card__buy--link">Escolher</a>';
+        } else {
+          buyHtml = '      <form action="/cart/add" method="post" enctype="multipart/form-data">'
+            + '        <input type="hidden" name="id" value="' + p.variants[0].id + '">'
+            + '        <button type="submit" class="product-card__buy">Comprar</button>'
+            + '      </form>';
+        }
+        var badge = isPreorder
+          ? '  <div class="product-card__badges"><span class="product-badge product-badge--preorder">Pré-venda</span></div>'
+          : '';
         return ''
           + '<div class="product-card" data-product-handle="' + p.handle + '">'
           + '  <a href="' + url + '" class="product-card__media product-card__media--portrait">' + img + '</a>'
+          + badge
           + '  <button type="button" class="product-card__wishlist is-active" data-wishlist-toggle="' + p.handle + '" aria-pressed="true" aria-label="Remover da lista de desejo">'
           + '    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
           + '  </button>'
@@ -698,12 +717,7 @@
           + '    <a href="' + url + '" class="product-card__title-link"><h3 class="product-card__title">' + escapeHtml(p.title) + '</h3></a>'
           + '    <div class="product-card__price">' + compare + '<span class="price__final">' + moneyBR(p.price) + '</span></div>'
           + '    <div class="product-card__buttons">'
-          + (p.variants && p.variants.length > 1
-              ? '      <a href="' + url + '" class="product-card__buy product-card__buy--link">Escolher</a>'
-              : '      <form action="/cart/add" method="post" enctype="multipart/form-data">'
-                + '        <input type="hidden" name="id" value="' + p.variants[0].id + '">'
-                + '        <button type="submit" class="product-card__buy">Comprar</button>'
-                + '      </form>')
+          + buyHtml
           + '      <a href="' + url + '" class="product-card__details">Ver detalhes</a>'
           + '    </div>'
           + '  </div>'
@@ -843,6 +857,7 @@
       itemsEl.innerHTML = '<p class="cart-drawer__empty">Seu carrinho está vazio.</p>';
       if (footerEl) footerEl.setAttribute('hidden', '');
       if (shippingEl) shippingEl.setAttribute('hidden', '');
+      updatePreorderNotices(cart);
       refreshCartShipping(cart);
       return;
     }
@@ -853,11 +868,15 @@
     itemsEl.innerHTML = cart.items.map(function (item, i) {
       var imgUrl = item.image ? item.image.replace(/(\.[a-z]+)\?/, '_120x$1?') : '';
       var img = imgUrl ? '<img src="' + imgUrl + '" alt="' + escapeHtml(item.product_title) + '" class="cart-item__image">' : '<div class="cart-item__image"></div>';
+      var preorder = (item.properties && item.properties['Pré-venda'])
+        ? '    <p class="cart-item__preorder">Pré-venda — ' + escapeHtml(item.properties['Pré-venda']) + '</p>'
+        : '';
       return ''
         + '<div class="cart-item" data-line-key="' + item.key + '" data-line-index="' + (i + 1) + '">'
         + img
         + '  <div class="cart-item__info">'
         + '    <h4 class="cart-item__title">' + escapeHtml(item.product_title) + '</h4>'
+        + preorder
         + '    <div class="cart-item__price">' + moneyBR(item.final_price) + '</div>'
         + '    <div class="cart-item__qty">'
         + '      <button type="button" data-line-decrease aria-label="Diminuir">−</button>'
@@ -877,7 +896,33 @@
     if (totalEl) totalEl.textContent = moneyBR(cart.total_price);
 
     updateFreeShippingBar(cart.total_price);
+    updatePreorderNotices(cart);
     refreshCartShipping(cart);
+  }
+
+  // Pré-venda: liga/desliga os avisos fixos e a nota das calculadoras de
+  // frete de contexto carrinho (a da PDP tem nota própria via Liquid).
+  var PREORDER_CART_MSG = 'Seu carrinho tem item(ns) de pré-venda: o prazo acima conta a partir da data de envio da pré-venda.';
+
+  function cartHasPreorder(cart) {
+    return cart.items.some(function (item) {
+      return item.properties && item.properties['Pré-venda'];
+    });
+  }
+
+  function updatePreorderNotices(cart) {
+    var has = cartHasPreorder(cart);
+    document.querySelectorAll('[data-preorder-cart-note]').forEach(function (el) {
+      el.hidden = !has;
+    });
+    document.querySelectorAll('[data-shipping-calculator], [data-cep-widget]').forEach(function (el) {
+      if (el.dataset.variantId) return; // PDP: nota do próprio produto, não mexe
+      if (has) {
+        el.dataset.preorderNote = el.dataset.preorderCartMsg || PREORDER_CART_MSG;
+      } else {
+        delete el.dataset.preorderNote;
+      }
+    });
   }
 
   // O frete exibido (linha "Frete" e resultado da calculadora) é calculado
@@ -931,7 +976,7 @@
             return;
           }
           results.forEach(function (el) {
-            if (el.innerHTML.trim() !== '') el.innerHTML = renderShippingRates(rates);
+            if (el.innerHTML.trim() !== '') el.innerHTML = renderShippingRates(rates, el.closest('[data-shipping-calculator]'));
           });
           updateCheapestShipping(rates);
         })
@@ -1241,7 +1286,7 @@
     return (isNaN(n) || n < 0) ? 0 : n;
   }
 
-  function renderShippingRates(rates) {
+  function renderShippingRates(rates, container) {
     if (!rates || rates.length === 0) {
       return '<p class="ship-calc__error">Nenhuma opção de frete encontrada para este CEP. Confira se o endereço está correto.</p>';
     }
@@ -1281,7 +1326,10 @@
     var note = (extra > 0 && hasEstimate)
       ? '<p class="ship-calc__note">Prazo já inclui ' + extra + (extra === 1 ? ' dia útil' : ' dias úteis') + ' de preparo do pedido.</p>'
       : '';
-    return '<ul class="ship-calc__options">' + rows + '</ul>' + note;
+    var preorderNote = (container && container.dataset && container.dataset.preorderNote)
+      ? '<p class="ship-calc__preorder-note">' + escapeHtml(container.dataset.preorderNote) + '</p>'
+      : '';
+    return '<ul class="ship-calc__options">' + rows + '</ul>' + preorderNote + note;
   }
 
   /* ==========================================================
@@ -1684,6 +1732,7 @@
 
       // Se tem itens no cart, calcula e mostra
       fetch('/cart.js').then(function (r) { return r.json(); }).then(function (cart) {
+        updatePreorderNotices(cart);
         if (cart.item_count === 0) {
           if (result) result.innerHTML = '<p class="ship-calc__loading" style="background:#E8F5E9;color:#1B5E20;border:0;padding:8px 10px;border-radius:6px;">CEP salvo! Adicione produtos pra ver o frete.</p>';
           setTimeout(close, 1800);
@@ -1693,7 +1742,7 @@
         submit.disabled = true;
         shopifyShippingRates(zip)
           .then(function (rates) {
-            if (result) result.innerHTML = renderShippingRates(rates);
+            if (result) result.innerHTML = renderShippingRates(rates, widget);
             updateCheapestShipping(rates);
           })
           .catch(function (err) {
@@ -1758,7 +1807,7 @@
 
       promise
         .then(function (rates) {
-          result.innerHTML = renderShippingRates(rates);
+          result.innerHTML = renderShippingRates(rates, container);
           saveCEP(zip);
           updateCheapestShipping(rates);
         })
