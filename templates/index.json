@@ -268,6 +268,21 @@
     "cta": {
       "type": "cta-banner",
       "blocks": {
+        "cta_slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Mobile_1_7c000087-589b-4efe-8848-e05b688f05a3.jpg",
+            "eyebrow": "",
+            "heading": "Combo Família Consagrada – Proteja o que Você Mais AmaUm kit completo para fortalecer a vida de oração da família, consagrar o lar e caminhar diariamente sob a proteção de Deus.",
+            "text": "",
+            "button_label": "Garantir",
+            "button_url": "https://grupoexercitodedeus.com.br/products/combo-familia-consagrada",
+            "background_color": "#CE6C3B",
+            "text_color": "#ffffff",
+            "button_bg": "#B72B2B",
+            "button_color": "#ffffff"
+          }
+        },
         "slide_jd9eA8": {
           "type": "slide",
           "settings": {
@@ -280,21 +295,6 @@
             "background_color": "#dce9f1",
             "text_color": "#1a1a1a",
             "button_bg": "#FF5500",
-            "button_color": "#ffffff"
-          }
-        },
-        "slide_LFYUQC": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_6ugnj6ugnj6ugnj6.png",
-            "eyebrow": "",
-            "heading": "Proteção para Cada Batalha Leve com você dois poderosos sinais de devoção a São Miguel Arcanjo e fortaleça sua caminhada de fé com oração, proteção e perseverança diária.",
-            "text": "",
-            "button_label": "Garantir",
-            "button_url": "",
-            "background_color": "#FD8700",
-            "text_color": "#1a1a1a",
-            "button_bg": "#1f4e78",
             "button_color": "#ffffff"
           }
         },
@@ -313,27 +313,27 @@
             "button_color": "#ffffff"
           }
         },
-        "cta_slide_2": {
+        "slide_LFYUQC": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Mobile_1_7c000087-589b-4efe-8848-e05b688f05a3.jpg",
+            "image": "shopify://shop_images/Gemini_Generated_Image_6ugnj6ugnj6ugnj6.png",
             "eyebrow": "",
-            "heading": "Combo Família Consagrada – Proteja o que Você Mais AmaUm kit completo para fortalecer a vida de oração da família, consagrar o lar e caminhar diariamente sob a proteção de Deus.",
+            "heading": "Proteção para Cada Batalha Leve com você dois poderosos sinais de devoção a São Miguel Arcanjo e fortaleça sua caminhada de fé com oração, proteção e perseverança diária.",
             "text": "",
             "button_label": "Garantir",
-            "button_url": "https://grupoexercitodedeus.com.br/products/combo-familia-consagrada",
-            "background_color": "#CE6C3B",
-            "text_color": "#ffffff",
-            "button_bg": "#B72B2B",
+            "button_url": "",
+            "background_color": "#FD8700",
+            "text_color": "#1a1a1a",
+            "button_bg": "#1f4e78",
             "button_color": "#ffffff"
           }
         }
       },
       "block_order": [
+        "cta_slide_2",
         "slide_jd9eA8",
-        "slide_LFYUQC",
         "cta_slide_1",
-        "cta_slide_2"
+        "slide_LFYUQC"
       ],
       "settings": {
         "autoplay_seconds": 7
