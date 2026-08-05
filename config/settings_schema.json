@@ -334,7 +334,7 @@
       {
         "type": "url",
         "id": "cookie_policy_url",
-        "label": "Link da política de privacidade (opcional, padrão: /policies/privacy-policy)"
+        "label": "Link da política de cookies (opcional, padrão: /pages/politicas-de-cookies)"
       }
     ]
   },

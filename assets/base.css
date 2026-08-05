@@ -1272,6 +1272,20 @@ a.site-footer__contact-row:hover { color: var(--color-accent); }
   letter-spacing: 0.01em;
   font-weight: 500;
 }
+/* Identificação da empresa em uma linha própria: o texto é longo (razão
+   social + CNPJ + endereço) e ficava ilegível colado no "todos os direitos". */
+.site-footer__entity,
+.site-footer__rights {
+  display: block;
+}
+.site-footer__entity {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+.site-footer__rights {
+  margin-top: 4px;
+}
 @media (max-width: 749px) {
   .site-footer__bottom { text-align: center; justify-content: center; }
 }

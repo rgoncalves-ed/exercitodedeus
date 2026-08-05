@@ -2,7 +2,6 @@
   assign address = section.settings.address
   assign email = section.settings.email
   assign phone = section.settings.phone
-  assign cnpj = section.settings.cnpj
   assign phone_clean = phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', ''
   assign wa_number = settings.social_whatsapp | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-'
 
@@ -126,6 +125,8 @@
             <li><a href="/pages/politica-de-troca">Política de troca</a></li>
             <li><a href="/pages/politica-de-privacidade">Política de privacidade</a></li>
             <li><a href="/pages/politica-de-entrega">Política de entrega</a></li>
+            <li><a href="/pages/politicas-de-cookies">Política de cookies</a></li>
+            <li><a href="/pages/termos-de-uso">Termos de uso</a></li>
           {%- endif -%}
         </ul>
       </div>
@@ -203,11 +204,19 @@
 
   <div class="site-footer__bottom-wrap">
     <div class="page-width site-footer__bottom">
+      {%- comment -%}
+        Identificação da empresa. Vem de um campo só (legal_entity) em vez de
+        nome + CNPJ separados, porque o texto é jurídico e precisa sair exatamente
+        como registrado, incluindo a grafia sem acento da razão social.
+      {%- endcomment -%}
       <div class="site-footer__legal">
-        © {{ 'now' | date: '%Y' }} {{ section.settings.legal_name | default: shop.name }}.
-        {%- if cnpj != blank %} CNPJ: {{ cnpj }}.{% endif %}
-        Todos os direitos reservados.
-        {%- if section.settings.tagline != blank %} {{ section.settings.tagline }}{% endif -%}
+        {%- if section.settings.legal_entity != blank -%}
+          <span class="site-footer__entity">{{ section.settings.legal_entity }}</span>
+        {%- endif -%}
+        <span class="site-footer__rights">
+          © {{ 'now' | date: '%Y' }} · Todos os direitos reservados
+          {%- if section.settings.tagline != blank %} · {{ section.settings.tagline }}{% endif -%}
+        </span>
       </div>
 
       {%- if section.settings.adora_logo != blank -%}
@@ -285,8 +294,7 @@
     { "type": "text", "id": "security_heading", "label": "Título", "default": "Segurança" },
 
     { "type": "header", "content": "Rodapé inferior" },
-    { "type": "text", "id": "legal_name", "label": "Razão social", "default": "Exército de Deus" },
-    { "type": "text", "id": "cnpj", "label": "CNPJ", "default": "46.386.798/0002-33" },
+    { "type": "textarea", "id": "legal_entity", "label": "Identificação da empresa", "default": "IMPACTO PRODUCOES E PROMOCOES DE EVENTOS LTDA · CNPJ 46.386.798/0002-33 · Rua Carmela Dutra, nº 190, 2º andar, Sala 02, Jardim Morumbi, Londrina/PR, CEP 86036-360", "info": "Razão social, CNPJ e endereço. Manter a grafia exata do registro, inclusive sem acento na razão social." },
     { "type": "text", "id": "tagline", "label": "Tagline (após \"Todos os direitos reservados\")" },
     { "type": "text", "id": "dev_credit", "label": "Crédito de desenvolvimento" },
 

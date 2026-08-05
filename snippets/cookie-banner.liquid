@@ -6,11 +6,13 @@
         <p>
           <strong>Sua privacidade é importante.</strong>
           {{ settings.cookie_banner_text | default: 'Usamos cookies pra melhorar sua experiência, lembrar suas preferências e analisar o uso do site. Ao continuar navegando, você concorda com nossa' }}
-          {%- if settings.cookie_policy_url != blank -%}
-            <a href="{{ settings.cookie_policy_url }}">política de privacidade</a>.
-          {%- else -%}
-            <a href="/policies/privacy-policy">política de privacidade</a>.
-          {%- endif -%}
+          {%- comment -%}
+            O link aponta para a Política de cookies. O rótulo acompanha o destino:
+            se mandar para a página de cookies mas escrever "política de privacidade",
+            o aviso fica incoerente com a página que abre.
+          {%- endcomment -%}
+          {%- assign cookie_url = settings.cookie_policy_url | default: '/pages/politicas-de-cookies' -%}
+          <a href="{{ cookie_url }}">política de cookies</a>.
         </p>
       </div>
       <div class="cookie-banner__actions">
