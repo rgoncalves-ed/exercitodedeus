@@ -4330,6 +4330,12 @@ a.contact-info__row:hover { color: var(--color-accent); }
   text-align: center;
   font-weight: 600;
 }
+.product__restock-fine {
+  margin: 8px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
 
 /* Selos de confiança — colados embaixo da galeria */
 .product__trust {

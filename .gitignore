@@ -9,6 +9,9 @@ node_modules/
 # Build local / preview estático (não faz parte do tema)
 _preview/
 
+# Documentos internos de proposta e planejamento (não fazem parte do tema)
+_proposta/
+
 # Zips gerados localmente
 *.zip
 

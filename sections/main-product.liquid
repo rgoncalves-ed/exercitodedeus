@@ -218,22 +218,33 @@
           </div>
         </form>
       {%- else -%}
-        {%- comment -%} Esgotado: form "Avise-me quando voltar" {%- endcomment -%}
-        <div class="product__restock" data-restock>
+        {%- comment -%}
+          Esgotado: bloco "Avise-me quando voltar".
+          O modo vem do Customizer. Enquanto a loja não tiver app de back in stock,
+          o formulário do tema manda um e-mail avisando a loja (não monta lista).
+          Depois de instalar o app, trocar o modo para "app": o tema para de
+          renderizar o formulário e o widget do app fica sozinho, sem duplicar.
+        {%- endcomment -%}
+        {%- assign restock_mode = section.settings.restock_form_mode | default: 'tema' -%}
+        <div class="product__restock" data-restock data-restock-mode="{{ restock_mode }}">
           <div class="product__restock-head">
             <h3>Produto esgotado</h3>
             <p>Deixe seu e-mail e te avisamos assim que voltar.</p>
           </div>
-          {% form 'contact', class: 'product__restock-form', id: 'RestockForm' %}
-            {%- if form.posted_successfully? -%}
-              <p class="product__restock-success">✓ Obrigado! Vamos te avisar.</p>
-            {%- else -%}
-              <input type="hidden" name="contact[subject]" value="Restock — {{ product.title | escape }}">
-              <input type="hidden" name="contact[body]" value="Cliente quer ser avisado quando voltar: {{ product.title }} ({{ shop.url }}{{ product.url }})">
-              <input type="email" name="contact[email]" placeholder="seu@email.com" required>
-              <button type="submit" class="btn btn--primary">Avise-me</button>
-            {%- endif -%}
-          {% endform %}
+          {%- if restock_mode == 'tema' -%}
+            {%- assign restock_sku = product.selected_or_first_available_variant.sku | default: 'sem SKU' -%}
+            {% form 'contact', class: 'product__restock-form', id: 'RestockForm' %}
+              {%- if form.posted_successfully? -%}
+                <p class="product__restock-success">✓ Obrigado! Vamos te avisar.</p>
+              {%- else -%}
+                <input type="hidden" name="contact[subject]" value="Aviso de estoque: {{ product.title | escape }}">
+                <input type="hidden" name="contact[body]" value="Cliente quer ser avisado quando este produto voltar. Produto: {{ product.title | escape }} | SKU: {{ restock_sku | escape }} | Handle: {{ product.handle }} | {{ shop.url }}{{ product.url }}">
+                <input type="email" name="contact[email]" placeholder="seu@email.com" required>
+                <button type="submit" class="btn btn--primary">Avise-me</button>
+              {%- endif -%}
+            {% endform %}
+            <p class="product__restock-fine">Usamos seu e-mail apenas para avisar sobre este produto.</p>
+          {%- endif -%}
           <button type="button"
                   class="product__wishlist-btn product__wishlist-btn--full"
                   data-wishlist-toggle="{{ product.handle }}">
@@ -463,6 +474,21 @@
 {
   "name": "Produto",
   "settings": [
+    {
+      "type": "header",
+      "content": "Aviso de estoque (produto esgotado)"
+    },
+    {
+      "type": "select",
+      "id": "restock_form_mode",
+      "label": "Formulário 'Avise-me quando voltar'",
+      "options": [
+        { "value": "tema", "label": "Formulário do tema (envia e-mail para a loja)" },
+        { "value": "app", "label": "App de back in stock (o tema não mostra formulário)" }
+      ],
+      "default": "tema",
+      "info": "Depois de instalar um app de back in stock, troque para 'App'. Senão a página fica com dois formulários de aviso."
+    },
     {
       "type": "header",
       "content": "Confiança"

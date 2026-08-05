@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="{{ settings.color_primary | default: '#1A1A1A' }}">
     <link rel="canonical" href="{{ canonical_url }}">
+    {%- comment -%}
+      Feed do blog. Serve para leitores de RSS e, principalmente, para ferramentas
+      de e-mail (Mailchimp, Omnisend, Klaviyo) que disparam campanha sozinhas
+      quando sai matéria nova. O Shopify Flow não tem gatilho de blog, então esse
+      feed é o caminho para automatizar a divulgação de post novo.
+    {%- endcomment -%}
+    {%- if blog.url != blank -%}
+      <link rel="alternate" type="application/atom+xml" title="{{ blog.title | escape }}" href="{{ shop.url }}{{ blog.url }}.atom">
+    {%- endif -%}
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
