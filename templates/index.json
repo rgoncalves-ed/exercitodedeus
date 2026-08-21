@@ -169,8 +169,9 @@
         "category_hPyDNr": {
           "type": "category",
           "settings": {
-            "title": "Espiritualidade",
-            "collection": "espiritualidade"
+            "title": "Combos",
+            "image": "shopify://shop_images/d04568b5e59d7bae6b21ce86049cdf28.jpg",
+            "collection": "combos"
           }
         }
       },
@@ -190,7 +191,7 @@
     "novidades": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Combos",
+        "heading": "Quaresma de São Miguel 2026",
         "collection": "quaresma-de-sao-miguel",
         "layout": "carousel",
         "desktop_cols": 4,
@@ -257,7 +258,7 @@
     "presentear": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Os mais vendidos",
+        "heading": "Nossos destaques",
         "collection": "mais-vendidos",
         "layout": "carousel",
         "desktop_cols": 4,
@@ -271,7 +272,7 @@
         "cta_slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Mobile_1_7c000087-589b-4efe-8848-e05b688f05a3.jpg",
+            "image": "shopify://shop_images/Mobile_1_copiar.png",
             "eyebrow": "",
             "heading": "Combo Família Consagrada – Proteja o que Você Mais Ama Um kit completo para fortalecer a vida de oração da família, consagrar o lar e caminhar diariamente sob a proteção de Deus.",
             "text": "",
