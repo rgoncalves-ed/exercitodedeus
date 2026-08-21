@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -25,17 +34,34 @@
           }
         }
       },
-      "block_order": ["faq-1", "faq-2", "faq-3"],
-      "settings": {}
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3"
+      ],
+      "settings": {
+        "show_trust_badges": true,
+        "show_bundle": true,
+        "show_recently_viewed": true,
+        "recent_heading": "Você viu recentemente",
+        "show_related": true,
+        "related_heading": "Você também pode gostar"
+      }
     },
     "featured-related": {
       "type": "featured-collection",
       "settings": {
         "heading": "Você também pode gostar",
+        "collection": "",
+        "layout": "carousel",
+        "desktop_cols": 4,
         "products_to_show": 6,
         "show_view_all": false
       }
     }
   },
-  "order": ["main", "featured-related"]
+  "order": [
+    "main",
+    "featured-related"
+  ]
 }
