@@ -89,6 +89,43 @@
         "autoplay_seconds": 6
       }
     },
+    "cta_banner_iKyRwg": {
+      "type": "cta-banner",
+      "blocks": {
+        "slide_HrU3ti": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/6d375843f1bae1eb69964162ba3f3ab9.jpg",
+            "eyebrow": "",
+            "heading": "Rainha dos Exércitos com 60% de desconto",
+            "text": "Promoção imperdível: de R$ 34,90 por R$ 13,90",
+            "button_label": "Garanta já o seu!",
+            "button_url": "https://grupoexercitodedeus.com.br/products/livro-rainha-dos-exercitos-como-vencer-qualquer-batalha-capela-exercito-de-deus-714584303",
+            "background_color": "#2F517A",
+            "text_color": "#ffffff",
+            "button_bg": "#14993C",
+            "button_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "slide_HrU3ti"
+      ],
+      "settings": {
+        "autoplay_seconds": 7
+      }
+    },
+    "novidades": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Combos com até 50% de desconto",
+        "collection": "combos",
+        "layout": "carousel",
+        "desktop_cols": 4,
+        "products_to_show": 9,
+        "show_view_all": true
+      }
+    },
     "categorias": {
       "type": "categories-grid",
       "blocks": {
@@ -152,17 +189,6 @@
       "settings": {
         "eyebrow": "Navegue por",
         "heading": "Categorias"
-      }
-    },
-    "novidades": {
-      "type": "featured-collection",
-      "settings": {
-        "heading": "Combos com até 50% de desconto",
-        "collection": "combos",
-        "layout": "carousel",
-        "desktop_cols": 4,
-        "products_to_show": 9,
-        "show_view_all": true
       }
     },
     "fe_detalhe": {
@@ -242,11 +268,11 @@
             "eyebrow": "",
             "heading": "Combo Escudo de Nazaré: Um kit completo para fortalecer a vida de oração da família, consagrar o lar e caminhar diariamente sob a proteção de Deus.",
             "text": "",
-            "button_label": "Garantir",
+            "button_label": "Adquira aqui!",
             "button_url": "https://grupoexercitodedeus.com.br/products/combo-familia-consagrada-2026-899703455",
-            "background_color": "#6B4C3C",
+            "background_color": "#6b4c3c",
             "text_color": "#ffffff",
-            "button_bg": "#EF1818",
+            "button_bg": "#14993C",
             "button_color": "#ffffff"
           }
         },
@@ -261,7 +287,7 @@
             "button_url": "https://grupoexercitodedeus.com.br/collections/all?sort_by=title-ascending&filter.v.price.gte=&filter.v.price.lte=20",
             "background_color": "#dce9f1",
             "text_color": "#1a1a1a",
-            "button_bg": "#1f4e78",
+            "button_bg": "#14993C",
             "button_color": "#ffffff"
           }
         }
@@ -288,8 +314,9 @@
   },
   "order": [
     "hero",
-    "categorias",
+    "cta_banner_iKyRwg",
     "novidades",
+    "categorias",
     "fe_detalhe",
     "presentear",
     "cta",
