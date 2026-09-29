@@ -98,7 +98,7 @@
             "image": "shopify://shop_images/6d375843f1bae1eb69964162ba3f3ab9.jpg",
             "eyebrow": "",
             "heading": "Rainha dos Exércitos com 60% de desconto",
-            "text": "Promoção imperdível: de R$ 34,90 por R$ 13,90",
+            "text": "Promoção imperdível: Livro + Capela de R$ 34,90 por R$ 13,90",
             "button_label": "Garanta já o seu!",
             "button_url": "https://grupoexercitodedeus.com.br/products/livro-rainha-dos-exercitos-como-vencer-qualquer-batalha-capela-exercito-de-deus-714584303",
             "background_color": "#2F517A",
@@ -275,8 +275,19 @@
             "button_bg": "#14993C",
             "button_color": "#ffffff"
           }
-        },
-        "slide_p4MYwe": {
+        }
+      },
+      "block_order": [
+        "cta_slide_2"
+      ],
+      "settings": {
+        "autoplay_seconds": 7
+      }
+    },
+    "cta_banner_4fDi3F": {
+      "type": "cta-banner",
+      "blocks": {
+        "slide_n7kHxV": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/bf57b3624ea26db23db62ea524493b33_871e1c96-10c4-4d72-a890-e60f39f086f2.jpg",
@@ -293,8 +304,7 @@
         }
       },
       "block_order": [
-        "cta_slide_2",
-        "slide_p4MYwe"
+        "slide_n7kHxV"
       ],
       "settings": {
         "autoplay_seconds": 7
@@ -320,6 +330,7 @@
     "fe_detalhe",
     "presentear",
     "cta",
-    "favoritos"
+    "favoritos",
+    "cta_banner_4fDi3F"
   ]
 }
