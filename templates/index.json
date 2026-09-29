@@ -157,8 +157,8 @@
     "novidades": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Quaresma de São Miguel 2026",
-        "collection": "quaresma-de-sao-miguel",
+        "heading": "Combos com até 50% de desconto",
+        "collection": "combos",
         "layout": "carousel",
         "desktop_cols": 4,
         "products_to_show": 9,
