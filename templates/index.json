@@ -12,22 +12,6 @@
     "hero": {
       "type": "hero-banner",
       "blocks": {
-        "slide_RJ9JLp": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Thumb_Pos_pre_venda.png",
-            "mobile_image": "shopify://shop_images/Mobile_1_copiar.png",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
-            "button_label": "",
-            "button_url": "shopify://products/combo-familia-consagrada",
-            "background_color": "#2a4234",
-            "text_color": "#ffffff",
-            "button_bg": "#781f1f",
-            "button_color": "#ffffff"
-          }
-        },
         "slide_haLfgg": {
           "type": "slide",
           "settings": {
@@ -38,22 +22,6 @@
             "text": "",
             "button_label": "",
             "button_url": "https://grupoexercitodedeus.com.br/collections/quaresma-de-sao-miguel",
-            "background_color": "#2a4234",
-            "text_color": "#ffffff",
-            "button_bg": "#1f4e78",
-            "button_color": "#ffffff"
-          }
-        },
-        "slide_MWTAj6": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_9_de_jun._de_2026_17_08_19.png",
-            "mobile_image": "shopify://shop_images/ChatGPT_Image_9_de_jun._de_2026_17_12_15.png",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
-            "button_label": "",
-            "button_url": "https://www.youtube.com/playlist?list=PLHzRDMOIGgY6_g8ZKOElOSENAO2WZeE4N",
             "background_color": "#2a4234",
             "text_color": "#ffffff",
             "button_bg": "#1f4e78",
@@ -111,15 +79,13 @@
         }
       },
       "block_order": [
-        "slide_RJ9JLp",
         "slide_haLfgg",
-        "slide_MWTAj6",
         "slide_AQ9Fiz",
         "slide_1",
         "slide_3"
       ],
       "settings": {
-        "welcome_text": "<p><strong>Bem-vindo ao Exército de Deus</strong>, o movimento das famílias<strong> consagradas </strong>do Brasil, liderado por </p><p><strong>Ana Clara Rocha e Italo Poeta.</strong></p>",
+        "welcome_text": "<p><strong>Bem-vindo ao Exército de Deus</strong>, o movimento das famílias<strong> consagradas </strong>do Brasil, liderado por&nbsp;</p><p><strong>Ana Clara Rocha e Italo Poeta.</strong></p>",
         "autoplay_seconds": 6
       }
     },
