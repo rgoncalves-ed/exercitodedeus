@@ -101,9 +101,9 @@
             "text": "Promoção imperdível: Livro + Capela de R$ 34,90 por R$ 13,90",
             "button_label": "Garanta já o seu!",
             "button_url": "https://grupoexercitodedeus.com.br/products/livro-rainha-dos-exercitos-como-vencer-qualquer-batalha-capela-exercito-de-deus-714584303",
-            "background_color": "#2F517A",
+            "background_color": "#2f517a",
             "text_color": "#ffffff",
-            "button_bg": "#14993C",
+            "button_bg": "#14993c",
             "button_color": "#ffffff"
           }
         }
@@ -247,6 +247,17 @@
         "columns": 4
       }
     },
+    "favoritos": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Favoritos dos leitores",
+        "collection": "livros",
+        "layout": "carousel",
+        "desktop_cols": 4,
+        "products_to_show": 6,
+        "show_view_all": true
+      }
+    },
     "presentear": {
       "type": "featured-collection",
       "settings": {
@@ -272,7 +283,7 @@
             "button_url": "https://grupoexercitodedeus.com.br/products/combo-familia-consagrada-2026-899703455",
             "background_color": "#6b4c3c",
             "text_color": "#ffffff",
-            "button_bg": "#14993C",
+            "button_bg": "#14993c",
             "button_color": "#ffffff"
           }
         }
@@ -282,17 +293,6 @@
       ],
       "settings": {
         "autoplay_seconds": 7
-      }
-    },
-    "favoritos": {
-      "type": "featured-collection",
-      "settings": {
-        "heading": "Favoritos dos leitores",
-        "collection": "livros",
-        "layout": "carousel",
-        "desktop_cols": 4,
-        "products_to_show": 6,
-        "show_view_all": true
       }
     },
     "cta_banner_4fDi3F": {
@@ -309,7 +309,7 @@
             "button_url": "https://grupoexercitodedeus.com.br/collections/all?sort_by=title-ascending&filter.v.price.gte=&filter.v.price.lte=20",
             "background_color": "#dce9f1",
             "text_color": "#1a1a1a",
-            "button_bg": "#14993C",
+            "button_bg": "#14993c",
             "button_color": "#ffffff"
           }
         }
@@ -328,9 +328,9 @@
     "novidades",
     "categorias",
     "fe_detalhe",
-    "presentear",
-    "cta",
     "favoritos",
+    "cta",
+    "presentear",
     "cta_banner_4fDi3F"
   ]
 }
