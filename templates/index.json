@@ -15,6 +15,22 @@
         "slide_haLfgg": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/Banner.png",
+            "mobile_image": "shopify://shop_images/Banner-Mobile.png",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "button_url": "https://grupoexercitodedeus.com.br/collections/all?sort_by=price-descending",
+            "background_color": "#2a4234",
+            "text_color": "#ffffff",
+            "button_bg": "#1f4e78",
+            "button_color": "#ffffff"
+          }
+        },
+        "slide_47yApM": {
+          "type": "slide",
+          "settings": {
             "image": "shopify://shop_images/Desktop_2_1.jpg",
             "mobile_image": "shopify://shop_images/Mobile_2.jpg",
             "eyebrow": "",
@@ -80,6 +96,7 @@
       },
       "block_order": [
         "slide_haLfgg",
+        "slide_47yApM",
         "slide_AQ9Fiz",
         "slide_1",
         "slide_3"
@@ -258,17 +275,6 @@
         "show_view_all": true
       }
     },
-    "presentear": {
-      "type": "featured-collection",
-      "settings": {
-        "heading": "Nossos destaques",
-        "collection": "mais-vendidos",
-        "layout": "carousel",
-        "desktop_cols": 4,
-        "products_to_show": 6,
-        "show_view_all": true
-      }
-    },
     "cta": {
       "type": "cta-banner",
       "blocks": {
@@ -293,6 +299,17 @@
       ],
       "settings": {
         "autoplay_seconds": 7
+      }
+    },
+    "presentear": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Nossos destaques",
+        "collection": "mais-vendidos",
+        "layout": "carousel",
+        "desktop_cols": 4,
+        "products_to_show": 6,
+        "show_view_all": true
       }
     },
     "cta_banner_4fDi3F": {
